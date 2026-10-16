@@ -4,11 +4,14 @@
   "private": true,
   "description": "Frontend for the SIGINT project.",
   "scripts": {
+    "build:css": "npx @tailwindcss/cli -i www/input.css -o www/style.css --minify",
     "lint": "prettier --check \"**/*.{html,css}\"",
     "lint:fix": "prettier --write \"**/*.{html,css}\""
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.3.3"
   }
 }

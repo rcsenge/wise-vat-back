@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <title>VATBACK Scanner</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-slate-100 text-slate-900">
+    <main
+      class="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-white shadow-sm"
+    >
+      <header
+        class="border-b border-slate-200 bg-slate-900 px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]"
+      >
+        <h1 class="text-lg font-semibold text-white">VATBACK Scanner</h1>
+        <p id="receipt-count" class="text-sm text-slate-300">No receipts yet</p>
+      </header>
+
+      <section aria-labelledby="scan-heading" class="flex-1 px-4 py-3">
+        <h2 id="scan-heading" class="sr-only">Scanned receipts</h2>
+        <ul id="receipt-list" class="space-y-3"></ul>
+      </section>
+
+      <section id="empty-state" class="px-4 pt-12 pb-8 text-center">
+        <p class="text-sm text-slate-500">
+          No receipts scanned yet. Press the button below to start.
+        </p>
+      </section>
+
+      <footer
+        class="sticky bottom-0 border-t border-slate-200 bg-white px-4 py-3 pb-[max(1rem,env(safe-area-inset-bottom))]"
+      >
+        <label
+          for="document-input"
+          class="block w-full cursor-pointer rounded-xl bg-slate-900 px-4 py-3 text-center text-base font-medium text-white"
+        >
+          Add New Document
+        </label>
+        <input
+          id="document-input"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          class="sr-only"
+        />
+      </footer>
+    </main>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const STORAGE_KEY = "vatback-receipts";
+        const MAX_RECEIPTS = 50;
+        const MAX_IMAGE_DIMENSION = 800;
+        const JPEG_QUALITY = 0.7;
+
+        const receiptList = document.getElementById("receipt-list");
+        const documentInput = document.getElementById("document-input");
+        const receiptCount = document.getElementById("receipt-count");
+        const emptyState = document.getElementById("empty-state");
+
+        const readReceipts = () => {
+          try {
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            return Array.isArray(stored) ? stored : [];
+          } catch (error) {
+            return [];
+          }
+        };
+
+        const saveReceipts = (receipts) => {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(receipts));
+        };
+
+        const createReceiptItem = (receipt) => {
+          const item = document.createElement("li");
+          item.className =
+            "flex items-center gap-3 rounded-xl border border-slate-200 p-3";
+
+          const image = document.createElement("img");
+          image.src = receipt.imageDataUrl;
+          image.alt = "Scanned receipt preview";
+          image.className = "h-16 w-16 shrink-0 rounded-lg object-cover";
+
+          const details = document.createElement("div");
+          details.className = "min-w-0 flex-1";
+
+          const name = document.createElement("p");
+          name.className = "truncate text-sm font-medium";
+          name.textContent = receipt.fileName;
+
+          const time = document.createElement("p");
+          time.className = "text-xs text-slate-500";
+          time.textContent = new Date(receipt.scannedAt).toLocaleString();
+
+          const status = document.createElement("span");
+          status.className =
+            "rounded-full bg-slate-900 px-2 py-1 text-xs font-medium text-white";
+          status.textContent = "Pending";
+
+          details.append(name, time);
+          item.append(image, details, status);
+          return item;
+        };
+
+        const render = () => {
+          const receipts = readReceipts().slice(0, MAX_RECEIPTS);
+          receiptList.replaceChildren();
+          receipts.forEach((receipt) => {
+            receiptList.appendChild(createReceiptItem(receipt));
+          });
+          const hasReceipts = receipts.length > 0;
+          emptyState.classList.toggle("hidden", hasReceipts);
+          receiptCount.textContent = hasReceipts
+            ? `${receipts.length} receipt${receipts.length === 1 ? "" : "s"}`
+            : "No receipts yet";
+        };
+
+        const downscaleImage = (file) => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const image = new Image();
+              image.onload = () => {
+                const scale = Math.min(
+                  1,
+                  MAX_IMAGE_DIMENSION / Math.max(image.width, image.height),
+                );
+                const width = Math.max(1, Math.round(image.width * scale));
+                const height = Math.max(1, Math.round(image.height * scale));
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(image, 0, 0, width, height);
+                resolve(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
+              };
+              image.onerror = reject;
+              image.src = reader.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        };
+
+        documentInput.addEventListener("change", async () => {
+          const file = documentInput.files[0];
+          documentInput.value = "";
+          if (!file || !file.type.startsWith("image/")) {
+            return;
+          }
+          const receipts = readReceipts();
+          if (receipts.length >= MAX_RECEIPTS) {
+            return;
+          }
+          const imageDataUrl = await downscaleImage(file);
+          receipts.unshift({
+            id: Date.now().toString(),
+            fileName: file.name,
+            scannedAt: Date.now(),
+            imageDataUrl,
+          });
+          saveReceipts(receipts);
+          render();
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
