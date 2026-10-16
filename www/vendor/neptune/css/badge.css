@@ -1,0 +1,68 @@
+.badge {
+  display: inline-block;
+  min-inline-size: var(--size-16);
+  padding-block: 5px;
+  padding-inline: var(--size-8);
+  font-size: 10px;
+  font-weight: var(--font-weight-semi-bold);
+  color: #fff;
+  line-height: var(--line-height-control);
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  background-color: var(--color-interactive-negative);
+  border-radius: var(--radius-medium);
+  inset-block-start: -1px;
+  position: relative;
+}
+.np-theme-personal .badge {
+  display: inline-block;
+  min-inline-size: var(--size-16);
+  padding-block: var(--size-4);
+  padding-inline: var(--size-8);
+  color: #fff;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  line-height: normal;
+  line-height: initial;
+  background-color: var(--color-interactive-negative);
+  border-radius: var(--radius-medium);
+  position: relative;
+  inset-block-start: 0;
+}
+.badge:empty {
+  display: none;
+}
+.btn .badge {
+  position: relative;
+  inset-block-start: -1px;
+}
+.btn-xs .badge,
+.btn-group-xs > .btn .badge {
+  inset-block-start: 0;
+  padding-block: 1px;
+  padding-inline: 5px;
+}
+a.badge:hover,
+a.badge:focus {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.list-group-item > .badge {
+  float: inline-end;
+}
+.list-group-item > .badge + .badge {
+  margin-inline-end: 5px;
+}
+.nav-pills > li > a > .badge,
+.nav-stacked > li > a > .badge {
+  margin-inline-start: 19px;
+}
+.badge-success {
+  background: var(--color-interactive-positive);
+}
+.np-theme-personal .badge-success {
+  background: var(--color-sentiment-positive);
+}

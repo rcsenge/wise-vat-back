@@ -1,0 +1,22 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+@custom-media --screen-400-zoom (width <= 320px);
+
+@custom-media --screen-xs (width > 320px);
+@custom-media --screen-xs-max (width < 600px);
+@custom-media --screen-sm (width >= 600px);
+@custom-media --screen-sm-max (width < 840px);
+@custom-media --screen-md (width >= 840px);
+@custom-media --screen-md-max (width < 1160px);
+@custom-media --screen-lg (width >= 1160px);
+/* @deprecated use --screen-md-max */
+@custom-media --screen-lg-max (width < 1160px);
+/* @deprecated use --screen-lg */
+@custom-media --screen-xl (width >= 1160px);
+
+@custom-media --screen-xs-sm (320px < width < 600px);
+@custom-media --screen-sm-md (600px <= width < 840px);
+@custom-media --screen-md-lg (840px <= width < 1160px);
+

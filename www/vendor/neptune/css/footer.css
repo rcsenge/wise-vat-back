@@ -1,0 +1,175 @@
+.footer {
+  background-color: var(--color-background-neutral);
+  font-size: var(--font-size-14);
+  line-height: 155%;
+  letter-spacing: -0.006em;
+  font-weight: var(--font-weight-regular);
+  word-wrap: break-word;
+  padding-block-start: calc(var(--size-8) * 10);
+  padding-block-end: calc(var(--size-8) * 10);
+}
+@supports (hyphenate-limit-chars: 1) {
+  .footer {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .footer {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .footer {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .footer {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .footer {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+@media (min-width: 600px) {
+  .footer {
+    padding-block-start: calc(var(--size-8) * 15);
+    padding-block-end: calc(var(--size-8) * 15);
+  }
+}
+@media (min-width: 1160px) {
+  .footer {
+    padding-block-start: calc(var(--size-8) * 20);
+    padding-block-end: calc(var(--size-8) * 20);
+  }
+}
+.footer .footer-link,
+.footer .link-icon {
+  color: var(--color-content-secondary);
+  font-size: var(--font-size-14);
+  line-height: 155%;
+  letter-spacing: -0.006em;
+  font-weight: var(--font-weight-regular);
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .footer .footer-link,
+  .footer .link-icon {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .footer .footer-link,
+    .footer .link-icon {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .footer .footer-link,
+    .footer .link-icon {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .footer .footer-link,
+  .footer .link-icon {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .footer .footer-link,
+    .footer .link-icon {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+.footer .footer-link:hover,
+.footer .link-icon:hover,
+.footer .footer-link:active,
+.footer .link-icon:active,
+.footer .footer-link:focus,
+.footer .link-icon:focus {
+  color: var(--color-content-secondary);
+}
+.footer .footer-title {
+  color: var(--color-content-primary);
+}
+.footer .footer-title .footer-link {
+  color: var(--color-content-primary);
+}
+.footer .footer-title .footer-link:hover,
+.footer .footer-title .footer-link:active,
+.footer .footer-title .footer-link:focus {
+  color: var(--color-content-primary);
+}
+.footer .logo {
+  color: transparent;
+}
+.footer .icon {
+  margin-block: 0;
+  margin-inline: 5px;
+  font-size: 32px !important;
+  inline-size: 24px;
+}
+.footer .link-icon {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.footer .link-icon svg {
+  fill: var(--color-content-secondary);
+}
+.footer .link-icon svg:hover,
+.footer .link-icon svg:active,
+.footer .link-icon svg:focus {
+  fill: var(--color-content-secondary);
+}
+.footer.footer-inverse {
+  background: #37517e;
+}
+.footer.footer-inverse .footer-link,
+.footer.footer-inverse .link-icon {
+  color: #ffffff;
+}
+.footer.footer-inverse .footer-link:hover,
+.footer.footer-inverse .link-icon:hover,
+.footer.footer-inverse .footer-link:active,
+.footer.footer-inverse .link-icon:active,
+.footer.footer-inverse .footer-link:focus,
+.footer.footer-inverse .link-icon:focus {
+  color: #ffffff;
+}
+.footer.footer-inverse .footer-link svg,
+.footer.footer-inverse .link-icon svg {
+  fill: #ffffff;
+}
+.footer.footer-inverse .footer-link svg:hover,
+.footer.footer-inverse .link-icon svg:hover,
+.footer.footer-inverse .footer-link svg:active,
+.footer.footer-inverse .link-icon svg:active,
+.footer.footer-inverse .footer-link svg:focus,
+.footer.footer-inverse .link-icon svg:focus {
+  fill: #ffffff;
+}
+.footer.footer-inverse .footer-title {
+  color: #ffffff;
+}
+.footer.footer-inverse hr {
+  opacity: 0.1;
+}
+.footer.footer-inverse .tiny,
+.footer.footer-inverse .body-3,
+.footer.footer-inverse .np-text-body-default {
+  color: #ffffff;
+}
+@media (max-width: 599.98px) {
+  .footer {
+    position: relative;
+  }
+}

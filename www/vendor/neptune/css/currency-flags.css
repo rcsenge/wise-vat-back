@@ -1,0 +1,30 @@
+/* DEPRECATED: use <Flag /> component instead */
+.currency-flag {
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+.np-theme-personal .currency-flag {
+  box-shadow: inset 0 0 0 1px var(--color-border-neutral);
+  border-radius: 50%;
+}
+.btn .currency-flag,
+.dropdown-menu li .currency-flag {
+  vertical-align: -3px;
+  line-height: 16px;
+}
+.btn-sm .currency-flag,
+.form-group-sm .btn .currency-flag,
+.input-group-sm .btn .currency-flag {
+  vertical-align: -4px;
+}
+.btn-lg .currency-flag,
+.form-group-lg .btn .currency-flag,
+.input-group-lg .btn .currency-flag {
+  vertical-align: -1px;
+}
+li > .currency-flag:first-child,
+li > a > .currency-flag:first-child {
+  margin-inline-end: var(--size-8);
+}
+.btn .currency-flag:first-child {
+  margin-inline-end: var(--size-8);
+}

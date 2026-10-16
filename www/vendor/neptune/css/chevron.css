@@ -1,0 +1,37 @@
+.tw-chevron {
+  display: inline-block;
+  transition: transform cubic-bezier(0, 0.94, 0.62, 1) 350ms;
+}
+.tw-chevron.top {
+  transform: rotate(0deg);
+}
+[dir="rtl"] .tw-chevron.top {
+  transform: rotate(360deg);
+}
+.tw-chevron.right {
+  transform: rotate(90deg);
+}
+[dir="rtl"] .tw-chevron.right {
+  transform: rotate(-90deg);
+}
+.tw-chevron.right-sigle-direction {
+  transform: rotate(90deg) !important;
+}
+.tw-chevron.bottom {
+  transform: rotate(180deg);
+}
+.tw-chevron.left {
+  transform: rotate(270deg);
+}
+[dir="rtl"] .tw-chevron.left {
+  transform: rotate(-270deg);
+}
+.tw-chevron.left-single-direction {
+  transform: rotate(270deg) !important;
+}
+.chevron-color {
+  color: var(--color-content-accent);
+}
+.np-theme-personal .chevron-color {
+  color: var(--color-interactive-primary);
+}

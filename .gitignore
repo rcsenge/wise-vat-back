@@ -12,6 +12,8 @@ node_modules/
 !*.md
 !*.html
 !*.css
+!*.svg
+!*.woff2
 !package.json
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
@@ -19,6 +21,3 @@ node_modules/
 !.gitignore
 !.prettierrc
 !.prettierignore
-
-# Re-ignore the generated neptune assets after the whitelist rules.
-www/vendor/**

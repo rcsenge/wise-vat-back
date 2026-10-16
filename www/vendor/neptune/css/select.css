@@ -1,0 +1,59 @@
+.tw-select .tw-icon {
+  display: inline-block;
+  margin-inline-end: var(--size-8);
+  margin-block-start: -2px;
+  vertical-align: middle;
+}
+.tw-select .tw-dropdown-item--clickable {
+  cursor: pointer;
+}
+.tw-select .tw-dropdown-item--divider {
+  border-block-end-style: solid;
+  border-block-end-width: 1px;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  border-block-end-color: var(--color-border-neutral);
+}
+.tw-select .tw-dropdown-item--focused {
+  background-color: var(--color-background-neutral);
+}
+.tw-select .tw-dropdown-item .currency-flag {
+  margin-inline-end: var(--size-8);
+}
+.tw-select .tw-dropdown-item > a {
+  white-space: normal;
+}
+.tw-select .dropdown-toggle.btn-input.btn-sm {
+  padding-inline-end: var(--size-32);
+}
+.tw-select .dropdown-toggle.btn-input.btn-md {
+  padding-inline-end: var(--size-40);
+}
+.tw-select .dropdown-toggle.btn-input.btn-lg {
+  padding-inline-end: var(--size-48);
+}
+.tw-select .dropdown-toggle tw-chevron-down-icon > span {
+  margin: 0;
+}
+.tw-select .dropdown-toggle tw-icon span.tw-icon {
+  position: static;
+  display: inline-block;
+}
+.tw-select .circle .tw-icon {
+  vertical-align: middle;
+}
+@media (max-width: 599.98px) {
+  .tw-select.dropdown-menu.dropdown-menu--open {
+    max-block-size: 50vh;
+    max-block-size: 50svh;
+    max-inline-size: 100%;
+    opacity: 1;
+    overflow: auto;
+    position: static;
+    transform: none;
+    visibility: visible;
+    inline-size: 100% !important;
+  }
+}
+.tw-select-filter {
+  border: 0;
+}

@@ -1,0 +1,13 @@
+.link-callout > .tw-icon-chevron-up {
+  display: inline-block;
+  margin-inline-start: var(--size-8);
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+  transform: rotate(90deg);
+}
+.link-callout:hover > .tw-icon-chevron-up,
+.link-callout:focus > .tw-icon-chevron-up,
+.callout-container:hover .link-callout > .tw-icon-chevron-up,
+.callout-container:focus .link-callout > .tw-icon-chevron-up {
+  transform: translateX(4px) rotate(90deg);
+}

@@ -1,0 +1,1208 @@
+.btn-sm {
+  block-size: 32px;
+}
+.btn {
+  line-height: 150%;
+  letter-spacing: -0.011em;
+  word-wrap: break-word;
+  display: inline-block;
+  margin-block-end: 0;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding-block-end: 10px;
+  font-weight: var(--font-weight-semi-bold);
+  padding: var(--btn-padding);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-24);
+  border-radius: var(--btn-radius-base);
+  min-block-size: var(--btn-height);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .btn {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .btn {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .btn {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .btn {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .btn {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+.btn .dropdown-menu > li > a {
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-24);
+}
+.np-theme-personal .btn {
+  font-size: 16px;
+  line-height: 24px;
+}
+.np-theme-personal .btn:not(.disabled):not(:disabled):not(.np-dropdown-toggle):focus-visible.btn-negative,
+.np-theme-personal .btn:not(.disabled):not(:disabled):not(.np-dropdown-toggle).focus.btn-negative {
+  outline-color: var(--color-sentiment-negative);
+}
+.np-theme-personal .critical-comms--cta .btn:not(.disabled):not(:disabled):not(.np-dropdown-toggle):focus-visible.btn-negative,
+.np-theme-personal .critical-comms--cta .btn:not(.disabled):not(:disabled):not(.np-dropdown-toggle).focus.btn-negative {
+  outline-color: var(--color-contrast);
+}
+.np-theme-personal .critical-comms--cta .btn:not(.disabled):not(:disabled):not(.np-dropdown-toggle).btn-negative {
+  border: none;
+}
+.np-theme-personal .btn.btn-negative:not(.disabled):not(:disabled):not(.np-dropdown-toggle):focus,
+.np-theme-personal .btn.btn-negative:not(.disabled):not(:disabled):not(.np-dropdown-toggle).focus {
+  outline-color: var(--color-sentiment-negative);
+}
+.btn:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-accent-hover);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+  outline: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+a.btn.disabled,
+fieldset[disabled] a.btn {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn-default {
+  color: var(--color-content-accent);
+  background-color: transparent;
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #FFF;
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-default {
+  color: #FFF;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-default:not(.disabled):not(:disabled):hover {
+  color: #FFF;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-default {
+  background-image: none;
+}
+.btn-default .badge {
+  color: transparent;
+  background-color: var(--color-content-accent);
+}
+.np-theme-personal .btn-default {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent);
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-default {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-default:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-default {
+  background-image: none;
+}
+.np-theme-personal .btn-default .badge {
+  color: var(--color-interactive-accent);
+  background-color: var(--color-interactive-control);
+}
+.np-theme-personal .btn-default.btn-priority-2 {
+  color: var(--color-interactive-primary);
+  background-color: transparent;
+  border-color: var(--color-interactive-primary);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-default.btn-priority-2 {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-default.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-default.btn-priority-2 {
+  background-image: none;
+}
+.np-theme-personal .btn-default.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-primary);
+}
+.btn-accent,
+.btn-primary {
+  color: #fff;
+  background-color: var(--color-interactive-accent);
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-accent,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-accent:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-primary:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-accent,
+.open > .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+.btn-accent .badge,
+.btn-primary .badge {
+  color: var(--color-interactive-accent);
+  background-color: #fff;
+}
+.btn-accent.btn-priority-2,
+.btn-primary.btn-priority-2 {
+  color: var(--color-interactive-accent);
+  background-color: transparent;
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-accent.btn-priority-2,
+.open > .dropdown-toggle.btn-primary.btn-priority-2 {
+  color: #fff;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-accent.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-primary.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-accent.btn-priority-2,
+.open > .dropdown-toggle.btn-primary.btn-priority-2 {
+  background-image: none;
+}
+.btn-accent.btn-priority-2 .badge,
+.btn-primary.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-accent);
+}
+.np-theme-personal .btn-accent,
+.np-theme-personal .btn-primary {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent);
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-accent,
+.open > .dropdown-toggle.np-theme-personal .btn-primary {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-accent:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-primary:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-primary:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-accent,
+.open > .dropdown-toggle.np-theme-personal .btn-primary {
+  background-image: none;
+}
+.np-theme-personal .btn-accent .badge,
+.np-theme-personal .btn-primary .badge {
+  color: var(--color-interactive-accent);
+  background-color: var(--color-interactive-control);
+}
+.np-theme-personal .btn-accent.btn-priority-2,
+.np-theme-personal .btn-primary.btn-priority-2 {
+  color: var(--color-interactive-primary);
+  background-color: transparent;
+  border-color: var(--color-interactive-primary);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-accent.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-primary.btn-priority-2 {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-accent.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-primary.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-accent.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-primary.btn-priority-2 {
+  background-image: none;
+}
+.np-theme-personal .btn-accent.btn-priority-2 .badge,
+.np-theme-personal .btn-primary.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-primary);
+}
+.btn-link,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3 {
+  color: var(--color-content-accent);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border-color: transparent;
+}
+.btn-link,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3,
+.btn-link:not(.disabled):not(:disabled):active,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):active,
+.btn-link:not(.disabled):not(:disabled).active,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled).active,
+.btn-link[disabled],
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3[disabled],
+fieldset[disabled] .btn-link,
+fieldset[disabled] .btn-accent:not(.disabled):not(:disabled).btn-priority-3 {
+  background-color: transparent;
+}
+.btn-link:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-link:not(.disabled):not(:disabled):focus-visible,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):focus-visible {
+  color: var(--color-content-accent-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border-color: transparent;
+  background-color: transparent;
+}
+.btn-link:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):not(.btn-loading):active {
+  color: var(--color-content-accent-active);
+}
+.np-theme-personal .btn-link,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled).btn-priority-3 {
+  color: var(--color-interactive-primary);
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.np-theme-personal .btn-link:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-link:not(.disabled):not(:disabled):focus-visible,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):focus-visible {
+  color: var(--color-interactive-primary-hover);
+  border-color: transparent;
+}
+.np-theme-personal .btn-link:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-accent:not(.disabled):not(:disabled).btn-priority-3:not(.disabled):not(:disabled):not(.btn-loading):active {
+  color: var(--color-interactive-primary-active);
+  background-color: var(--color-background-screen-active) !important;
+}
+.btn-accent.disabled.btn-priority-3,
+.btn-accent.btn-priority-3:disabled {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-content-accent);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+.np-theme-personal .btn-accent.disabled.btn-priority-3,
+.np-theme-personal .btn-accent.btn-priority-3:disabled {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.btn-positive,
+.btn-success {
+  color: #fff;
+  background-color: var(--color-interactive-positive);
+  border-color: var(--color-interactive-positive);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-positive-hover);
+  border-color: var(--color-interactive-positive-hover);
+}
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-positive,
+.open > .dropdown-toggle.btn-success {
+  color: #fff;
+  background-color: var(--color-interactive-positive-active);
+  border-color: var(--color-interactive-positive-active);
+}
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-positive:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-success:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-positive-active);
+  border-color: var(--color-interactive-positive-active);
+}
+.btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-success:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-positive,
+.open > .dropdown-toggle.btn-success {
+  background-image: none;
+}
+.btn-positive .badge,
+.btn-success .badge {
+  color: var(--color-interactive-positive);
+  background-color: #fff;
+}
+.btn-positive.btn-priority-2,
+.btn-success.btn-priority-2 {
+  color: var(--color-interactive-positive);
+  background-color: transparent;
+  border-color: var(--color-interactive-positive);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-positive-hover);
+  border-color: var(--color-interactive-positive-hover);
+}
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-positive.btn-priority-2,
+.open > .dropdown-toggle.btn-success.btn-priority-2 {
+  color: #fff;
+  background-color: var(--color-interactive-positive-active);
+  border-color: var(--color-interactive-positive-active);
+}
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-positive.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-success.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-positive-active);
+  border-color: var(--color-interactive-positive-active);
+}
+.btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-positive.btn-priority-2,
+.open > .dropdown-toggle.btn-success.btn-priority-2 {
+  background-image: none;
+}
+.btn-positive.btn-priority-2 .badge,
+.btn-success.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-positive);
+}
+.np-theme-personal .btn-positive,
+.np-theme-personal .btn-success {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent);
+  border-color: var(--color-interactive-accent);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent);
+}
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-positive,
+.open > .dropdown-toggle.np-theme-personal .btn-success {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent);
+}
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-positive:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-success:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent);
+}
+.np-theme-personal .btn-positive:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-success:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-positive,
+.open > .dropdown-toggle.np-theme-personal .btn-success {
+  background-image: none;
+}
+.np-theme-personal .btn-positive .badge,
+.np-theme-personal .btn-success .badge {
+  color: var(--color-interactive-accent);
+  background-color: var(--color-interactive-control);
+}
+.np-theme-personal .btn-positive.btn-priority-2,
+.np-theme-personal .btn-success.btn-priority-2 {
+  color: var(--color-interactive-primary);
+  background-color: transparent;
+  border-color: var(--color-interactive-primary);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+}
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-positive.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-success.btn-priority-2 {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: var(--color-interactive-control);
+  background-color: var(--color-interactive-accent-active);
+  border-color: var(--color-interactive-accent-active);
+}
+.np-theme-personal .btn-positive.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-success.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-positive.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-success.btn-priority-2 {
+  background-image: none;
+}
+.np-theme-personal .btn-positive.btn-priority-2 .badge,
+.np-theme-personal .btn-success.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-primary);
+}
+.btn-info {
+  color: #6f8691;
+  background-color: transparent;
+  border-color: #6f8691;
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #FFF;
+  background-color: #00b9ff;
+  border-color: #00b9ff;
+}
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-info {
+  color: #FFF;
+  background-color: #008ec0;
+  border-color: #008ec0;
+}
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-info:not(.disabled):not(:disabled):hover {
+  color: #FFF;
+  background-color: #008ec0;
+  border-color: #008ec0;
+}
+.btn-info:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-info {
+  background-image: none;
+}
+.btn-info .badge {
+  color: transparent;
+  background-color: #6f8691;
+}
+.btn-warning {
+  color: #FFA600;
+  background-color: transparent;
+  border-color: #FFA600;
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #FFF;
+  background-color: #DF8700;
+  border-color: #DF8700;
+}
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-warning {
+  color: #FFF;
+  background-color: #9E5F00;
+  border-color: #9E5F00;
+}
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-warning:not(.disabled):not(:disabled):hover {
+  color: #FFF;
+  background-color: #9E5F00;
+  border-color: #9E5F00;
+}
+.btn-warning:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-warning {
+  background-image: none;
+}
+.btn-warning .badge {
+  color: transparent;
+  background-color: #FFA600;
+}
+.btn-danger,
+.btn-negative {
+  color: #fff;
+  background-color: var(--color-interactive-negative);
+  border-color: var(--color-interactive-negative);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-negative-hover);
+  border-color: var(--color-interactive-negative-hover);
+}
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-danger,
+.open > .dropdown-toggle.btn-negative {
+  color: #fff;
+  background-color: var(--color-interactive-negative-active);
+  border-color: var(--color-interactive-negative-active);
+}
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-danger:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-negative:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-negative-active);
+  border-color: var(--color-interactive-negative-active);
+}
+.btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-danger,
+.open > .dropdown-toggle.btn-negative {
+  background-image: none;
+}
+.btn-danger .badge,
+.btn-negative .badge {
+  color: var(--color-interactive-negative);
+  background-color: #fff;
+}
+.btn-danger.btn-priority-2,
+.btn-negative.btn-priority-2 {
+  color: var(--color-interactive-negative);
+  background-color: transparent;
+  border-color: var(--color-interactive-negative);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #fff;
+  background-color: var(--color-interactive-negative-hover);
+  border-color: var(--color-interactive-negative-hover);
+}
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-danger.btn-priority-2,
+.open > .dropdown-toggle.btn-negative.btn-priority-2 {
+  color: #fff;
+  background-color: var(--color-interactive-negative-active);
+  border-color: var(--color-interactive-negative-active);
+}
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-danger.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-negative.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: #fff;
+  background-color: var(--color-interactive-negative-active);
+  border-color: var(--color-interactive-negative-active);
+}
+.btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-danger.btn-priority-2,
+.open > .dropdown-toggle.btn-negative.btn-priority-2 {
+  background-image: none;
+}
+.btn-danger.btn-priority-2 .badge,
+.btn-negative.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-interactive-negative);
+}
+.np-theme-personal .btn-danger,
+.np-theme-personal .btn-negative {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative);
+  border-color: var(--color-sentiment-negative);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-hover);
+  border-color: var(--color-sentiment-negative-hover);
+}
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-danger,
+.open > .dropdown-toggle.np-theme-personal .btn-negative {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-active);
+  border-color: var(--color-sentiment-negative-active);
+}
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-danger:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-negative:not(.disabled):not(:disabled):hover {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-active);
+  border-color: var(--color-sentiment-negative-active);
+}
+.np-theme-personal .btn-danger:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-negative:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-danger,
+.open > .dropdown-toggle.np-theme-personal .btn-negative {
+  background-image: none;
+}
+.np-theme-personal .btn-danger .badge,
+.np-theme-personal .btn-negative .badge {
+  color: var(--color-sentiment-negative);
+  background-color: var(--color-contrast);
+}
+.np-theme-personal .btn-danger.btn-priority-2,
+.np-theme-personal .btn-negative.btn-priority-2 {
+  color: var(--color-sentiment-negative);
+  background-color: transparent;
+  border-color: var(--color-sentiment-negative);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-hover);
+  border-color: var(--color-sentiment-negative-hover);
+}
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active,
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-danger.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-negative.btn-priority-2 {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-active);
+  border-color: var(--color-sentiment-negative-active);
+}
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):hover {
+  color: var(--color-contrast);
+  background-color: var(--color-sentiment-negative-active);
+  border-color: var(--color-sentiment-negative-active);
+}
+.np-theme-personal .btn-danger.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.np-theme-personal .btn-negative.btn-priority-2:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.np-theme-personal .btn-danger.btn-priority-2,
+.open > .dropdown-toggle.np-theme-personal .btn-negative.btn-priority-2 {
+  background-image: none;
+}
+.np-theme-personal .btn-danger.btn-priority-2 .badge,
+.np-theme-personal .btn-negative.btn-priority-2 .badge {
+  color: transparent;
+  background-color: var(--color-sentiment-negative);
+}
+.bootstrap-select .btn-default,
+.btn-input {
+  color: var(--color-content-primary);
+  background-color: var(--color-background-screen);
+  border-color: var(--color-interactive-secondary);
+  transition: color, background-color 0.15s ease-in-out;
+}
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: var(--color-content-primary);
+  background-color: var(--color-background-screen);
+  border-color: var(--color-interactive-secondary-hover);
+}
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading):active,
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.bootstrap-select .btn-default,
+.open > .dropdown-toggle.btn-input {
+  color: var(--color-content-primary);
+  background-color: var(--color-background-screen);
+  border-color: var(--color-interactive-secondary-active);
+}
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.bootstrap-select .btn-default:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-input:not(.disabled):not(:disabled):hover {
+  color: var(--color-content-primary);
+  background-color: var(--color-background-screen);
+  border-color: var(--color-interactive-secondary-active);
+}
+.bootstrap-select .btn-default:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-input:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.bootstrap-select .btn-default,
+.open > .dropdown-toggle.btn-input {
+  background-image: none;
+}
+.bootstrap-select .btn-default .badge,
+.btn-input .badge {
+  color: var(--color-background-screen);
+  background-color: var(--color-content-primary);
+}
+.btn-image {
+  background-color: #6f8691;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+.btn-image:not(.disabled):not(:disabled):hover,
+.btn-image:not(.disabled):not(:disabled):focus-visible {
+  background-color: #6f8691;
+  background-color: rgba(24, 33, 56, 0.56);
+}
+.btn-image:not(.disabled):not(:disabled):active,
+.btn-image:not(.disabled):not(:disabled):hover:active {
+  background: #384347;
+}
+.btn-input .caret {
+  margin-inline-start: var(--size-8);
+}
+.btn-inverse {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #5d7079;
+  background-color: #fff;
+  border-color: #fff;
+}
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-inverse {
+  color: #5d7079;
+  background-color: #e2e6e8;
+  border-color: #e2e6e8;
+}
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-inverse:not(.disabled):not(:disabled):hover {
+  color: #5d7079;
+  background-color: #e2e6e8;
+  border-color: #e2e6e8;
+}
+.btn-inverse:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-inverse {
+  background-image: none;
+}
+.btn-inverse .badge {
+  color: transparent;
+  background-color: #fff;
+}
+.btn-lg {
+  padding: var(--btn-lg-padding);
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-28);
+  border-radius: var(--btn-lg-radius-base);
+  min-block-size: var(--btn-lg-height);
+}
+.btn-lg .dropdown-menu > li > a {
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-28);
+}
+.np-theme-personal .btn-lg {
+  font-size: 20px;
+  line-height: 32px;
+}
+.btn-lg .btn-loader {
+  margin-block-start: 2px;
+}
+.btn-sm,
+.navbar .btn {
+  padding: var(--btn-sm-padding);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-22);
+  border-radius: var(--btn-sm-radius-base);
+  min-block-size: var(--btn-sm-height);
+}
+.btn-sm .dropdown-menu > li > a,
+.navbar .btn .dropdown-menu > li > a {
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-22);
+}
+.np-theme-personal .btn-sm,
+.np-theme-personal .navbar .btn {
+  font-size: 14px;
+  line-height: 24px;
+}
+.btn-xs {
+  padding: var(--btn-xs-padding);
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-20);
+  border-radius: var(--btn-sm-radius-base);
+  min-block-size: 22px;
+}
+.btn-xs .dropdown-menu > li > a {
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-20);
+}
+.np-theme-personal .btn-xs {
+  font-size: 12px;
+  line-height: 18px;
+}
+.np-theme-personal .btn-xs .btn-loader {
+  margin-inline-start: calc(var(--padding-x-small) / 2) !important;
+  block-size: 18px;
+  background-size: 12px 12px !important;
+}
+@media (max-width: 839px) {
+  .navbar-collapse .btn {
+    padding: var(--btn-padding);
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-24);
+    border-radius: var(--border-radius-base);
+    min-block-size: var(--btn-height);
+  }
+  .navbar-collapse .btn .dropdown-menu > li > a {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-24);
+  }
+  .np-theme-personal .navbar-collapse .btn {
+    font-size: 16px;
+    line-height: 24px;
+    max-block-size: var(--btn-height);
+  }
+}
+.btn-block {
+  display: block;
+  inline-size: 100%;
+}
+.btn-block + .btn-block {
+  margin-block-start: var(--size-8);
+}
+input[type="submit"].btn-block,
+input[type="reset"].btn-block,
+input[type="button"].btn-block {
+  inline-size: 100%;
+}
+.btn-input {
+  font-weight: var(--font-weight-regular);
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+}
+.btn-input:not(.disabled):not(:disabled):hover {
+  border-color: var(--color-interactive-secondary-hover);
+}
+.btn-input:not(.disabled):not(:disabled).active,
+.btn-input:not(.disabled):not(:disabled):active,
+.btn-input:not(.disabled):not(:disabled).focus,
+.btn-input:not(.disabled):not(:disabled):focus-visible {
+  border-color: var(--color-interactive-accent-active);
+  outline: 0 none !important;
+}
+.np-theme-personal .btn-input:not(.disabled):not(:disabled).active,
+.np-theme-personal .btn-input:not(.disabled):not(:disabled):active,
+.np-theme-personal .btn-input:not(.disabled):not(:disabled).focus,
+.np-theme-personal .btn-input:not(.disabled):not(:disabled):focus-visible {
+  border-color: var(--color-interactive-secondary-active);
+}
+.btn-input .caret {
+  color: var(--color-content-accent);
+}
+.btn-input.btn-sm {
+  padding-inline-start: 12px;
+  padding-inline-end: 12px;
+}
+.btn-input.btn-lg {
+  font-size: var(--font-size-20);
+}
+.btn-input.btn-lg.btn-addon,
+.btn-input.btn-lg.btn-input-inverse {
+  font-weight: var(--font-weight-semi-bold);
+}
+.btn-input-inverse {
+  --color-content-primary: #ffffff;
+  --color-content-accent: #00b9ff;
+}
+.btn-input-inverse,
+.btn-addon {
+  color: #ffffff;
+  background-color: #2e4369;
+  border-color: #37517e;
+  transition: color, background-color 0.15s ease-in-out;
+}
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading):hover,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading):hover {
+  color: #ffffff;
+  background-color: #2e4369;
+  border-color: #2e4369;
+}
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading):active,
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-input-inverse,
+.open > .dropdown-toggle.btn-addon {
+  color: #ffffff;
+  background-color: #2e4369;
+  border-color: #2e4369;
+}
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading):active:not(.disabled):not(:disabled):hover,
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading).active:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-input-inverse:not(.disabled):not(:disabled):hover,
+.open > .dropdown-toggle.btn-addon:not(.disabled):not(:disabled):hover {
+  color: #ffffff;
+  background-color: #2e4369;
+  border-color: #2e4369;
+}
+.btn-input-inverse:not(.disabled):not(:disabled):not(.btn-loading).active,
+.btn-addon:not(.disabled):not(:disabled):not(.btn-loading).active,
+.open > .dropdown-toggle.btn-input-inverse,
+.open > .dropdown-toggle.btn-addon {
+  background-image: none;
+}
+.btn-input-inverse .badge,
+.btn-addon .badge {
+  color: #2e4369;
+  background-color: #ffffff;
+}
+.form-group-sm .bootstrap-select .btn-default {
+  padding-block: 4px;
+  padding-inline: 12px;
+}
+.form-group-lg .bootstrap-select .btn-default {
+  padding-block: 12px;
+  padding-inline: 16px;
+}
+.bootstrap-select.open > .dropdown-toggle.btn-default {
+  border-color: var(--color-interactive-accent);
+  background-color: var(--color-background-screen);
+  color: var(--color-content-primary);
+}
+.btn-loader {
+  display: inline-block;
+  block-size: 24px;
+  inline-size: 24px;
+  margin-block-end: -8px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.btn-loading {
+  cursor: wait;
+}
+.btn-loading:not(.btn-block) {
+  display: inline-flex;
+  align-items: center;
+}
+.btn-loading:not(.btn-block) .btn-loader[class] {
+  margin-block-end: 0;
+  margin-inline-start: 16px;
+  margin-inline-end: 0;
+}
+.btn-loading.btn-block .btn-loader {
+  inset-block-start: 0;
+  inset-block-end: 0;
+  margin-block-start: auto;
+  margin-block-end: auto;
+}
+.btn-loading:hover .process-circle[class],
+.btn-loading:focus .process-circle[class],
+.btn-loading:active .process-circle[class],
+.btn-loading .process-circle[class] {
+  stroke: currentColor;
+}
+.btn-sm .btn-loader {
+  background-size: 16px 16px;
+}
+.np-theme-personal .btn-sm .btn-loader {
+  margin-inline-start: calc(var(--padding-small) / 2) !important;
+}
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.btn-input.btn {
+  text-align: start;
+}
+.btn-input.btn .tw-icon {
+  position: absolute;
+  inset-inline-end: var(--size-16);
+  inset-block-start: var(--size-16);
+}
+.btn-input.btn .tw-icon:not(.tw-chevron):not(.tw-icon-chevron-down) {
+  position: static;
+  position: initial;
+}
+.btn-input.btn.btn-sm .tw-icon {
+  inset-inline-end: var(--size-8);
+  inset-block-start: var(--size-8);
+}
+.btn-input.btn.btn-lg .tw-icon {
+  inset-block-start: 27px;
+}
+a.btn {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.btn-unstyled {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}

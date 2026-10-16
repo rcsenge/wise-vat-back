@@ -1,0 +1,51 @@
+:root {
+  --ring-outline-width: 2px;
+  --ring-outline-offset: 2px;
+  --ring-outline-color: var(--color-content-primary);
+}
+:root.np-theme-personal,
+:root .np-theme-personal {
+  --ring-outline-color: var(--color-interactive-primary);
+}
+.focus-ring:focus {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: var(--ring-outline-color) solid var(--ring-outline-width);
+  outline-offset: var(--ring-outline-offset);
+}
+details:focus,
+summary:focus,
+a:focus,
+button:focus,
+input:focus,
+option:focus,
+dialog:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+details:focus-visible,
+summary:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+option:focus-visible,
+dialog:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: var(--ring-outline-color) solid var(--ring-outline-width);
+  outline-offset: var(--ring-outline-offset);
+}
+.ring-offset-0 {
+  --ring-outline-offset: 0;
+}
+.ring-inset {
+  --ring-outline-width: 3px;
+  --ring-outline-offset: calc(-1 * var(--ring-outline-width));
+}
+.ring-negative {
+  --ring-outline-color: var(--color-sentiment-negative);
+}

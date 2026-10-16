@@ -1,0 +1,47 @@
+.media {
+  display: flex;
+  align-items: center;
+}
+.media-body {
+  flex: 1;
+}
+.media-body > *:last-child {
+  margin-block-end: 0;
+}
+.media-middle {
+  align-self: center;
+}
+.media-bottom {
+  align-self: flex-end;
+}
+/* Images/elements as the media anchor */
+.media-object {
+  display: block;
+}
+/* Alignment */
+.media-right {
+  padding-inline-start: var(--size-16);
+}
+.media-left {
+  padding-inline-end: var(--size-16);
+}
+@media (max-width: 320px) {
+  .media-right,
+  .media-left {
+    padding-inline-start: var(--size-32);
+  }
+}
+/* Headings */
+.media-heading {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+/* Media list variation */
+.media-list {
+  padding-inline-start: 0;
+  list-style: none;
+}
+/* Fix text-ellipsis issue with text in dropdown */
+.dropdown-menu .media-body {
+  overflow: hidden;
+}

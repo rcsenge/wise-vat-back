@@ -1,0 +1,41 @@
+.close {
+  float: inline-end;
+  color: var(--color-content-accent);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.np-theme-personal .close {
+  color: var(--color-interactive-primary);
+}
+.close:hover {
+  color: var(--color-content-accent-hover);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.np-theme-personal .close:hover {
+  color: var(--color-interactive-primary-hover);
+}
+.close:focus {
+  outline: none;
+}
+.close:focus-visible {
+  outline: var(--ring-outline-color) solid var(--ring-outline-width);
+  outline-offset: var(--ring-outline-offset);
+}
+.close:active {
+  color: var(--color-content-accent-active);
+}
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+.np-theme-personal button.close:hover {
+  background: transparent none repeat 0 0 / auto auto padding-box border-box scroll;
+  background: initial;
+}

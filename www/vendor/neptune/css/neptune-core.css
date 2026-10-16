@@ -1,0 +1,1999 @@
+/* See: https://github.com/fontsource/fontsource/blob/main/fonts/google/inter/variable.css */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-cyrillic-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-cyrillic-ext-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-greek-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0370-03FF;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-greek-ext-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-latin-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-latin-ext-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-vietnamese-variable-wghtOnly-normal.woff2") format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: "Wise Sans";
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/WiseSans-Heavy.woff2") format("woff2");
+}
+/* stylelint-disable selector-max-empty-lines */
+/*! modern-normalize v3.0.1 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*
+Document
+========
+*/
+/**
+Use a better box model (opinionated).
+*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+html {
+  /* Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3) */
+  font-family: system-ui,-apple-system,Segoe UI,Ubuntu,Cantarell,Noto Sans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.15;
+  /* 1. Correct the line height in all browsers. */
+  -webkit-text-size-adjust: 100%;
+  /* 2. Prevent adjustments of font size after orientation changes in iOS. */
+  -moz-tab-size: 4;
+    -o-tab-size: 4;
+       tab-size: 4;
+  /* 3. Use a more readable tab size (opinionated). */
+}
+/*
+Sections
+========
+*/
+body {
+  margin: 0;
+  /* Remove the margin in all browsers. */
+}
+/*
+Text-level semantics
+====================
+*/
+/**
+Add the correct font weight in Chrome and Safari.
+*/
+b,
+strong {
+  font-weight: bolder;
+}
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+/**
+Add the correct font size in all browsers.
+*/
+small {
+  font-size: 80%;
+}
+/**
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  inset-block-end: -0.25em;
+}
+sup {
+  inset-block-start: -0.5em;
+}
+/*
+Tabular data
+============
+*/
+/**
+Correct table border color inheritance in Chrome and Safari. (https://issues.chromium.org/issues/40615503, https://bugs.webkit.org/show_bug.cgi?id=195016)
+*/
+table {
+  border-color: currentcolor;
+}
+/*
+Forms
+=====
+*/
+/**
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+}
+/**
+Correct the inability to style clickable types in iOS and Safari.
+*/
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+legend {
+  padding: 0;
+}
+/**
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+progress {
+  vertical-align: baseline;
+}
+/**
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  block-size: auto;
+}
+/**
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+[type='search'] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+/**
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/**
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to 'inherit' in Safari.
+*/
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+/*
+Interactive
+===========
+*/
+/*
+Add the correct display in Chrome and Safari.
+*/
+summary {
+  display: list-item;
+}
+:root {
+  --base-font-size: 16px;
+  --input-group-addon-padding: 12px 16px calc(12px - 2px);
+  --btn-padding: 12px 24px calc(12px - 2px);
+  --btn-xs-padding: 2px 8px calc(2px - 2px);
+  --btn-sm-padding: 4px 16px calc(4px - 2px);
+  --btn-lg-padding: 20px 24px calc(20px - 2px);
+  --input-padding: 12px 16px calc(12px - 2px);
+  --input-padding-small: 4px 12px calc(4px - 2px);
+  --input-padding-large: 12px 16px calc(12px - 2px);
+  --input-group-addon-sm-padding: calc(4px - 1px) 12px;
+  --input-group-addon-lg-padding: 12px 16px calc(12px - 2px);
+  --dropdown-link-padding: calc(12px + 1px) 16px calc(12px - 1px);
+  --btn-radius-base: 3px;
+  --btn-sm-radius-base: 2px;
+  --btn-lg-radius-base: 3px;
+}
+.np-theme-personal {
+  font-family: var(--font-family-regular);
+  font-feature-settings: "calt";
+  --input-group-addon-padding: 12px 16px;
+  --btn-padding: calc(12px - 1px) 24px;
+  --btn-xs-padding: calc(2px - 1px) 8px;
+  --btn-sm-padding: calc(4px - 1px) 16px;
+  --btn-lg-padding: calc(20px - 1px) 24px;
+  --btn-height: 48px;
+  --btn-xs-height: 22px;
+  --btn-sm-height: 32px;
+  --btn-lg-height: 72px;
+  --input-height-base: 48px;
+  --input-height-large: 72px;
+  --input-height-small: 32px;
+  --input-padding: 12px 16px;
+  --input-padding-small: 4px 12px;
+  --input-padding-large: 12px 16px;
+  --input-group-addon-sm-padding: 4px 12px;
+  --input-group-addon-lg-padding: 12px 16px;
+  --dropdown-link-padding: 12px 16px;
+  --btn-radius-base: 9999px;
+  --btn-sm-radius-base: var(--btn-radius-base);
+  --btn-lg-radius-base: var(--btn-radius-base);
+  color: var(--color-content-secondary);
+  background-color: var(--color-background-screen);
+}
+html {
+  font-size: var(--base-font-size);
+  font-family: var(--font-family-regular);
+  color: var(--color-content-secondary);
+  background-color: var(--color-background-screen);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+blockquote,
+dl,
+dd,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+.np-theme-personal::-moz-selection {
+  background-color: var(--color-background-neutral-active);
+  color: var(--color-content-primary);
+}
+.np-theme-personal::selection {
+  background-color: var(--color-background-neutral-active);
+  color: var(--color-content-primary);
+}
+/* DEPRECATED: use `a` tag or .np-text-link-* instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.anchor,
+a,
+.np-text-link-default,
+.np-text-link-large {
+  color: var(--color-sentiment-content-primary, var(--color-content-link));
+}
+.bg-primary .anchor,
+.bg-primary a,
+.bg-primary .np-text-link-default,
+.bg-primary .np-text-link-large {
+  color: #00b9ff;
+}
+.bg-primary .anchor:hover,
+.bg-primary a:hover,
+.bg-primary .np-text-link-default:hover,
+.bg-primary .np-text-link-large:hover,
+.bg-primary .anchor:focus,
+.bg-primary a:focus,
+.bg-primary .np-text-link-default:focus,
+.bg-primary .np-text-link-large:focus {
+  color: #00a6ea;
+}
+.bg-primary .anchor:active,
+.bg-primary a:active,
+.bg-primary .np-text-link-default:active,
+.bg-primary .np-text-link-large:active {
+  color: #0097db;
+}
+.anchor:hover,
+a:hover,
+.np-text-link-default:hover,
+.np-text-link-large:hover,
+.anchor:focus,
+a:focus,
+.np-text-link-default:focus,
+.np-text-link-large:focus {
+  color: var(--color-sentiment-content-primary-hover, var(--color-content-link-hover));
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+.anchor:active,
+a:active,
+.np-text-link-default:active,
+.np-text-link-large:active {
+  color: var(--color-sentiment-content-primary-active, var(--color-content-link-active));
+}
+.anchor.secondary,
+a.secondary,
+.np-text-link-default.secondary,
+.np-text-link-large.secondary {
+  color: var(--color-content-secondary);
+}
+.anchor.secondary:hover,
+a.secondary:hover,
+.np-text-link-default.secondary:hover,
+.np-text-link-large.secondary:hover,
+.anchor.secondary:focus,
+a.secondary:focus,
+.np-text-link-default.secondary:focus,
+.np-text-link-large.secondary:focus {
+  color: var(--color-content-accent-hover);
+}
+.anchor.secondary:active,
+a.secondary:active,
+.np-text-link-default.secondary:active,
+.np-text-link-large.secondary:active {
+  color: var(--color-content-accent-active);
+}
+html.ios-click {
+  cursor: pointer;
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  cursor: pointer;
+}
+[role="button"] {
+  cursor: pointer;
+}
+textarea {
+  resize: vertical;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: var(--color-content-tertiary);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-content-tertiary);
+}
+ol,
+ul {
+  margin-block: 0 var(--size-24);
+  margin-inline: 0;
+  padding-block: 0 0;
+  padding-inline: calc(var(--size-48) - var(--size-10)) 0;
+}
+ol ol,
+ul ol,
+ol ul,
+ul ul {
+  margin-block-end: 0;
+}
+.list-unstyled {
+  padding-inline-start: 0;
+  list-style: none;
+}
+.list-inline {
+  margin-inline-start: calc(var(--size-4) * -1);
+  padding-inline-start: 0;
+  list-style: none;
+}
+.list-inline > li {
+  display: inline-block;
+  padding-inline-end: var(--size-8);
+  padding-inline-start: var(--size-4);
+  border-inline-end: 1px solid var(--color-border-neutral);
+}
+.list-inline > li:last-child {
+  border-inline-end: 0  ;
+}
+dt,
+dd {
+  line-height: var(--line-height-body);
+}
+dt {
+  font-size: var(--font-size-14);
+}
+dd {
+  margin-block-end: var(--size-16);
+  color: var(--color-content-primary);
+}
+@media (min-width: 600px) {
+  dd {
+    margin-block-end: var(--size-24);
+  }
+}
+/* Deprecated - use the Neptune Web DefinitionList component */
+.dl-horizontal dd::before,
+.dl-horizontal dd::after {
+  display: table;
+  content: " ";
+}
+.dl-horizontal dd::after {
+  clear: both;
+}
+@media (min-width: 600px) {
+  .dl-horizontal dt {
+    float: inline-start;
+    clear: inline-start;
+    inline-size: 156px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: start;
+    text-overflow: ellipsis;
+  }
+  .dl-horizontal dd {
+    margin-block-end: var(--size-8);
+    margin-inline-start: 180px;
+  }
+}
+/* Deprecated - use the Neptune Web DefinitionList component */
+.dl-horizontal-item {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.dl-horizontal-item dt {
+  flex: 1 2 auto;
+}
+.dl-horizontal-item dd {
+  flex: 1 1 auto;
+  text-align: end;
+  word-break: break-all;
+}
+hr {
+  margin-block: var(--size-16);
+  margin-inline: auto;
+  border: 0;
+  border-block-start: 1px solid var(--color-border-neutral);
+}
+.bg-primary hr {
+  border-block-start: 1px solid rgba(255,255,255,0.10196);
+}
+@media (min-width: 600px) {
+  hr {
+    margin-block: var(--size-24);
+    margin-inline: auto;
+  }
+}
+@media (min-width: 1160px) {
+  hr {
+    margin-block: var(--size-32);
+    margin-inline: auto;
+  }
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+}
+img,
+video {
+  max-inline-size: 100%;
+  block-size: auto;
+  vertical-align: middle;
+}
+.img-rounded {
+  border-radius: var(--radius-small);
+}
+.img-circle {
+  border-radius: 50%;
+}
+.disabled,
+:disabled {
+  filter: grayscale(1);
+  opacity: 0.45;
+  cursor: not-allowed !important;
+}
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+/* stylelint-disable selector-max-empty-lines */
+/* DEPRECATED: use .np-text-*-title instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.title-1,
+.title-2,
+.title-3,
+.title-4,
+.title-5,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.np-text-title-screen,
+.np-text-title-section,
+.np-text-title-subsection,
+.np-text-title-body,
+.np-text-title-group {
+  margin: 0;
+  color: var(--color-content-primary);
+  line-height: var(--line-height-title);
+  letter-spacing: 0;
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .title-1,
+  .title-2,
+  .title-3,
+  .title-4,
+  .title-5,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .np-text-title-screen,
+  .np-text-title-section,
+  .np-text-title-subsection,
+  .np-text-title-body,
+  .np-text-title-group {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    .title-1,
+    .title-2,
+    .title-3,
+    .title-4,
+    .title-5,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .np-text-title-screen,
+    .np-text-title-section,
+    .np-text-title-subsection,
+    .np-text-title-body,
+    .np-text-title-group {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    .title-1,
+    .title-2,
+    .title-3,
+    .title-4,
+    .title-5,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .np-text-title-screen,
+    .np-text-title-section,
+    .np-text-title-subsection,
+    .np-text-title-body,
+    .np-text-title-group {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .title-1,
+  .title-2,
+  .title-3,
+  .title-4,
+  .title-5,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .np-text-title-screen,
+  .np-text-title-section,
+  .np-text-title-subsection,
+  .np-text-title-body,
+  .np-text-title-group {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    .title-1,
+    .title-2,
+    .title-3,
+    .title-4,
+    .title-5,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .np-text-title-screen,
+    .np-text-title-section,
+    .np-text-title-subsection,
+    .np-text-title-body,
+    .np-text-title-group {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+.h1 + p,
+.h2 + p,
+.h3 + p,
+.h4 + p,
+.h5 + p,
+.h6 + p,
+.title-1 + p,
+.title-2 + p,
+.title-3 + p,
+.title-4 + p,
+.title-5 + p,
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p,
+h6 + p,
+.np-text-title-screen + p,
+.np-text-title-section + p,
+.np-text-title-subsection + p,
+.np-text-title-body + p,
+.np-text-title-group + p,
+.h1 + ul:not(.list-unstyled),
+.h2 + ul:not(.list-unstyled),
+.h3 + ul:not(.list-unstyled),
+.h4 + ul:not(.list-unstyled),
+.h5 + ul:not(.list-unstyled),
+.h6 + ul:not(.list-unstyled),
+.title-1 + ul:not(.list-unstyled),
+.title-2 + ul:not(.list-unstyled),
+.title-3 + ul:not(.list-unstyled),
+.title-4 + ul:not(.list-unstyled),
+.title-5 + ul:not(.list-unstyled),
+h1 + ul:not(.list-unstyled),
+h2 + ul:not(.list-unstyled),
+h3 + ul:not(.list-unstyled),
+h4 + ul:not(.list-unstyled),
+h5 + ul:not(.list-unstyled),
+h6 + ul:not(.list-unstyled),
+.np-text-title-screen + ul:not(.list-unstyled),
+.np-text-title-section + ul:not(.list-unstyled),
+.np-text-title-subsection + ul:not(.list-unstyled),
+.np-text-title-body + ul:not(.list-unstyled),
+.np-text-title-group + ul:not(.list-unstyled),
+.h1 + ol:not(.list-unstyled),
+.h2 + ol:not(.list-unstyled),
+.h3 + ol:not(.list-unstyled),
+.h4 + ol:not(.list-unstyled),
+.h5 + ol:not(.list-unstyled),
+.h6 + ol:not(.list-unstyled),
+.title-1 + ol:not(.list-unstyled),
+.title-2 + ol:not(.list-unstyled),
+.title-3 + ol:not(.list-unstyled),
+.title-4 + ol:not(.list-unstyled),
+.title-5 + ol:not(.list-unstyled),
+h1 + ol:not(.list-unstyled),
+h2 + ol:not(.list-unstyled),
+h3 + ol:not(.list-unstyled),
+h4 + ol:not(.list-unstyled),
+h5 + ol:not(.list-unstyled),
+h6 + ol:not(.list-unstyled),
+.np-text-title-screen + ol:not(.list-unstyled),
+.np-text-title-section + ol:not(.list-unstyled),
+.np-text-title-subsection + ol:not(.list-unstyled),
+.np-text-title-body + ol:not(.list-unstyled),
+.np-text-title-group + ol:not(.list-unstyled) {
+  margin-block-start: var(--size-8);
+}
+/* DEPRECATED: use .np-text-title-screen instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h1,
+.title-1,
+h1,
+.np-text-title-screen {
+  margin-block-end: initial;
+  font-size: var(--font-size-30);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: -0.021em;
+  line-height: 115%;
+}
+/* DEPRECATED: use .np-text-title-section instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h2,
+.title-2,
+h2,
+.np-text-title-section {
+  margin-block-end: initial;
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-26);
+  letter-spacing: -0.02em;
+  line-height: 122%;
+}
+/* DEPRECATED: use .np-text-title-subsection instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h3,
+.title-3,
+h3,
+.np-text-title-subsection {
+  margin-block-end: initial;
+  font-size: var(--font-size-22);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: -0.018em;
+  line-height: 125%;
+}
+/* DEPRECATED: use .np-text-title-body instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h4,
+.title-4,
+h4,
+.np-text-title-body {
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: -0.014em;
+  line-height: 135%;
+}
+/* DEPRECATED: use .np-text-title-group instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.h5,
+.h6,
+.title-5,
+h5,
+h6,
+.np-text-title-group {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-14);
+  letter-spacing: -0.006em;
+  line-height: 140%;
+}
+/* DEPRECATED: use .np-text-title-body instead */
+.lead {
+  margin-block-end: var(--size-24);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-title);
+}
+.tiny {
+  color: var(--color-content-secondary);
+}
+/* DEPRECATED: use .np-text-body-default instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.body-2,
+.body-3,
+.small,
+.tiny,
+body,
+small,
+.np-text-body-default {
+  font-size: var(--font-size-14);
+  line-height: 155%;
+  letter-spacing: -0.006em;
+  font-weight: var(--font-weight-regular);
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .body-2,
+  .body-3,
+  .small,
+  .tiny,
+  body,
+  small,
+  .np-text-body-default {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .body-2,
+    .body-3,
+    .small,
+    .tiny,
+    body,
+    small,
+    .np-text-body-default {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .body-2,
+    .body-3,
+    .small,
+    .tiny,
+    body,
+    small,
+    .np-text-body-default {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .body-2,
+  .body-3,
+  .small,
+  .tiny,
+  body,
+  small,
+  .np-text-body-default {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .body-2,
+    .body-3,
+    .small,
+    .tiny,
+    body,
+    small,
+    .np-text-body-default {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+/* DEPRECATED: use .np-text-body-default-bold instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.control-2,
+.label,
+.control-label,
+.np-text-body-default-bold {
+  font-size: var(--font-size-14);
+  line-height: 155%;
+  letter-spacing: -0.006em;
+  font-weight: var(--font-weight-semi-bold);
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .control-2,
+  .label,
+  .control-label,
+  .np-text-body-default-bold {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .control-2,
+    .label,
+    .control-label,
+    .np-text-body-default-bold {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .control-2,
+    .label,
+    .control-label,
+    .np-text-body-default-bold {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .control-2,
+  .label,
+  .control-label,
+  .np-text-body-default-bold {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .control-2,
+    .label,
+    .control-label,
+    .np-text-body-default-bold {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+/* DEPRECATED: use .np-text-body-large instead  */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.body-1,
+.value,
+.np-text-body-large {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-16);
+  line-height: 150%;
+  letter-spacing: -0.011em;
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .body-1,
+  .value,
+  .np-text-body-large {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .body-1,
+    .value,
+    .np-text-body-large {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .body-1,
+    .value,
+    .np-text-body-large {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .body-1,
+  .value,
+  .np-text-body-large {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .body-1,
+    .value,
+    .np-text-body-large {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+/* DEPRECATED: use np-text-body-large-bold instead */
+/* stylelint-disable-next-line selector-list-comma-newline-after */
+.control-1,
+.np-text-body-large-bold {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-16);
+  line-height: 150%;
+  letter-spacing: -0.011em;
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .control-1,
+  .np-text-body-large-bold {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .control-1,
+    .np-text-body-large-bold {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .control-1,
+    .np-text-body-large-bold {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .control-1,
+  .np-text-body-large-bold {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .control-1,
+    .np-text-body-large-bold {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+a,
+.np-text-link-default,
+.np-text-link-large {
+  font-weight: var(--font-weight-semi-bold);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.np-text-link-large {
+  font-size: var(--font-size-16);
+  letter-spacing: -0.011em;
+  line-height: 150%;
+}
+.np-text-link-default {
+  font-size: var(--font-size-14);
+  letter-spacing: -0.006em;
+  line-height: 155%;
+}
+.np-text-display-number {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: 40px;
+  line-height: 110%;
+}
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.np-text-display-extra-large,
+.np-text-display-large,
+.np-text-display-medium,
+.np-text-display-small,
+.display-1--forced,
+.display-2--forced,
+.display-3--forced,
+.display-4--forced,
+.display-5--forced,
+.np-text-display-extra-large--forced,
+.np-text-display-large--forced,
+.np-text-display-medium--forced,
+.np-text-display-small--forced {
+  font-family: var(--font-family-display);
+  font-synthesis: none;
+}
+:lang(ja) .display-1,
+:lang(ja) .display-2,
+:lang(ja) .display-3,
+:lang(ja) .display-4,
+:lang(ja) .display-5,
+:lang(ja) .np-text-display-extra-large,
+:lang(ja) .np-text-display-large,
+:lang(ja) .np-text-display-medium,
+:lang(ja) .np-text-display-small,
+:lang(th) .display-1,
+:lang(th) .display-2,
+:lang(th) .display-3,
+:lang(th) .display-4,
+:lang(th) .display-5,
+:lang(th) .np-text-display-extra-large,
+:lang(th) .np-text-display-large,
+:lang(th) .np-text-display-medium,
+:lang(th) .np-text-display-small,
+:lang(zh-CN) .display-1,
+:lang(zh-CN) .display-2,
+:lang(zh-CN) .display-3,
+:lang(zh-CN) .display-4,
+:lang(zh-CN) .display-5,
+:lang(zh-CN) .np-text-display-extra-large,
+:lang(zh-CN) .np-text-display-large,
+:lang(zh-CN) .np-text-display-medium,
+:lang(zh-CN) .np-text-display-small,
+:lang(zh-HK) .display-1,
+:lang(zh-HK) .display-2,
+:lang(zh-HK) .display-3,
+:lang(zh-HK) .display-4,
+:lang(zh-HK) .display-5,
+:lang(zh-HK) .np-text-display-extra-large,
+:lang(zh-HK) .np-text-display-large,
+:lang(zh-HK) .np-text-display-medium,
+:lang(zh-HK) .np-text-display-small {
+  /**
+     * Wise Sans covers extended Latin glyphs for logged-in experiences and a small subset
+     * of Japanese ones for the logged out ones (exposed by the Editorial DS). Unfortunately,
+     * font files are browser-cached and we carried over to launchpad, where it causes issues
+     * for unsupported locales, especially those that share glyphs, like Japanese and Chinese.
+     * There are exceptions for small UI parts where Wise Sans is fine or expected — e.g. the
+     * numeric input of ExpressiveMoneyInput.
+     * Add `--forced` BEM modifier to the original class name to guarantee it.
+     */
+  font-family: var(--font-family-regular);
+  line-height: var(--line-height-title);
+}
+/* DEPRECATED(.np-text-display-extra-large): use .np-text-display-large instead */
+.np-text-display-extra-large,
+.np-text-display-large,
+.np-text-display-medium,
+.np-text-display-small {
+  letter-spacing: normal;
+  word-wrap: break-word;
+}
+@supports (hyphenate-limit-chars: 1) {
+  .np-text-display-extra-large,
+  .np-text-display-large,
+  .np-text-display-medium,
+  .np-text-display-small {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .np-text-display-extra-large,
+    .np-text-display-large,
+    .np-text-display-medium,
+    .np-text-display-small {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .np-text-display-extra-large,
+    .np-text-display-large,
+    .np-text-display-medium,
+    .np-text-display-small {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .np-text-display-extra-large,
+  .np-text-display-large,
+  .np-text-display-medium,
+  .np-text-display-small {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .np-text-display-extra-large,
+    .np-text-display-large,
+    .np-text-display-medium,
+    .np-text-display-small {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+.np-text-display-extra-large,
+.np-text-display-large {
+  font-size: var(--size-64);
+  line-height: normal;
+  font-weight: var(--font-weight-bold);
+}
+.np-text-display-medium {
+  font-size: var(--size-52);
+  line-height: normal;
+  font-weight: var(--font-weight-bold);
+}
+.np-text-display-small {
+  font-size: var(--size-40);
+  line-height: normal;
+  font-weight: var(--font-weight-bold);
+}
+:lang(en) > .np-text-display-extra-large,
+:lang(en) > .np-text-display-large {
+  font-size: var(--size-64);
+  line-height: 0.85;
+  font-weight: var(--font-weight-regular);
+}
+:lang(en) > .np-text-display-medium {
+  font-size: var(--size-52);
+  line-height: 0.85;
+  font-weight: var(--font-weight-regular);
+}
+:lang(en) > .np-text-display-small {
+  font-size: var(--size-40);
+  line-height: 0.85;
+  font-weight: var(--font-weight-regular);
+}
+/* Disable hyphenation for English
+ * and Japanese, Thai, Chinese (these languages use character-level breaks and should never insert hyphens). */
+:lang(en),
+:lang(ja),
+:lang(th),
+:lang(zh-CN),
+:lang(zh-HK) {
+  hyphens: none;
+}
+:lang(af) .np-text-display-extra-large,
+:lang(sq) .np-text-display-extra-large,
+:lang(eu) .np-text-display-extra-large,
+:lang(bs) .np-text-display-extra-large,
+:lang(ca) .np-text-display-extra-large,
+:lang(kw) .np-text-display-extra-large,
+:lang(hr) .np-text-display-extra-large,
+:lang(cs) .np-text-display-extra-large,
+:lang(da) .np-text-display-extra-large,
+:lang(nl) .np-text-display-extra-large,
+:lang(eo) .np-text-display-extra-large,
+:lang(et) .np-text-display-extra-large,
+:lang(fo) .np-text-display-extra-large,
+:lang(fi) .np-text-display-extra-large,
+:lang(fr) .np-text-display-extra-large,
+:lang(gl) .np-text-display-extra-large,
+:lang(lg) .np-text-display-extra-large,
+:lang(de) .np-text-display-extra-large,
+:lang(hu) .np-text-display-extra-large,
+:lang(is) .np-text-display-extra-large,
+:lang(se) .np-text-display-extra-large,
+:lang(id) .np-text-display-extra-large,
+:lang(in) .np-text-display-extra-large,
+:lang(ga) .np-text-display-extra-large,
+:lang(it) .np-text-display-extra-large,
+:lang(kl) .np-text-display-extra-large,
+:lang(ki) .np-text-display-extra-large,
+:lang(rw) .np-text-display-extra-large,
+:lang(lv) .np-text-display-extra-large,
+:lang(lt) .np-text-display-extra-large,
+:lang(lb) .np-text-display-extra-large,
+:lang(mg) .np-text-display-extra-large,
+:lang(ms) .np-text-display-extra-large,
+:lang(mt) .np-text-display-extra-large,
+:lang(gv) .np-text-display-extra-large,
+:lang(mi) .np-text-display-extra-large,
+:lang(nd) .np-text-display-extra-large,
+:lang(nb) .np-text-display-extra-large,
+:lang(nn) .np-text-display-extra-large,
+:lang(om) .np-text-display-extra-large,
+:lang(pl) .np-text-display-extra-large,
+:lang(pt) .np-text-display-extra-large,
+:lang(ro) .np-text-display-extra-large,
+:lang(rm) .np-text-display-extra-large,
+:lang(rn) .np-text-display-extra-large,
+:lang(sg) .np-text-display-extra-large,
+:lang(gd) .np-text-display-extra-large,
+:lang(sr) .np-text-display-extra-large,
+:lang(sn) .np-text-display-extra-large,
+:lang(sk) .np-text-display-extra-large,
+:lang(sl) .np-text-display-extra-large,
+:lang(so) .np-text-display-extra-large,
+:lang(es) .np-text-display-extra-large,
+:lang(sw) .np-text-display-extra-large,
+:lang(sv) .np-text-display-extra-large,
+:lang(tr) .np-text-display-extra-large,
+:lang(cy) .np-text-display-extra-large,
+:lang(fy) .np-text-display-extra-large,
+:lang(wo) .np-text-display-extra-large,
+:lang(zu) .np-text-display-extra-large,
+:lang(hsb) .np-text-display-extra-large,
+:lang(gsw) .np-text-display-extra-large,
+:lang(dsb) .np-text-display-extra-large,
+:lang(fil) .np-text-display-extra-large,
+:lang(af) .np-text-display-large,
+:lang(sq) .np-text-display-large,
+:lang(eu) .np-text-display-large,
+:lang(bs) .np-text-display-large,
+:lang(ca) .np-text-display-large,
+:lang(kw) .np-text-display-large,
+:lang(hr) .np-text-display-large,
+:lang(cs) .np-text-display-large,
+:lang(da) .np-text-display-large,
+:lang(nl) .np-text-display-large,
+:lang(eo) .np-text-display-large,
+:lang(et) .np-text-display-large,
+:lang(fo) .np-text-display-large,
+:lang(fi) .np-text-display-large,
+:lang(fr) .np-text-display-large,
+:lang(gl) .np-text-display-large,
+:lang(lg) .np-text-display-large,
+:lang(de) .np-text-display-large,
+:lang(hu) .np-text-display-large,
+:lang(is) .np-text-display-large,
+:lang(se) .np-text-display-large,
+:lang(id) .np-text-display-large,
+:lang(in) .np-text-display-large,
+:lang(ga) .np-text-display-large,
+:lang(it) .np-text-display-large,
+:lang(kl) .np-text-display-large,
+:lang(ki) .np-text-display-large,
+:lang(rw) .np-text-display-large,
+:lang(lv) .np-text-display-large,
+:lang(lt) .np-text-display-large,
+:lang(lb) .np-text-display-large,
+:lang(mg) .np-text-display-large,
+:lang(ms) .np-text-display-large,
+:lang(mt) .np-text-display-large,
+:lang(gv) .np-text-display-large,
+:lang(mi) .np-text-display-large,
+:lang(nd) .np-text-display-large,
+:lang(nb) .np-text-display-large,
+:lang(nn) .np-text-display-large,
+:lang(om) .np-text-display-large,
+:lang(pl) .np-text-display-large,
+:lang(pt) .np-text-display-large,
+:lang(ro) .np-text-display-large,
+:lang(rm) .np-text-display-large,
+:lang(rn) .np-text-display-large,
+:lang(sg) .np-text-display-large,
+:lang(gd) .np-text-display-large,
+:lang(sr) .np-text-display-large,
+:lang(sn) .np-text-display-large,
+:lang(sk) .np-text-display-large,
+:lang(sl) .np-text-display-large,
+:lang(so) .np-text-display-large,
+:lang(es) .np-text-display-large,
+:lang(sw) .np-text-display-large,
+:lang(sv) .np-text-display-large,
+:lang(tr) .np-text-display-large,
+:lang(cy) .np-text-display-large,
+:lang(fy) .np-text-display-large,
+:lang(wo) .np-text-display-large,
+:lang(zu) .np-text-display-large,
+:lang(hsb) .np-text-display-large,
+:lang(gsw) .np-text-display-large,
+:lang(dsb) .np-text-display-large,
+:lang(fil) .np-text-display-large {
+  font-size: var(--size-64);
+  line-height: 1.05;
+  font-weight: var(--font-weight-regular);
+}
+:lang(af) .np-text-display-medium,
+:lang(sq) .np-text-display-medium,
+:lang(eu) .np-text-display-medium,
+:lang(bs) .np-text-display-medium,
+:lang(ca) .np-text-display-medium,
+:lang(kw) .np-text-display-medium,
+:lang(hr) .np-text-display-medium,
+:lang(cs) .np-text-display-medium,
+:lang(da) .np-text-display-medium,
+:lang(nl) .np-text-display-medium,
+:lang(eo) .np-text-display-medium,
+:lang(et) .np-text-display-medium,
+:lang(fo) .np-text-display-medium,
+:lang(fi) .np-text-display-medium,
+:lang(fr) .np-text-display-medium,
+:lang(gl) .np-text-display-medium,
+:lang(lg) .np-text-display-medium,
+:lang(de) .np-text-display-medium,
+:lang(hu) .np-text-display-medium,
+:lang(is) .np-text-display-medium,
+:lang(se) .np-text-display-medium,
+:lang(id) .np-text-display-medium,
+:lang(in) .np-text-display-medium,
+:lang(ga) .np-text-display-medium,
+:lang(it) .np-text-display-medium,
+:lang(kl) .np-text-display-medium,
+:lang(ki) .np-text-display-medium,
+:lang(rw) .np-text-display-medium,
+:lang(lv) .np-text-display-medium,
+:lang(lt) .np-text-display-medium,
+:lang(lb) .np-text-display-medium,
+:lang(mg) .np-text-display-medium,
+:lang(ms) .np-text-display-medium,
+:lang(mt) .np-text-display-medium,
+:lang(gv) .np-text-display-medium,
+:lang(mi) .np-text-display-medium,
+:lang(nd) .np-text-display-medium,
+:lang(nb) .np-text-display-medium,
+:lang(nn) .np-text-display-medium,
+:lang(om) .np-text-display-medium,
+:lang(pl) .np-text-display-medium,
+:lang(pt) .np-text-display-medium,
+:lang(ro) .np-text-display-medium,
+:lang(rm) .np-text-display-medium,
+:lang(rn) .np-text-display-medium,
+:lang(sg) .np-text-display-medium,
+:lang(gd) .np-text-display-medium,
+:lang(sr) .np-text-display-medium,
+:lang(sn) .np-text-display-medium,
+:lang(sk) .np-text-display-medium,
+:lang(sl) .np-text-display-medium,
+:lang(so) .np-text-display-medium,
+:lang(es) .np-text-display-medium,
+:lang(sw) .np-text-display-medium,
+:lang(sv) .np-text-display-medium,
+:lang(tr) .np-text-display-medium,
+:lang(cy) .np-text-display-medium,
+:lang(fy) .np-text-display-medium,
+:lang(wo) .np-text-display-medium,
+:lang(zu) .np-text-display-medium,
+:lang(hsb) .np-text-display-medium,
+:lang(gsw) .np-text-display-medium,
+:lang(dsb) .np-text-display-medium,
+:lang(fil) .np-text-display-medium {
+  font-size: var(--size-52);
+  line-height: 1.05;
+  font-weight: var(--font-weight-regular);
+}
+:lang(af) .np-text-display-small,
+:lang(sq) .np-text-display-small,
+:lang(eu) .np-text-display-small,
+:lang(bs) .np-text-display-small,
+:lang(ca) .np-text-display-small,
+:lang(kw) .np-text-display-small,
+:lang(hr) .np-text-display-small,
+:lang(cs) .np-text-display-small,
+:lang(da) .np-text-display-small,
+:lang(nl) .np-text-display-small,
+:lang(eo) .np-text-display-small,
+:lang(et) .np-text-display-small,
+:lang(fo) .np-text-display-small,
+:lang(fi) .np-text-display-small,
+:lang(fr) .np-text-display-small,
+:lang(gl) .np-text-display-small,
+:lang(lg) .np-text-display-small,
+:lang(de) .np-text-display-small,
+:lang(hu) .np-text-display-small,
+:lang(is) .np-text-display-small,
+:lang(se) .np-text-display-small,
+:lang(id) .np-text-display-small,
+:lang(in) .np-text-display-small,
+:lang(ga) .np-text-display-small,
+:lang(it) .np-text-display-small,
+:lang(kl) .np-text-display-small,
+:lang(ki) .np-text-display-small,
+:lang(rw) .np-text-display-small,
+:lang(lv) .np-text-display-small,
+:lang(lt) .np-text-display-small,
+:lang(lb) .np-text-display-small,
+:lang(mg) .np-text-display-small,
+:lang(ms) .np-text-display-small,
+:lang(mt) .np-text-display-small,
+:lang(gv) .np-text-display-small,
+:lang(mi) .np-text-display-small,
+:lang(nd) .np-text-display-small,
+:lang(nb) .np-text-display-small,
+:lang(nn) .np-text-display-small,
+:lang(om) .np-text-display-small,
+:lang(pl) .np-text-display-small,
+:lang(pt) .np-text-display-small,
+:lang(ro) .np-text-display-small,
+:lang(rm) .np-text-display-small,
+:lang(rn) .np-text-display-small,
+:lang(sg) .np-text-display-small,
+:lang(gd) .np-text-display-small,
+:lang(sr) .np-text-display-small,
+:lang(sn) .np-text-display-small,
+:lang(sk) .np-text-display-small,
+:lang(sl) .np-text-display-small,
+:lang(so) .np-text-display-small,
+:lang(es) .np-text-display-small,
+:lang(sw) .np-text-display-small,
+:lang(sv) .np-text-display-small,
+:lang(tr) .np-text-display-small,
+:lang(cy) .np-text-display-small,
+:lang(fy) .np-text-display-small,
+:lang(wo) .np-text-display-small,
+:lang(zu) .np-text-display-small,
+:lang(hsb) .np-text-display-small,
+:lang(gsw) .np-text-display-small,
+:lang(dsb) .np-text-display-small,
+:lang(fil) .np-text-display-small {
+  font-size: var(--size-40);
+  line-height: 1.05;
+  font-weight: var(--font-weight-regular);
+}
+:lang(el) .np-text-display-extra-large,
+:lang(az) .np-text-display-extra-large,
+:lang(be) .np-text-display-extra-large,
+:lang(bs) .np-text-display-extra-large,
+:lang(bg) .np-text-display-extra-large,
+:lang(ce) .np-text-display-extra-large,
+:lang(mk) .np-text-display-extra-large,
+:lang(os) .np-text-display-extra-large,
+:lang(ru) .np-text-display-extra-large,
+:lang(sr) .np-text-display-extra-large,
+:lang(uk) .np-text-display-extra-large,
+:lang(uz) .np-text-display-extra-large,
+:lang(sah) .np-text-display-extra-large,
+:lang(el) .np-text-display-large,
+:lang(az) .np-text-display-large,
+:lang(be) .np-text-display-large,
+:lang(bs) .np-text-display-large,
+:lang(bg) .np-text-display-large,
+:lang(ce) .np-text-display-large,
+:lang(mk) .np-text-display-large,
+:lang(os) .np-text-display-large,
+:lang(ru) .np-text-display-large,
+:lang(sr) .np-text-display-large,
+:lang(uk) .np-text-display-large,
+:lang(uz) .np-text-display-large,
+:lang(sah) .np-text-display-large {
+  font-size: var(--size-60);
+  line-height: 120%;
+  font-weight: var(--font-weight-semi-bold);
+}
+:lang(el) .np-text-display-medium,
+:lang(az) .np-text-display-medium,
+:lang(be) .np-text-display-medium,
+:lang(bs) .np-text-display-medium,
+:lang(bg) .np-text-display-medium,
+:lang(ce) .np-text-display-medium,
+:lang(mk) .np-text-display-medium,
+:lang(os) .np-text-display-medium,
+:lang(ru) .np-text-display-medium,
+:lang(sr) .np-text-display-medium,
+:lang(uk) .np-text-display-medium,
+:lang(uz) .np-text-display-medium,
+:lang(sah) .np-text-display-medium {
+  font-size: var(--size-48);
+  line-height: 120%;
+  font-weight: var(--font-weight-semi-bold);
+}
+:lang(el) .np-text-display-small,
+:lang(az) .np-text-display-small,
+:lang(be) .np-text-display-small,
+:lang(bs) .np-text-display-small,
+:lang(bg) .np-text-display-small,
+:lang(ce) .np-text-display-small,
+:lang(mk) .np-text-display-small,
+:lang(os) .np-text-display-small,
+:lang(ru) .np-text-display-small,
+:lang(sr) .np-text-display-small,
+:lang(uk) .np-text-display-small,
+:lang(uz) .np-text-display-small,
+:lang(sah) .np-text-display-small {
+  font-size: var(--size-40);
+  line-height: 120%;
+  font-weight: var(--font-weight-semi-bold);
+}
+/* DEPRECATED: use `.np-text-display-*` instead */
+.display-1 {
+  margin-block-end: var(--size-24);
+  /* stylelint-disable-next-line number-max-precision */
+  font-size: 3.73333333rem;
+}
+@media (min-width: 840px) {
+  .display-1 {
+    margin-block-end: var(--size-8);
+    font-size: 6.5rem;
+  }
+}
+/* DEPRECATED: use `.np-text-display-*` instead */
+.display-2 {
+  margin-block-end: var(--size-24);
+  /* stylelint-disable-next-line number-max-precision */
+  font-size: 3.73333333rem;
+}
+@media (min-width: 840px) {
+  .display-2 {
+    margin-block-end: var(--size-16);
+    font-size: 5.5rem;
+  }
+}
+/* DEPRECATED: use `.np-text-display-*` instead */
+.display-3 {
+  margin-block-end: var(--size-8);
+  font-size: 2.8rem;
+}
+@media (min-width: 840px) {
+  .display-3 {
+    margin-block-end: var(--size-24);
+    font-size: 4.5rem;
+  }
+}
+/* DEPRECATED: use `.np-text-display-*` instead */
+.display-4 {
+  margin-block-end: var(--size-4);
+  /* stylelint-disable-next-line number-max-precision */
+  font-size: 1.86666667rem;
+}
+@media (min-width: 840px) {
+  .display-4 {
+    margin-block-end: var(--size-24);
+    font-size: 3.5rem;
+  }
+}
+/* DEPRECATED: use `.np-text-display-*` instead */
+.display-5 {
+  margin-block-end: var(--size-4);
+  /* stylelint-disable-next-line number-max-precision */
+  font-size: 1.86666667rem;
+}
+@media (min-width: 840px) {
+  .display-5 {
+    margin-block-end: var(--size-8);
+    font-size: 2.625rem;
+  }
+}
+p {
+  margin-block: 0 var(--size-16);
+  margin-inline: 0;
+}
+p + h1,
+p + h2,
+p + h3,
+p + h4,
+p + h5,
+p + h6,
+p + .h1,
+p + .h2,
+p + .h3,
+p + .h4,
+p + .h5,
+p + .h6,
+p + .title-1,
+p + .title-2,
+p + .title-3,
+p + .title-4,
+p + .title-5,
+p + .np-text-title-screen,
+p + .np-text-title-section,
+p + .np-text-title-subsection,
+p + .np-text-title-body,
+p + .np-text-title-group {
+  margin-block-start: 0;
+  margin-block-end: var(--size-8);
+}
+.control-1,
+.control-2 {
+  color: var(--color-content-accent);
+}
+strong,
+b {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-content-primary);
+}
+mark,
+.mark {
+  padding: var(--size-4);
+  background-color: var(--color-background-warning);
+}
+address {
+  margin-block-end: var(--size-24);
+  font-style: normal;
+}
+blockquote {
+  margin-block: var(--size-16);
+  margin-inline: 0;
+  padding-block: 0 0;
+  padding-inline: calc(var(--size-16) - 2px) var(--size-16);
+  font-size: var(--font-size-16);
+  border-inline-start: 2px solid var(--color-content-accent);
+}
+blockquote p {
+  margin-block-end: var(--size-8);
+}
+blockquote p:last-child,
+blockquote ol:last-child,
+blockquote ul:last-child {
+  margin-block-end: 0;
+}
+blockquote footer {
+  display: block;
+  color: var(--color-content-secondary);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-body);
+}
+blockquote footer::before {
+  content: "\2014 \00A0";
+}
+@media (min-width: 600px) {
+  blockquote {
+    margin: var(--size-24);
+  }
+}
+@media (min-width: 1160px) {
+  blockquote {
+    margin: var(--size-32);
+    font-size: var(--font-size-16);
+  }
+}
+.blockquote-reverse {
+  padding-inline-end: 22px;
+  padding-inline-start: 0;
+  text-align: end;
+  border-inline-end: 2px solid var(--color-content-accent);
+  border-inline-start: 0  ;
+}
+.blockquote-reverse footer::before {
+  content: "";
+}
+.blockquote-reverse footer::after {
+  content: "\00A0 \2014";
+}
+pre,
+code,
+kbd {
+  border-radius: var(--radius-small);
+}
+pre {
+  margin-block: 0 var(--size-24);
+  margin-inline: 0;
+  padding: var(--size-16);
+  overflow: auto;
+  color: var(--color-content-secondary);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-body);
+  word-wrap: break-word;
+  word-break: break-all;
+  background-color: var(--color-background-neutral);
+}
+pre code {
+  padding: 0;
+  font-size: inherit;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border-radius: 0;
+}
+code {
+  padding-block: 2px;
+  padding-inline: var(--size-4);
+  font-size: 90%;
+  color: var(--color-content-secondary);
+  background-color: var(--color-background-neutral);
+}
+kbd {
+  padding-block: 2px;
+  padding-inline: var(--size-4);
+  font-size: 90%;
+  color: #fff;
+  background-color: #333;
+}
+kbd kbd {
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  font-size: 100%;
+}
+.text-xs-left {
+  text-align: start;
+}
+.text-xs-right {
+  text-align: end;
+}
+.text-xs-center {
+  text-align: center;
+}
+.text-xs-justify {
+  text-align: justify;
+}
+.text-xs-nowrap {
+  white-space: nowrap;
+}
+@media (min-width: 600px) {
+  .text-sm-left {
+    text-align: start;
+  }
+  .text-sm-right {
+    text-align: end;
+  }
+  .text-sm-center {
+    text-align: center;
+  }
+  .text-sm-justify {
+    text-align: justify;
+  }
+  .text-sm-nowrap {
+    white-space: nowrap;
+  }
+}
+@media (min-width: 840px) {
+  .text-md-left {
+    text-align: start;
+  }
+  .text-md-right {
+    text-align: end;
+  }
+  .text-md-center {
+    text-align: center;
+  }
+  .text-md-justify {
+    text-align: justify;
+  }
+  .text-md-nowrap {
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1160px) {
+  .text-lg-left,
+  .text-xl-left {
+    text-align: start;
+  }
+  .text-lg-right,
+  .text-xl-right {
+    text-align: end;
+  }
+  .text-lg-center,
+  .text-xl-center {
+    text-align: center;
+  }
+  .text-lg-justify,
+  .text-xl-justify {
+    text-align: justify;
+  }
+  .text-lg-nowrap,
+  .text-xl-nowrap {
+    white-space: nowrap;
+  }
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+.text-underline {
+  text-decoration: underline;
+  text-decoration: underline !important;
+  text-underline-offset: 0.3em;
+}
+.text-no-decoration {
+  -webkit-text-decoration: none !important;
+  text-decoration: none !important;
+}
+.text-ellipsis,
+.text-ellipses {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.text-max-width {
+  max-inline-size: 600px;
+}
+.text-word-break {
+  word-break: break-all;
+}
+.text-overflow-wrap {
+  word-wrap: anywhere;
+}
+.font-weight-bold {
+  font-weight: var(--font-weight-bold) !important;
+}
+.font-weight-semi-bold {
+  font-weight: var(--font-weight-semi-bold) !important;
+}
+.font-weight-normal {
+  font-weight: var(--font-weight-regular) !important;
+}
+.font-italic {
+  font-style: italic !important;
+}
+.text-primary {
+  color: var(--color-content-primary) !important;
+}
+a.text-primary:hover,
+a.text-primary:focus {
+  color: var(--color-content-primary) !important;
+}
+.bg-primary .text-primary {
+  color: #ffffff !important;
+}
+.text-secondary {
+  color: var(--color-content-secondary) !important;
+}
+.text-positive,
+.text-success {
+  color: var(--color-content-positive) !important;
+}
+a.text-positive:hover,
+a.text-success:hover,
+a.text-positive:focus,
+a.text-success:focus {
+  color: var(--color-content-positive-hover) !important;
+}
+.bg-primary .text-positive,
+.bg-primary .text-success {
+  color: #6fd698 !important;
+}
+.text-accent,
+.text-info {
+  color: var(--color-content-accent) !important;
+  color: var(--color-interactive-primary) !important;
+}
+a.text-accent:hover,
+a.text-info:hover,
+a.text-accent:focus,
+a.text-info:focus {
+  color: var(--color-content-accent-hover) !important;
+}
+.bg-primary .text-accent,
+.bg-primary .text-info {
+  color: #00b9ff !important;
+}
+.text-warning {
+  color: var(--color-content-warning) !important;
+}
+a.text-warning:hover,
+a.text-warning:focus {
+  color: var(--color-content-warning-hover) !important;
+}
+.bg-primary .text-warning {
+  color: #ffd184 !important;
+}
+.text-negative,
+.text-danger {
+  color: var(--color-sentiment-negative) !important;
+}
+a.text-negative:hover,
+a.text-danger:hover,
+a.text-negative:focus,
+a.text-danger:focus {
+  color: var(--color-sentiment-negative-hover) !important;
+}
+.bg-primary .text-negative,
+.bg-primary .text-danger {
+  color: #ffa6a9 !important;
+}
+.text-inverse {
+  color: #ffffff !important;
+}
+a.text-inverse:hover,
+a.text-inverse:focus {
+  color: #c9cbce !important;
+}
+.text-muted {
+  color: var(--color-content-tertiary) !important;
+}
+.colored-dot::after {
+  content: none;
+}

@@ -1,0 +1,44 @@
+.progress {
+  --progress-bar-height: 4px;
+  --progress-bar-border-width: 4px;
+  --progress-bar-start-shift: calc(var(--progress-bar-border-width) * 2);
+  block-size: var(--progress-bar-height);
+  overflow: hidden;
+  margin-block-start: calc((var(--size-24) - var(--progress-bar-height)) / 2);
+  margin-block-end: calc((var(--size-24) - var(--progress-bar-height)) / 2);
+  background-color: var(--color-interactive-secondary);
+  border-radius: calc(var(--progress-bar-border-width) + var(--progress-bar-height));
+}
+.progress-bar {
+  float: inline-start;
+  position: relative;
+  inset-block-start: calc(-1 * var(--progress-bar-border-width));
+  inset-inline-start: calc(-1 * var(--progress-bar-start-shift));
+  block-size: calc(var(--progress-bar-height) + var(--progress-bar-border-width) * 2);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  text-align: end;
+  background-color: var(--color-content-accent);
+  border: var(--progress-bar-border-width) solid var(--color-background-screen);
+  border-radius: inherit;
+}
+[dir="rtl"] .progress-bar {
+  inset-inline-end: calc(-1 * var(--progress-bar-start-shift));
+  inset-inline-start: 0;
+}
+.progress-bar-primary {
+  background-color: var(--color-content-primary);
+}
+.progress-bar-success {
+  background-color: var(--color-content-positive);
+}
+.progress-bar-info {
+  background-color: var(--color-content-accent);
+}
+.progress-bar-warning {
+  background-color: var(--color-content-warning);
+}
+.progress-bar-danger {
+  background-color: var(--color-content-negative);
+}

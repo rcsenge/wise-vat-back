@@ -1,0 +1,143 @@
+.tooltip {
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  font-family: var(--font-family-regular);
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-break: auto;
+  line-height: var(--size-24);
+  text-align: start;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  white-space: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  opacity: 0;
+}
+.tooltip.in {
+  opacity: 1;
+}
+.tooltip.top {
+  margin-block-start: -3px;
+  padding-block: 5px;
+  padding-inline: 0;
+}
+.tooltip.right {
+  margin-inline-start: 3px;
+  padding-block: 0;
+  padding-inline: 5px;
+}
+.tooltip.bottom {
+  margin-block-start: 3px;
+  padding-block: 5px;
+  padding-inline: 0;
+}
+.tooltip.left {
+  margin-inline-start: -3px;
+  padding-block: 0;
+  padding-inline: 5px;
+}
+.tooltip-inner {
+  font-size: var(--font-size-14);
+  line-height: 155%;
+  letter-spacing: -0.006em;
+  font-weight: var(--font-weight-regular);
+  word-wrap: break-word;
+  max-inline-size: 200px;
+  min-inline-size: 120px;
+  padding-block: var(--size-16);
+  padding-inline: var(--size-16);
+  color: var(--color-content-primary);
+  text-align: center;
+  background-color: var(--color-background-screen);
+  border-radius: 3px;
+  box-shadow: 0 1px 28px 0 rgba(34, 48, 73, 0.2);
+}
+@supports (hyphenate-limit-chars: 1) {
+  .tooltip-inner {
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3;
+  }
+  @media (min-width: 840px) {
+    .tooltip-inner {
+      hyphenate-limit-chars: 8 3;
+    }
+  }
+  @media (min-width: 1160px) {
+    .tooltip-inner {
+      hyphenate-limit-chars: 10 4 3;
+    }
+  }
+}
+@supports (not (hyphenate-limit-chars: 1)) and (-webkit-hyphenate-limit-before: 1) {
+  .tooltip-inner {
+    hyphens: auto;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+  @media (min-width: 1160px) {
+    .tooltip-inner {
+      -webkit-hyphenate-limit-before: 4;
+    }
+  }
+}
+.np-theme-personal--forest-green .tooltip-inner,
+.np-theme-personal--bright-green .tooltip-inner,
+.np-theme-personal--dark .tooltip-inner {
+  box-shadow: none;
+}
+.tooltip-arrow {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.tooltip.top .tooltip-arrow {
+  inset-block-end: 0;
+  inset-inline-start: 50%;
+  margin-inline-start: -5px;
+  border-block-width: 5px 0;
+  border-inline-width: 5px;
+  border-block-start-color: var(--color-background-screen);
+}
+.tooltip.right .tooltip-arrow {
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  margin-block-start: -5px;
+  border-block-width: 5px 5px;
+  border-inline-width: 0 5px;
+  border-inline-end-color: var(--color-background-screen);
+}
+.tooltip.left .tooltip-arrow {
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  margin-block-start: -5px;
+  border-block-width: 5px 5px;
+  border-inline-width: 5px 0;
+  border-inline-start-color: var(--color-background-screen);
+}
+.tooltip.bottom .tooltip-arrow {
+  inset-block-start: 0;
+  inset-inline-start: 50%;
+  margin-inline-start: -5px;
+  border-block-width: 0 5px;
+  border-inline-width: 5px;
+  border-block-end-color: var(--color-background-screen);
+}
+[data-toggle="tooltip"]:not(.btn) {
+  cursor: pointer;
+}
+[data-toggle="tooltip"]:not(.btn):hover,
+[data-toggle="tooltip"]:not(.btn):focus {
+  color: var(--color-content-accent-hover) !important;
+  outline: 0;
+}
+a[data-toggle="tooltip"] {
+  white-space: nowrap;
+}

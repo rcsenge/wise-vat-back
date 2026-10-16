@@ -1,0 +1,467 @@
+/*
+// Keep these sizes in case we want to add these back in.
+@process-lg-radius: 48px;
+@process-lg-stroke: 2.7px;
+@process-lg-circumference: (pi() * (2 * (@process-lg-radius - 1)));
+@process-lg-icon-size: 48px;
+@process-lg-icon-stroke: 6px;
+
+@process-md-radius: 36px;
+@process-md-circumference: (pi() * (2 * (@process-md-radius - 1)));
+@process-md-stroke: 2.5px;
+@process-md-icon-size: 36px;
+@process-md-icon-stroke: 4px;
+*/
+.process {
+  position: relative;
+  margin: auto;
+  display: block;
+}
+.process svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+.process-circle {
+  transform-origin: center center;
+  transition: stroke 1s 0.2s linear;
+  stroke: var(--color-content-accent);
+  stroke-opacity: 1;
+  stroke-linecap: round;
+  -webkit-transform: translate3d(0, 0, 0);
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+.np-theme-personal .process-circle {
+  stroke: var(--color-content-primary);
+}
+.np-theme-personal--forest-green .process-circle,
+.np-theme-personal--bright-green .process-circle,
+.np-theme-personal--dark .process-circle {
+  stroke: var(--color-interactive-primary);
+}
+.process-inverse .process-circle {
+  stroke: var(--color-background-screen);
+}
+.process-icon-container {
+  position: absolute;
+  display: inline-block;
+  transform: rotate(45deg);
+  block-size: 50%;
+  inline-size: 50%;
+  inset-inline-start: 25%;
+  inset-block-start: 25%;
+}
+[dir="rtl"] .process-icon-container {
+  transform: rotate(45deg) scaleX(-1);
+}
+.process-icon-horizontal,
+.process-icon-vertical {
+  position: absolute;
+  display: block;
+  inline-size: 0;
+  block-size: 0;
+}
+.process-success .process-icon-horizontal {
+  background-color: var(--color-content-positive);
+  inset-block-end: 0;
+  inset-inline-start: 0;
+}
+.np-theme-personal .process-success .process-icon-horizontal {
+  background-color: var(--color-sentiment-positive);
+}
+.process-success .process-icon-vertical {
+  background-color: var(--color-content-positive);
+  inset-block-start: 100%;
+  inset-inline-end: 0;
+}
+.np-theme-personal .process-success .process-icon-vertical {
+  background-color: var(--color-sentiment-positive);
+}
+.process-success .process-circle {
+  stroke: var(--color-content-positive);
+}
+.np-theme-personal .process-success .process-circle {
+  stroke: var(--color-sentiment-positive);
+}
+.process-danger .process-icon-horizontal {
+  background-color: var(--color-content-negative);
+  inset-inline-start: 0;
+}
+.np-theme-personal .process-danger .process-icon-horizontal {
+  background-color: var(--color-sentiment-negative);
+}
+.process-danger .process-icon-vertical {
+  background-color: var(--color-content-negative);
+  inset-block-start: 0;
+}
+.np-theme-personal .process-danger .process-icon-vertical {
+  background-color: var(--color-sentiment-negative);
+}
+.process-danger .process-circle {
+  stroke: var(--color-content-negative);
+}
+.np-theme-personal .process-danger .process-circle {
+  stroke: var(--color-sentiment-negative);
+}
+.process-success .process-circle,
+.process-danger .process-circle {
+  animation-duration: 1.5s;
+  animation-delay: 1ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+.process-success .process-icon-horizontal,
+.process-danger .process-icon-horizontal {
+  /* Animation over transition, to run once on load */
+  animation: process-width 0.3s 1.2s ease forwards;
+}
+.process-success .process-icon-vertical,
+.process-danger .process-icon-vertical {
+  /* Animation over transition, to run once on load */
+  animation: process-height 0.3s 1.5s ease forwards;
+}
+.process-stopped .process-circle {
+  animation: none;
+}
+.process-stopped .process-icon-container {
+  display: none;
+}
+.process-xxs {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.process-xxs .process-circle {
+  /* Hide before animation to prevent glitching */
+  stroke-dashoffset: 31.41592654px;
+  stroke-dasharray: 31.41592654px;
+  stroke-width: 1.5px;
+}
+.process-xxs.process-danger .process-icon-horizontal {
+  inset-block-start: 2.5px;
+  block-size: 1px;
+}
+.process-xxs.process-danger .process-icon-vertical {
+  inset-inline-start: 2.5px;
+  inline-size: 1px;
+}
+.process-xxs .process-icon-horizontal,
+.process-xxs .process-icon-vertical {
+  border-radius: 0.5px;
+}
+.process-xxs.process-success .process-icon-container {
+  inline-size: 2.5px;
+  block-size: 5px;
+  inset-inline-start: 4.5px;
+}
+.process-xxs.process-success .process-icon-horizontal {
+  block-size: 1px;
+}
+.process-xxs.process-success .process-icon-vertical {
+  inline-size: 1px;
+}
+.process-xs {
+  inline-size: 24px;
+  block-size: 24px;
+}
+.process-xs .process-circle {
+  /* Hide before animation to prevent glitching */
+  stroke-dashoffset: 69.11503838px;
+  stroke-dasharray: 69.11503838px;
+  stroke-width: 2px;
+}
+.process-xs.process-danger .process-icon-horizontal {
+  inset-block-start: 5px;
+  block-size: 2px;
+}
+.process-xs.process-danger .process-icon-vertical {
+  inset-inline-start: 5px;
+  inline-size: 2px;
+}
+.process-xs .process-icon-horizontal,
+.process-xs .process-icon-vertical {
+  border-radius: 1px;
+}
+.process-xs.process-success .process-icon-container {
+  inline-size: 5px;
+  block-size: 10px;
+  inset-inline-start: 9px;
+}
+.process-xs.process-success .process-icon-horizontal {
+  block-size: 2px;
+}
+.process-xs.process-success .process-icon-vertical {
+  inline-size: 2px;
+}
+.process-sm {
+  inline-size: 48px;
+  block-size: 48px;
+}
+.process-sm .process-circle {
+  /* Hide before animation to prevent glitching */
+  stroke-dashoffset: 144.51326207px;
+  stroke-dasharray: 144.51326207px;
+  stroke-width: 2.4px;
+}
+.process-sm.process-danger .process-icon-horizontal {
+  inset-block-start: 10.5px;
+  block-size: 3px;
+}
+.process-sm.process-danger .process-icon-vertical {
+  inset-inline-start: 10.5px;
+  inline-size: 3px;
+}
+.process-sm .process-icon-horizontal,
+.process-sm .process-icon-vertical {
+  border-radius: 1.5px;
+}
+.process-sm.process-success .process-icon-container {
+  inline-size: 10.5px;
+  block-size: 21px;
+  inset-inline-start: 18px;
+}
+.process-sm.process-success .process-icon-horizontal {
+  block-size: 3px;
+}
+.process-sm.process-success .process-icon-vertical {
+  inline-size: 3px;
+}
+.process-xl {
+  inline-size: 128px;
+  block-size: 128px;
+}
+.process-xl .process-circle {
+  /* Hide before animation to prevent glitching */
+  stroke-dashoffset: 395.84067435px;
+  stroke-dasharray: 395.84067435px;
+  stroke-width: 3px;
+}
+.process-xl.process-danger .process-icon-horizontal {
+  inset-block-start: 28px;
+  block-size: 8px;
+}
+.process-xl.process-danger .process-icon-vertical {
+  inset-inline-start: 28px;
+  inline-size: 8px;
+}
+.process-xl .process-icon-horizontal,
+.process-xl .process-icon-vertical {
+  border-radius: 4px;
+}
+.process-xl.process-success .process-icon-container {
+  inline-size: 28px;
+  block-size: 56px;
+  inset-inline-start: 48px;
+}
+.process-xl.process-success .process-icon-horizontal {
+  block-size: 8px;
+}
+.process-xl.process-success .process-icon-vertical {
+  inline-size: 8px;
+}
+.process-xxs .process-icon-container {
+  display: none;
+}
+.process-xxs .process-circle {
+  animation-name: process-chase-circle-xxs;
+}
+.process-xxs.process-success .process-circle,
+.process-xxs.process-danger .process-circle {
+  animation-name: process-success-circle-xxs;
+}
+.process-xs .process-circle {
+  animation-name: process-chase-circle-xs;
+}
+.process-xs.process-success .process-circle,
+.process-xs.process-danger .process-circle {
+  animation-name: process-success-circle-xs;
+}
+.process-sm .process-circle {
+  animation-name: process-chase-circle-sm;
+}
+.process-sm.process-success .process-circle,
+.process-sm.process-danger .process-circle {
+  animation-name: process-success-circle-sm;
+}
+.process-xl .process-circle {
+  animation-name: process-chase-circle-xl;
+}
+.process-xl.process-success .process-circle,
+.process-xl.process-danger .process-circle {
+  animation-name: process-success-circle-xl;
+}
+@keyframes process-chase-circle-xxs {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 93.24777961px;
+    stroke-dasharray: 31.41592654px;
+  }
+  25% {
+    stroke-dashoffset: 30.41592654px;
+    stroke-dasharray: 15.70796327px;
+  }
+  75% {
+    stroke-dashoffset: 30.41592654px;
+    stroke-dasharray: 23.5619449px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 30.41592654px;
+    stroke-dasharray: 31.41592654px;
+  }
+}
+@keyframes process-success-circle-xxs {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 30.41592654px;
+    stroke-dasharray: 31.41592654px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 0;
+    stroke-dasharray: 31.41592654px;
+  }
+}
+@keyframes process-chase-circle-xs {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 206.34511514px;
+    stroke-dasharray: 69.11503838px;
+  }
+  25% {
+    stroke-dashoffset: 68.11503838px;
+    stroke-dasharray: 34.55751919px;
+  }
+  75% {
+    stroke-dashoffset: 68.11503838px;
+    stroke-dasharray: 51.83627878px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 68.11503838px;
+    stroke-dasharray: 69.11503838px;
+  }
+}
+@keyframes process-success-circle-xs {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 68.11503838px;
+    stroke-dasharray: 69.11503838px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 0;
+    stroke-dasharray: 69.11503838px;
+  }
+}
+@keyframes process-chase-circle-sm {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 432.5397862px;
+    stroke-dasharray: 144.51326207px;
+  }
+  25% {
+    stroke-dashoffset: 143.51326207px;
+    stroke-dasharray: 72.25663103px;
+  }
+  75% {
+    stroke-dashoffset: 143.51326207px;
+    stroke-dasharray: 108.38494655px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 143.51326207px;
+    stroke-dasharray: 144.51326207px;
+  }
+}
+@keyframes process-success-circle-sm {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 143.51326207px;
+    stroke-dasharray: 144.51326207px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 0;
+    stroke-dasharray: 144.51326207px;
+  }
+}
+@keyframes process-chase-circle-xl {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 1186.52202306px;
+    stroke-dasharray: 395.84067435px;
+  }
+  25% {
+    stroke-dashoffset: 394.84067435px;
+    stroke-dasharray: 197.92033718px;
+  }
+  75% {
+    stroke-dashoffset: 394.84067435px;
+    stroke-dasharray: 296.88050576px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 394.84067435px;
+    stroke-dasharray: 395.84067435px;
+  }
+}
+@keyframes process-success-circle-xl {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 394.84067435px;
+    stroke-dasharray: 395.84067435px;
+  }
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 0;
+    stroke-dasharray: 395.84067435px;
+  }
+}
+@keyframes process-width {
+  to {
+    inline-size: 100%;
+  }
+}
+@keyframes process-height {
+  to {
+    inset-block-start: 0;
+    block-size: 100%;
+  }
+}
+.btn .process:first-child {
+  margin-inline-start: -12px;
+  margin-inline-end: 12px;
+  float: inline-start;
+}
+.btn-block .process:first-child {
+  position: absolute;
+}
+.btn .process-circle {
+  transition: stroke 0.5s 0s linear;
+}
+.btn-primary .process-circle,
+.btn-success .process-circle {
+  stroke: #fff;
+}
+.btn-primary .process-icon-horizontal,
+.btn-success .process-icon-horizontal,
+.btn-primary .process-icon-vertical,
+.btn-success .process-icon-vertical {
+  background-color: #fff;
+}
+.btn:hover .process-circle,
+.btn:focus .process-circle {
+  stroke: #fff;
+}
+.btn:hover .process-icon-horizontal,
+.btn:focus .process-icon-horizontal,
+.btn:hover .process-icon-vertical,
+.btn:focus .process-icon-vertical {
+  background-color: #fff;
+}
+.btn[disabled] .process-icon-horizontal,
+.btn[disabled] .process-icon-vertical {
+  background-color: #fff;
+}

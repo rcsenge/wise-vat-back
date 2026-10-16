@@ -1,0 +1,40 @@
+.well,
+.well-xs {
+  min-block-size: var(--size-24);
+  margin-block-end: var(--size-24);
+  border-radius: var(--radius-small);
+  border: solid 1px var(--color-border-neutral);
+  padding: var(--size-24);
+  box-shadow: none;
+}
+@media only screen and (min-width: 600px) {
+  .well-sm {
+    min-block-size: var(--size-24);
+    margin-block-end: var(--size-24);
+    border-radius: var(--radius-small);
+    border: solid 1px var(--color-border-neutral);
+    padding: var(--size-24);
+    box-shadow: none;
+  }
+}
+@media only screen and (min-width: 840px) {
+  .well-md {
+    min-block-size: var(--size-24);
+    margin-block-end: var(--size-24);
+    border-radius: var(--radius-small);
+    border: solid 1px var(--color-border-neutral);
+    padding: var(--size-24);
+    box-shadow: none;
+  }
+}
+@media only screen and (min-width: 1160px) {
+  .well-lg,
+  .well-xl {
+    min-block-size: var(--size-24);
+    margin-block-end: var(--size-24);
+    border-radius: var(--radius-small);
+    border: solid 1px var(--color-border-neutral);
+    padding: var(--size-24);
+    box-shadow: none;
+  }
+}

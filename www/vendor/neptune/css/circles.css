@@ -1,0 +1,191 @@
+/**
+ * DEPRECATED: use <Circle /> component instead
+ */
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-content-primary);
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  background-color: #fff;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  transition: background-color ease 0.15s, border-color ease 0.15s, color ease 0.15s;
+}
+.circle.active {
+  border-color: var(--color-interactive-accent-active);
+  background-color: var(--color-interactive-accent-active);
+}
+.circle img {
+  inline-size: 100%;
+  border-radius: 50%;
+  vertical-align: baseline;
+  vertical-align: initial;
+}
+img.circle {
+  background-color: transparent;
+  border-radius: 50%;
+}
+.circle[style] {
+  border: 0;
+  border-radius: 50% !important;
+}
+a.circle[style]:hover {
+  border: 1px solid var(--color-interactive-accent);
+}
+.navbar-nav > li > a .circle {
+  inline-size: 40px;
+  block-size: 40px;
+  line-height: 40px;
+}
+.navbar-nav > li > a .circle .icon {
+  line-height: 40px;
+}
+.circle,
+.circle-sm {
+  font-size: 16px;
+  inline-size: 48px;
+  block-size: 48px;
+  line-height: 48px;
+}
+.circle-xs {
+  font-size: 10px;
+  inline-size: 24px;
+  block-size: 24px;
+  line-height: 24px;
+}
+.circle-md {
+  font-size: 24px;
+  inline-size: 72px;
+  block-size: 72px;
+  line-height: 72px;
+}
+.circle-lg {
+  font-size: 32px;
+  inline-size: 96px;
+  block-size: 96px;
+  line-height: 96px;
+}
+a.circle,
+a.circle .icon {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+a:hover .circle,
+a.circle:hover {
+  border-color: var(--color-interactive-accent);
+  color: var(--color-content-accent);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+a:hover .circle.active,
+a.circle.active:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+}
+/* TODO this could be tidier, ideally change the general link behaviour */
+.dropdown-menu li a:hover .circle {
+  background-color: var(--color-background-screen);
+  border-color: #fff;
+  color: var(--color-content-primary);
+}
+.dropdown-menu .disabled a:hover .circle {
+  background-color: var(--color-background-neutral);
+  border-color: transparent;
+}
+.circle-inverse {
+  background-color: var(--color-background-neutral);
+}
+.circle-responsive {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  inline-size: var(--size-24);
+  block-size: var(--size-24);
+  line-height: var(--size-24);
+  font-size: 16px;
+  overflow: visible;
+}
+.circle-responsive .icon {
+  font-size: 24px;
+  line-height: 24px;
+}
+.circle-responsive.circle-lg {
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: 16px;
+  inline-size: 48px;
+  block-size: 48px;
+  line-height: 48px;
+}
+.circle-responsive.circle-lg.circle-inverse {
+  background-color: var(--color-background-neutral);
+}
+@media (min-width: 600px) {
+  .circle-responsive {
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  .circle-responsive.circle,
+  .circle-responsive.circle-sm,
+  .circle-responsive.circle-md {
+    font-size: 16px;
+    inline-size: 48px;
+    block-size: 48px;
+    line-height: 48px;
+  }
+  .circle-responsive.circle-lg {
+    font-size: 24px;
+    inline-size: 72px;
+    block-size: 72px;
+    line-height: 72px;
+  }
+  .circle-responsive.circle-inverse {
+    background-color: var(--color-background-neutral);
+  }
+}
+@media (--screen-md-min) {
+  .circle-responsive.circle-md {
+    font-size: 24px;
+    inline-size: 72px;
+    block-size: 72px;
+    line-height: 72px;
+  }
+  .circle-responsive.circle-lg {
+    font-size: 32px;
+    inline-size: 96px;
+    block-size: 96px;
+    line-height: 96px;
+  }
+}
+.dropdown-menu li > .circle:first-child,
+.dropdown-menu li > a > .circle:first-child {
+  margin-inline-end: var(--size-8);
+}
+.dropdown-menu li > .circle-sm:first-child,
+.dropdown-menu li > a > .circle-sm:first-child {
+  margin-inline-end: var(--size-12);
+}
+.btn .circle:first-child {
+  margin-inline-end: var(--size-8);
+}
+.btn .circle-sm:first-child {
+  margin-inline-end: var(--size-12);
+}
+.btn .circle .tw-icon,
+.dropdown-menu li .circle .tw-icon {
+  float: none;
+  margin-block-start: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}

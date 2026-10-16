@@ -1,0 +1,644 @@
+/**
+ * DEPRECATED: use <InfoPrompt /> component instead
+ */
+.alert {
+  padding: var(--size-16);
+  border-radius: 10px;
+  color: var(--color-content-primary);
+  background-color: var(--color-background-neutral);
+  min-inline-size: 200px;
+  margin-block-end: var(--size-16);
+}
+.np-theme-personal .alert {
+  padding: var(--padding-medium);
+  border-radius: var(--radius-medium);
+}
+.np-theme-personal .alert .alert__message {
+  margin-block-start: 0;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+.np-theme-personal .alert .alert__message .alert__action {
+  margin-block-start: var(--size-8);
+}
+.alert .alert__icon {
+  inline-size: var(--size-32);
+  block-size: var(--size-32);
+  border-radius: 50%;
+  flex: none;
+}
+.alert .close {
+  margin-block-start: var(--size-4);
+}
+.np-theme-personal .alert .close {
+  margin-block-start: calc(var(--size-8) * -1);
+  margin-inline-end: calc(var(--size-8) * -1);
+}
+.alert p,
+.alert ul {
+  margin-block-end: 0;
+}
+.alert p + p {
+  margin-block-start: var(--padding-x-small);
+}
+.arrow {
+  position: relative;
+}
+.arrow::before {
+  content: " ";
+  position: absolute;
+  display: block;
+  inline-size: 10px;
+  block-size: 10px;
+  inset-inline-start: 20px;
+  inset-block-start: -5px;
+  transform: rotate(45deg);
+  background-color: inherit;
+}
+.arrow::before {
+  clip-path: polygon(0% 0%, 0 100%, 100% 0);
+}
+.arrow.arrow-center::before {
+  inset-inline-start: 50%;
+  margin-inline-start: -5px;
+}
+.arrow.arrow-top::before {
+  inset-block-start: -5px;
+  inset-block-end: auto;
+}
+.arrow.arrow-left::before {
+  inset-inline-start: 20px;
+  inset-inline-end: auto;
+}
+.arrow.arrow-right::before {
+  inset-inline-start: auto;
+  inset-inline-end: 20px;
+}
+.arrow.arrow-bottom::before {
+  inset-block-start: auto;
+  inset-block-end: -5px;
+}
+.alert-detach.arrow {
+  border-radius: var(--radius-small);
+}
+.form-group .alert {
+  padding-block: 4px 3px;
+  padding-inline: 16px;
+  margin-block-start: -2px;
+  border-style: solid;
+  border-color: var(--color-border-neutral);
+  border-block-width: 0 1px;
+  border-inline-width: 1px;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  margin-block-end: 0;
+  transition: border-color 0.15s ease-in-out;
+  position: relative;
+}
+.form-group .alert::before {
+  content: " ";
+  position: absolute;
+  display: block;
+  inline-size: 10px;
+  block-size: 10px;
+  inset-inline-start: 20px;
+  inset-block-start: -5px;
+  transform: rotate(45deg);
+  background-color: inherit;
+}
+.form-group .alert::before {
+  clip-path: polygon(0% 0%, 0 100%, 100% 0);
+}
+.form-group .alert.arrow-center::before {
+  inset-inline-start: 50%;
+  margin-inline-start: -5px;
+}
+.form-group .alert.arrow-top::before {
+  inset-block-start: -5px;
+  inset-block-end: auto;
+}
+.form-group .alert.arrow-left::before {
+  inset-inline-start: 20px;
+  inset-inline-end: auto;
+}
+.form-group .alert.arrow-right::before {
+  inset-inline-start: auto;
+  inset-inline-end: 20px;
+}
+.form-group .alert.arrow-bottom::before {
+  inset-block-start: auto;
+  inset-block-end: -5px;
+}
+.form-group .radio ~ .alert,
+.form-group .checkbox ~ .alert,
+.form-group .alert-detach {
+  border-width: 0;
+  margin-block-start: var(--size-12);
+  border-radius: var(--radius-small);
+}
+.form-group .alert-focus,
+.form-group .alert-info,
+.form-group .alert-success,
+.form-group .alert-warning,
+.form-group .alert-danger {
+  display: none;
+}
+.alert-success,
+.alert-positive {
+  background-color: var(--color-background-positive);
+  color: var(--color-content-positive);
+}
+.alert-success a,
+.alert-positive a,
+.alert-success b,
+.alert-positive b,
+.alert-success strong,
+.alert-positive strong,
+.alert-success .close,
+.alert-positive .close,
+.alert-success .alert-link,
+.alert-positive .alert-link,
+.alert-success .icon,
+.alert-positive .icon {
+  color: var(--color-content-positive);
+}
+.alert-success a:hover,
+.alert-positive a:hover,
+.alert-success a:focus,
+.alert-positive a:focus,
+.alert-success .alert-link:hover,
+.alert-positive .alert-link:hover,
+.alert-success .alert-link:focus,
+.alert-positive .alert-link:focus,
+.alert-success .close:hover,
+.alert-positive .close:hover,
+.alert-success .close:focus,
+.alert-positive .close:focus {
+  color: var(--color-content-positive-hover);
+}
+.bg-primary .alert-success,
+.bg-primary .alert-positive {
+  background-color: rgba(54,199,151,0.10196);
+  color: #6fd698;
+}
+.bg-primary .alert-success a,
+.bg-primary .alert-positive a,
+.bg-primary .alert-success b,
+.bg-primary .alert-positive b,
+.bg-primary .alert-success strong,
+.bg-primary .alert-positive strong,
+.bg-primary .alert-success .close,
+.bg-primary .alert-positive .close,
+.bg-primary .alert-success .alert-link,
+.bg-primary .alert-positive .alert-link,
+.bg-primary .alert-success .icon,
+.bg-primary .alert-positive .icon {
+  color: #6fd698;
+}
+.bg-primary .alert-success a:hover,
+.bg-primary .alert-positive a:hover,
+.bg-primary .alert-success a:focus,
+.bg-primary .alert-positive a:focus,
+.bg-primary .alert-success .alert-link:hover,
+.bg-primary .alert-positive .alert-link:hover,
+.bg-primary .alert-success .alert-link:focus,
+.bg-primary .alert-positive .alert-link:focus,
+.bg-primary .alert-success .close:hover,
+.bg-primary .alert-positive .close:hover,
+.bg-primary .alert-success .close:focus,
+.bg-primary .alert-positive .close:focus {
+  color: #5ac285;
+}
+.alert-info,
+.alert-neutral {
+  background-color: var(--color-background-neutral);
+  color: var(--color-content-primary);
+}
+.alert-info a,
+.alert-neutral a,
+.alert-info b,
+.alert-neutral b,
+.alert-info strong,
+.alert-neutral strong,
+.alert-info .close,
+.alert-neutral .close,
+.alert-info .alert-link,
+.alert-neutral .alert-link,
+.alert-info .icon,
+.alert-neutral .icon {
+  color: var(--color-content-primary);
+}
+.alert-info a:hover,
+.alert-neutral a:hover,
+.alert-info a:focus,
+.alert-neutral a:focus,
+.alert-info .alert-link:hover,
+.alert-neutral .alert-link:hover,
+.alert-info .alert-link:focus,
+.alert-neutral .alert-link:focus,
+.alert-info .close:hover,
+.alert-neutral .close:hover,
+.alert-info .close:focus,
+.alert-neutral .close:focus {
+  color: var(--color-content-primary);
+}
+.bg-primary .alert-info,
+.bg-primary .alert-neutral {
+  background-color: rgba(134,167,189,0.10196);
+  color: #ffffff;
+}
+.bg-primary .alert-info a,
+.bg-primary .alert-neutral a,
+.bg-primary .alert-info b,
+.bg-primary .alert-neutral b,
+.bg-primary .alert-info strong,
+.bg-primary .alert-neutral strong,
+.bg-primary .alert-info .close,
+.bg-primary .alert-neutral .close,
+.bg-primary .alert-info .alert-link,
+.bg-primary .alert-neutral .alert-link,
+.bg-primary .alert-info .icon,
+.bg-primary .alert-neutral .icon {
+  color: #ffffff;
+}
+.bg-primary .alert-info a:hover,
+.bg-primary .alert-neutral a:hover,
+.bg-primary .alert-info a:focus,
+.bg-primary .alert-neutral a:focus,
+.bg-primary .alert-info .alert-link:hover,
+.bg-primary .alert-neutral .alert-link:hover,
+.bg-primary .alert-info .alert-link:focus,
+.bg-primary .alert-neutral .alert-link:focus,
+.bg-primary .alert-info .close:hover,
+.bg-primary .alert-neutral .close:hover,
+.bg-primary .alert-info .close:focus,
+.bg-primary .alert-neutral .close:focus {
+  color: #ffffff;
+}
+.alert-warning {
+  background-color: var(--color-background-warning);
+  color: var(--color-content-warning);
+}
+.alert-warning a,
+.alert-warning b,
+.alert-warning strong,
+.alert-warning .close,
+.alert-warning .alert-link,
+.alert-warning .icon {
+  color: var(--color-content-warning);
+}
+.alert-warning a:hover,
+.alert-warning a:focus,
+.alert-warning .alert-link:hover,
+.alert-warning .alert-link:focus,
+.alert-warning .close:hover,
+.alert-warning .close:focus {
+  color: var(--color-content-warning-hover);
+}
+.bg-primary .alert-warning {
+  background-color: rgba(255,172,0,0.10196);
+  color: #ffd184;
+}
+.bg-primary .alert-warning a,
+.bg-primary .alert-warning b,
+.bg-primary .alert-warning strong,
+.bg-primary .alert-warning .close,
+.bg-primary .alert-warning .alert-link,
+.bg-primary .alert-warning .icon {
+  color: #ffd184;
+}
+.bg-primary .alert-warning a:hover,
+.bg-primary .alert-warning a:focus,
+.bg-primary .alert-warning .alert-link:hover,
+.bg-primary .alert-warning .alert-link:focus,
+.bg-primary .alert-warning .close:hover,
+.bg-primary .alert-warning .close:focus {
+  color: #e9bd71;
+}
+.alert-danger,
+.alert-negative {
+  background-color: var(--color-background-negative);
+  color: var(--color-content-negative);
+}
+.alert-danger a,
+.alert-negative a,
+.alert-danger b,
+.alert-negative b,
+.alert-danger strong,
+.alert-negative strong,
+.alert-danger .close,
+.alert-negative .close,
+.alert-danger .alert-link,
+.alert-negative .alert-link,
+.alert-danger .icon,
+.alert-negative .icon {
+  color: var(--color-content-negative);
+}
+.alert-danger a:hover,
+.alert-negative a:hover,
+.alert-danger a:focus,
+.alert-negative a:focus,
+.alert-danger .alert-link:hover,
+.alert-negative .alert-link:hover,
+.alert-danger .alert-link:focus,
+.alert-negative .alert-link:focus,
+.alert-danger .close:hover,
+.alert-negative .close:hover,
+.alert-danger .close:focus,
+.alert-negative .close:focus {
+  color: var(--color-content-negative-hover);
+}
+.bg-primary .alert-danger,
+.bg-primary .alert-negative {
+  background-color: rgba(255,135,135,0.10196);
+  color: #ffa6a9;
+}
+.bg-primary .alert-danger a,
+.bg-primary .alert-negative a,
+.bg-primary .alert-danger b,
+.bg-primary .alert-negative b,
+.bg-primary .alert-danger strong,
+.bg-primary .alert-negative strong,
+.bg-primary .alert-danger .close,
+.bg-primary .alert-negative .close,
+.bg-primary .alert-danger .alert-link,
+.bg-primary .alert-negative .alert-link,
+.bg-primary .alert-danger .icon,
+.bg-primary .alert-negative .icon {
+  color: #ffa6a9;
+}
+.bg-primary .alert-danger a:hover,
+.bg-primary .alert-negative a:hover,
+.bg-primary .alert-danger a:focus,
+.bg-primary .alert-negative a:focus,
+.bg-primary .alert-danger .alert-link:hover,
+.bg-primary .alert-negative .alert-link:hover,
+.bg-primary .alert-danger .alert-link:focus,
+.bg-primary .alert-negative .alert-link:focus,
+.bg-primary .alert-danger .close:hover,
+.bg-primary .alert-negative .close:hover,
+.bg-primary .alert-danger .close:focus,
+.bg-primary .alert-negative .close:focus {
+  color: #ea9396;
+}
+.form-group:focus-within .alert-focus,
+input:focus ~ .alert-focus,
+.btn:focus ~ .alert-focus {
+  display: block;
+  border-color: var(--color-interactive-accent);
+}
+.focus .alert-focus,
+.has-focus .alert-focus,
+.has-info .alert-info,
+.has-info .alert-neutral,
+.has-warning .alert-warning,
+.has-success .alert-success,
+.has-success .alert-positive,
+.has-error .alert-danger,
+.has-error .alert-negative {
+  display: block;
+}
+.has-info .help-block,
+.has-info .alert-focus,
+.has-warning .help-block,
+.has-warning .alert-focus,
+.has-warning .alert-info,
+.has-warning .alert-neutral,
+.has-success .help-block,
+.has-success .alert-focus,
+.has-success .alert-info,
+.has-success .alert-neutral,
+.has-success .alert-warning,
+.has-error .help-block,
+.has-error .alert-focus,
+.has-error .alert-info,
+.has-error .alert-neutral,
+.has-error .alert-warning,
+.has-error .alert-success,
+.has-error .alert-positive {
+  display: none !important;
+}
+.np-theme-personal .alert {
+  padding: var(--size-16);
+  flex-direction: row;
+}
+.np-theme-personal .alert .alert__message {
+  padding-block-start: 0;
+  padding-inline-start: var(--padding-small);
+}
+.np-theme-personal .alert-success,
+.np-theme-personal .alert-positive,
+.np-theme-personal .alert-info,
+.np-theme-personal .alert-neutral,
+.np-theme-personal .alert-warning,
+.np-theme-personal .alert-danger,
+.np-theme-personal .alert-negative,
+.bg-primary .np-theme-personal .alert-success,
+.bg-primary .np-theme-personal .alert-positive,
+.bg-primary .np-theme-personal .alert-info,
+.bg-primary .np-theme-personal .alert-neutral,
+.bg-primary .np-theme-personal .alert-warning,
+.bg-primary .np-theme-personal .alert-danger,
+.bg-primary .np-theme-personal .alert-negative {
+  background-color: var(--color-background-neutral);
+  color: var(--color-content-secondary);
+}
+.np-theme-personal .alert-success a,
+.np-theme-personal .alert-positive a,
+.np-theme-personal .alert-info a,
+.np-theme-personal .alert-neutral a,
+.np-theme-personal .alert-warning a,
+.np-theme-personal .alert-danger a,
+.np-theme-personal .alert-negative a,
+.bg-primary .np-theme-personal .alert-success a,
+.bg-primary .np-theme-personal .alert-positive a,
+.bg-primary .np-theme-personal .alert-info a,
+.bg-primary .np-theme-personal .alert-neutral a,
+.bg-primary .np-theme-personal .alert-warning a,
+.bg-primary .np-theme-personal .alert-danger a,
+.bg-primary .np-theme-personal .alert-negative a,
+.np-theme-personal .alert-success b,
+.np-theme-personal .alert-positive b,
+.np-theme-personal .alert-info b,
+.np-theme-personal .alert-neutral b,
+.np-theme-personal .alert-warning b,
+.np-theme-personal .alert-danger b,
+.np-theme-personal .alert-negative b,
+.bg-primary .np-theme-personal .alert-success b,
+.bg-primary .np-theme-personal .alert-positive b,
+.bg-primary .np-theme-personal .alert-info b,
+.bg-primary .np-theme-personal .alert-neutral b,
+.bg-primary .np-theme-personal .alert-warning b,
+.bg-primary .np-theme-personal .alert-danger b,
+.bg-primary .np-theme-personal .alert-negative b,
+.np-theme-personal .alert-success strong,
+.np-theme-personal .alert-positive strong,
+.np-theme-personal .alert-info strong,
+.np-theme-personal .alert-neutral strong,
+.np-theme-personal .alert-warning strong,
+.np-theme-personal .alert-danger strong,
+.np-theme-personal .alert-negative strong,
+.bg-primary .np-theme-personal .alert-success strong,
+.bg-primary .np-theme-personal .alert-positive strong,
+.bg-primary .np-theme-personal .alert-info strong,
+.bg-primary .np-theme-personal .alert-neutral strong,
+.bg-primary .np-theme-personal .alert-warning strong,
+.bg-primary .np-theme-personal .alert-danger strong,
+.bg-primary .np-theme-personal .alert-negative strong,
+.np-theme-personal .alert-success .close,
+.np-theme-personal .alert-positive .close,
+.np-theme-personal .alert-info .close,
+.np-theme-personal .alert-neutral .close,
+.np-theme-personal .alert-warning .close,
+.np-theme-personal .alert-danger .close,
+.np-theme-personal .alert-negative .close,
+.bg-primary .np-theme-personal .alert-success .close,
+.bg-primary .np-theme-personal .alert-positive .close,
+.bg-primary .np-theme-personal .alert-info .close,
+.bg-primary .np-theme-personal .alert-neutral .close,
+.bg-primary .np-theme-personal .alert-warning .close,
+.bg-primary .np-theme-personal .alert-danger .close,
+.bg-primary .np-theme-personal .alert-negative .close,
+.np-theme-personal .alert-success .alert-link,
+.np-theme-personal .alert-positive .alert-link,
+.np-theme-personal .alert-info .alert-link,
+.np-theme-personal .alert-neutral .alert-link,
+.np-theme-personal .alert-warning .alert-link,
+.np-theme-personal .alert-danger .alert-link,
+.np-theme-personal .alert-negative .alert-link,
+.bg-primary .np-theme-personal .alert-success .alert-link,
+.bg-primary .np-theme-personal .alert-positive .alert-link,
+.bg-primary .np-theme-personal .alert-info .alert-link,
+.bg-primary .np-theme-personal .alert-neutral .alert-link,
+.bg-primary .np-theme-personal .alert-warning .alert-link,
+.bg-primary .np-theme-personal .alert-danger .alert-link,
+.bg-primary .np-theme-personal .alert-negative .alert-link,
+.np-theme-personal .alert-success .icon,
+.np-theme-personal .alert-positive .icon,
+.np-theme-personal .alert-info .icon,
+.np-theme-personal .alert-neutral .icon,
+.np-theme-personal .alert-warning .icon,
+.np-theme-personal .alert-danger .icon,
+.np-theme-personal .alert-negative .icon,
+.bg-primary .np-theme-personal .alert-success .icon,
+.bg-primary .np-theme-personal .alert-positive .icon,
+.bg-primary .np-theme-personal .alert-info .icon,
+.bg-primary .np-theme-personal .alert-neutral .icon,
+.bg-primary .np-theme-personal .alert-warning .icon,
+.bg-primary .np-theme-personal .alert-danger .icon,
+.bg-primary .np-theme-personal .alert-negative .icon {
+  color: var(--color-content-secondary);
+}
+.np-theme-personal .alert-success a:hover,
+.np-theme-personal .alert-positive a:hover,
+.np-theme-personal .alert-info a:hover,
+.np-theme-personal .alert-neutral a:hover,
+.np-theme-personal .alert-warning a:hover,
+.np-theme-personal .alert-danger a:hover,
+.np-theme-personal .alert-negative a:hover,
+.bg-primary .np-theme-personal .alert-success a:hover,
+.bg-primary .np-theme-personal .alert-positive a:hover,
+.bg-primary .np-theme-personal .alert-info a:hover,
+.bg-primary .np-theme-personal .alert-neutral a:hover,
+.bg-primary .np-theme-personal .alert-warning a:hover,
+.bg-primary .np-theme-personal .alert-danger a:hover,
+.bg-primary .np-theme-personal .alert-negative a:hover,
+.np-theme-personal .alert-success a:focus,
+.np-theme-personal .alert-positive a:focus,
+.np-theme-personal .alert-info a:focus,
+.np-theme-personal .alert-neutral a:focus,
+.np-theme-personal .alert-warning a:focus,
+.np-theme-personal .alert-danger a:focus,
+.np-theme-personal .alert-negative a:focus,
+.bg-primary .np-theme-personal .alert-success a:focus,
+.bg-primary .np-theme-personal .alert-positive a:focus,
+.bg-primary .np-theme-personal .alert-info a:focus,
+.bg-primary .np-theme-personal .alert-neutral a:focus,
+.bg-primary .np-theme-personal .alert-warning a:focus,
+.bg-primary .np-theme-personal .alert-danger a:focus,
+.bg-primary .np-theme-personal .alert-negative a:focus,
+.np-theme-personal .alert-success .alert-link:hover,
+.np-theme-personal .alert-positive .alert-link:hover,
+.np-theme-personal .alert-info .alert-link:hover,
+.np-theme-personal .alert-neutral .alert-link:hover,
+.np-theme-personal .alert-warning .alert-link:hover,
+.np-theme-personal .alert-danger .alert-link:hover,
+.np-theme-personal .alert-negative .alert-link:hover,
+.bg-primary .np-theme-personal .alert-success .alert-link:hover,
+.bg-primary .np-theme-personal .alert-positive .alert-link:hover,
+.bg-primary .np-theme-personal .alert-info .alert-link:hover,
+.bg-primary .np-theme-personal .alert-neutral .alert-link:hover,
+.bg-primary .np-theme-personal .alert-warning .alert-link:hover,
+.bg-primary .np-theme-personal .alert-danger .alert-link:hover,
+.bg-primary .np-theme-personal .alert-negative .alert-link:hover,
+.np-theme-personal .alert-success .alert-link:focus,
+.np-theme-personal .alert-positive .alert-link:focus,
+.np-theme-personal .alert-info .alert-link:focus,
+.np-theme-personal .alert-neutral .alert-link:focus,
+.np-theme-personal .alert-warning .alert-link:focus,
+.np-theme-personal .alert-danger .alert-link:focus,
+.np-theme-personal .alert-negative .alert-link:focus,
+.bg-primary .np-theme-personal .alert-success .alert-link:focus,
+.bg-primary .np-theme-personal .alert-positive .alert-link:focus,
+.bg-primary .np-theme-personal .alert-info .alert-link:focus,
+.bg-primary .np-theme-personal .alert-neutral .alert-link:focus,
+.bg-primary .np-theme-personal .alert-warning .alert-link:focus,
+.bg-primary .np-theme-personal .alert-danger .alert-link:focus,
+.bg-primary .np-theme-personal .alert-negative .alert-link:focus,
+.np-theme-personal .alert-success .close:hover,
+.np-theme-personal .alert-positive .close:hover,
+.np-theme-personal .alert-info .close:hover,
+.np-theme-personal .alert-neutral .close:hover,
+.np-theme-personal .alert-warning .close:hover,
+.np-theme-personal .alert-danger .close:hover,
+.np-theme-personal .alert-negative .close:hover,
+.bg-primary .np-theme-personal .alert-success .close:hover,
+.bg-primary .np-theme-personal .alert-positive .close:hover,
+.bg-primary .np-theme-personal .alert-info .close:hover,
+.bg-primary .np-theme-personal .alert-neutral .close:hover,
+.bg-primary .np-theme-personal .alert-warning .close:hover,
+.bg-primary .np-theme-personal .alert-danger .close:hover,
+.bg-primary .np-theme-personal .alert-negative .close:hover,
+.np-theme-personal .alert-success .close:focus,
+.np-theme-personal .alert-positive .close:focus,
+.np-theme-personal .alert-info .close:focus,
+.np-theme-personal .alert-neutral .close:focus,
+.np-theme-personal .alert-warning .close:focus,
+.np-theme-personal .alert-danger .close:focus,
+.np-theme-personal .alert-negative .close:focus,
+.bg-primary .np-theme-personal .alert-success .close:focus,
+.bg-primary .np-theme-personal .alert-positive .close:focus,
+.bg-primary .np-theme-personal .alert-info .close:focus,
+.bg-primary .np-theme-personal .alert-neutral .close:focus,
+.bg-primary .np-theme-personal .alert-warning .close:focus,
+.bg-primary .np-theme-personal .alert-danger .close:focus,
+.bg-primary .np-theme-personal .alert-negative .close:focus {
+  color: var(--color-content-link-hover);
+}
+.np-theme-personal .alert-success .np-link,
+.np-theme-personal .alert-positive .np-link,
+.np-theme-personal .alert-info .np-link,
+.np-theme-personal .alert-neutral .np-link,
+.np-theme-personal .alert-warning .np-link,
+.np-theme-personal .alert-danger .np-link,
+.np-theme-personal .alert-negative .np-link {
+  color: var(--color-content-link);
+}
+.np-theme-personal .alert-success .np-link:hover,
+.np-theme-personal .alert-positive .np-link:hover,
+.np-theme-personal .alert-info .np-link:hover,
+.np-theme-personal .alert-neutral .np-link:hover,
+.np-theme-personal .alert-warning .np-link:hover,
+.np-theme-personal .alert-danger .np-link:hover,
+.np-theme-personal .alert-negative .np-link:hover,
+.np-theme-personal .alert-success .np-link:focus,
+.np-theme-personal .alert-positive .np-link:focus,
+.np-theme-personal .alert-info .np-link:focus,
+.np-theme-personal .alert-neutral .np-link:focus,
+.np-theme-personal .alert-warning .np-link:focus,
+.np-theme-personal .alert-danger .np-link:focus,
+.np-theme-personal .alert-negative .np-link:focus {
+  color: var(--color-content-link-hover);
+}

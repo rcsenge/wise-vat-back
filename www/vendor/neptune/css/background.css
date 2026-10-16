@@ -1,0 +1,19 @@
+.bg {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  background-position: bottom;
+}
+.bg--dark {
+  background-color: rgba(134,167,189,0.10196);
+  background-image: url("../img/bg-dark.svg");
+}
+.np-theme-personal .bg--dark {
+  background-color: var(--color-forest-green);
+  background-image: none;
+  color: #daffc0;
+}
+.bg--light {
+  background-color: var(--color-background-neutral);
+  background-image: url("../img/bg-light.svg");
+}

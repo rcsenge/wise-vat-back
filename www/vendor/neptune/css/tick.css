@@ -1,0 +1,33 @@
+.tw-checkbox-check {
+  position: relative;
+  display: inline-block;
+  inline-size: 10px;
+  block-size: 8px;
+}
+.tw-checkbox-check::before,
+.tw-checkbox-check::after {
+  content: "";
+  position: absolute;
+  background: var(--color-background-screen);
+  transform: translateX(-1.5px) rotate(-45deg);
+  transform-origin: left bottom;
+}
+[dir="rtl"] .tw-checkbox-check::before,
+[dir="rtl"] .tw-checkbox-check::after {
+  transform: translateX(-1.5px) rotate(-45deg) scaleX(-1);
+  transform-origin: right bottom;
+}
+.tw-checkbox-check .has-error::before,
+.tw-checkbox-check .has-error::after {
+  background-color: var(--color-interactive-negative);
+}
+.tw-checkbox-check::before {
+  inset-block-start: 9px;
+  block-size: 6px;
+  inline-size: 2px;
+}
+.tw-checkbox-check::after {
+  inset-block-end: 5px;
+  block-size: 2px;
+  inline-size: 11px;
+}
