@@ -7,6 +7,7 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Framework:** Tailwind CSS
 - **Design System:** Tailwind v4
 - **Mobile App:** Capacitor by Ionic
+- **Python Tooling:** UV
 - **Web Server:** Caddy
 - **Documentation Language:** English
 - **Commit Message Language:** English
