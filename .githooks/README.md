@@ -5,33 +5,30 @@ directory because `core.hooksPath` points here.
 
 ## Setup
 
-Each developer runs these commands once after cloning and once after
-authenticating:
+Each developer runs this command once after cloning:
 
 ```
 git config core.hooksPath .githooks
-gh auth login
 ```
 
 ## Hooks
 
 - `pre-commit` blocks commits on `main`. It also runs Prettier with the
   Tailwind plugin on staged HTML and CSS files.
-- `pre-merge-commit` blocks local merges that commit onto `main`.
-- `pre-push` blocks every push to `main`. It also blocks force pushes and
-  pushes of a feature branch to `main`.
+- `pre-push` blocks force pushes to `main`. It also blocks pushes of a
+  feature branch to `main`.
 
-## Mandatory Pull Request Workflow
+## Workflow
 
-Code reaches `main` only through a pull request. Use the GitHub CLI:
+Work on a short-lived feature branch. Merge the branch to `main` and push:
 
 ```
-git push -u origin <branch>
-gh pr create --fill
-gh pr review --approve
-gh pr merge --merge
+git checkout -b feat/my-change
+# edit and commit on the branch
 git checkout main
-git pull
+git merge --ff-only feat/my-change
+git push origin main
+git branch -d feat/my-change
 ```
 
 ## Server-Side Enforcement

@@ -16,10 +16,10 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 Apply Trunk-Based Development with strict commit hygiene. Use this workflow for every change, including documentation edits. Git hooks in `.githooks/` enforce the workflow. Never bypass the hooks. A bypass is a critical defect.
 
 ### 2.1. Branching
-- **Branch Before Edit:** Create a feature branch off `main` before any edit. Never commit or push directly on `main`.
-- **Hard Prohibition:** Never run `git commit` on `main`. Never run `git push` to `main`. The action is forbidden in all cases.
+- **Branch Before Edit:** Create a feature branch off `main` before any edit. Never commit directly on `main`.
+- **Hard Prohibition:** Never run `git commit` on `main`. Never bypass the hooks. The actions are forbidden in all cases.
 - **Short-Lived Branches:** Keep the branch lifespan under one day. Merge the branch back when complete.
-- **No Direct Push:** Push only feature branches. Never push to `main`.
+- **No Branch Push:** Never push a feature branch to `main`. Push `main` only after a merge.
 
 ### 2.2. Committing
 - **Atomic Commits:** A commit must do exactly one thing (one feature, one fix, or one refactor).
@@ -28,13 +28,10 @@ Apply Trunk-Based Development with strict commit hygiene. Use this workflow for 
 - **Working State Guarantee:** Every commit must load and render without errors. Do not leave broken states in the commit log.
 - **Conventional Commits:** Prefix all commit messages with standard tags (`feat:`, `fix:`, `refactor:`, `chore:`). Write all commit messages in English.
 
-### 2.3. Pull Request Only
-- **Push Branch:** Push the feature branch to the remote origin.
-- **Open Pull Request:** Open a pull request with the GitHub CLI.
-- **Review Diff:** Review the full diff before you merge. Approve only a clean diff.
-- **Merge by Pull Request:** Merge the branch with the GitHub CLI. Never merge locally on `main`.
+### 2.3. Merging and Pushing
+- **Merge to Main:** Check out `main`. Merge the feature branch after the final commit.
+- **Push Main:** Push the merged `main` to the remote origin.
 - **Delete Branch:** Delete the feature branch after the merge.
-- **CLI Setup:** Run `gh auth login` once. Use `gh` for every pull request and merge.
 
 ### 2.4. File Tracking
 - **Whitelist Only:** The `.gitignore` is a whitelist. It ignores every path by default. It re-includes only allowed paths.
@@ -43,8 +40,7 @@ Apply Trunk-Based Development with strict commit hygiene. Use this workflow for 
 ### 2.5. No Workarounds
 - **No Hook Bypass:** Never use `--no-verify`. The flag defeats the enforcement.
 - **No Force Push:** Never use `--force`. The flag defeats the enforcement.
-- **No Local Merge:** Never merge locally into `main`. Merge only through a pull request.
-- **Critical Defect:** A bypass or a direct push is a critical defect. Stop the workflow. Create a branch and restart.
+- **Critical Defect:** A bypass is a critical defect. Stop the workflow. Create a branch and restart.
 
 ## 3. Frontend Coding Standards
 We optimize for safety, predictability, and simplicity. Apply these rules to all markup and styling.
