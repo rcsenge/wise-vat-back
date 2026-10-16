@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#00a4a6" />
+    <title>vatback - Employer Review</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body
+    class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
+  >
+    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pt-6 pb-10 sm:px-6">
+      <header
+        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <span
+            class="grid h-11 w-11 place-items-center rounded-2xl bg-[#00a4a6] text-white"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6"
+            >
+              <path d="M3 3v18h18" />
+              <path d="m7 14 4-4 3 3 5-6" />
+            </svg>
+          </span>
+          <div>
+            <h1 class="text-xl leading-tight font-semibold tracking-tight">
+              vatback
+            </h1>
+            <p class="text-sm text-[#6b7a78]">Employer review</p>
+          </div>
+        </div>
+        <a
+          href="index.html"
+          class="inline-flex items-center justify-center gap-2 rounded-full border border-[#00a4a6] px-4 py-2 text-sm font-semibold text-[#00a4a6] transition-colors hover:bg-[#00a4a6]/10"
+        >
+          Open employee scanner
+        </a>
+      </header>
+
+      <section
+        id="summary-section"
+        aria-label="Claim summary"
+        class="mt-6 grid gap-4 sm:grid-cols-3"
+      >
+        <div
+          class="rounded-2xl border border-[#00a4a6]/30 bg-[#00a4a6] p-5 text-white shadow-sm"
+        >
+          <p class="text-sm font-medium text-[#d6f6f6]">Total claimable</p>
+          <p id="summary-claimable" class="mt-1 text-3xl font-bold">€0.00</p>
+          <p class="mt-1 text-xs text-[#d6f6f6]">
+            Sum of VAT across all receipts
+          </p>
+        </div>
+        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
+          <p class="text-sm font-medium text-[#6b7a78]">Total spend</p>
+          <p id="summary-spend" class="mt-1 text-2xl font-bold">€0.00</p>
+          <p class="mt-1 text-xs text-[#6b7a78]">Sum of receipt amounts</p>
+        </div>
+        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
+          <p class="text-sm font-medium text-[#6b7a78]">Receipts</p>
+          <p id="summary-count" class="mt-1 text-2xl font-bold">0</p>
+          <p class="mt-1 text-xs text-[#6b7a78]">Claimable documents</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="receipts-heading" class="mt-8">
+        <h2 id="receipts-heading" class="text-lg font-semibold">
+          Claimable receipts
+        </h2>
+        <ul id="receipt-list" class="mt-4 space-y-3"></ul>
+      </section>
+
+      <section
+        id="empty-state"
+        class="mt-10 rounded-2xl bg-white p-10 shadow-sm"
+      >
+        <div class="mx-auto max-w-sm text-center">
+          <div
+            class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#00a4a6]/10 text-[#00a4a6]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-8 w-8"
+            >
+              <path
+                d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+              />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+              <path d="M12 17.5v-11" />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-base font-semibold">No receipts to review</h3>
+          <p class="mt-1 text-sm text-[#6b7a78]">
+            Scan company receipts in the employee app first.
+          </p>
+        </div>
+      </section>
+
+      <footer
+        class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
+      >
+        <p>
+          The employee scanner stores receipts on this device. This review sees
+          the same local data.
+        </p>
+      </footer>
+    </main>
+
+    <dialog
+      id="document-dialog"
+      class="m-auto max-w-lg rounded-3xl bg-white p-3 shadow-2xl [&::backdrop]:bg-black/60"
+    >
+      <img
+        id="document-image"
+        alt="Scanned receipt"
+        class="max-h-[75vh] w-full rounded-2xl object-contain"
+      />
+    </dialog>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const STORAGE_KEY = "vatback-receipts";
+
+        const currencyFormatter = new Intl.NumberFormat(undefined, {
+          style: "currency",
+          currency: "EUR",
+        });
+
+        const receiptList = document.getElementById("receipt-list");
+        const summaryClaimable = document.getElementById("summary-claimable");
+        const summarySpend = document.getElementById("summary-spend");
+        const summaryCount = document.getElementById("summary-count");
+        const emptyState = document.getElementById("empty-state");
+        const documentDialog = document.getElementById("document-dialog");
+        const documentImage = document.getElementById("document-image");
+
+        const readReceipts = () => {
+          try {
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            return Array.isArray(stored) ? stored : [];
+          } catch (error) {
+            return [];
+          }
+        };
+
+        const formatMoney = (value) => {
+          return currencyFormatter.format(Number.isFinite(value) ? value : 0);
+        };
+
+        const createReceiptItem = (receipt) => {
+          const item = document.createElement("li");
+          item.className =
+            "flex items-center gap-4 rounded-2xl border border-[#e6e9ea] bg-white p-4 shadow-sm";
+
+          const thumbButton = document.createElement("button");
+          thumbButton.type = "button";
+          thumbButton.className =
+            "shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00a4a6]";
+          thumbButton.setAttribute("aria-label", "View receipt document");
+          thumbButton.addEventListener("click", () => {
+            documentImage.src = receipt.imageDataUrl;
+            documentDialog.showModal();
+          });
+
+          const image = document.createElement("img");
+          image.src = receipt.imageDataUrl;
+          image.alt = "Scanned receipt preview";
+          image.className = "h-16 w-16 rounded-xl object-cover";
+          thumbButton.appendChild(image);
+
+          const details = document.createElement("div");
+          details.className = "min-w-0 flex-1";
+
+          const merchant = document.createElement("p");
+          merchant.className = "truncate text-sm font-medium";
+          merchant.textContent = receipt.merchant || "Untitled receipt";
+
+          const time = document.createElement("p");
+          time.className = "text-xs text-[#6b7a78]";
+          time.textContent = new Date(receipt.scannedAt || 0).toLocaleString();
+
+          details.append(merchant, time);
+
+          const spend = document.createElement("div");
+          spend.className = "hidden text-right sm:block";
+          spend.append(
+            createLabel("Amount"),
+            createValue(formatMoney(receipt.amount)),
+          );
+
+          const claim = document.createElement("div");
+          claim.className = "text-right";
+          claim.append(
+            createLabel("Claimable VAT"),
+            createValue(formatMoney(receipt.taxAmount), true),
+          );
+
+          item.append(thumbButton, details, spend, claim);
+          return item;
+        };
+
+        const createLabel = (text) => {
+          const label = document.createElement("p");
+          label.className = "text-xs text-[#6b7a78]";
+          label.textContent = text;
+          return label;
+        };
+
+        const createValue = (text, isClaim) => {
+          const value = document.createElement("p");
+          value.className = isClaim
+            ? "font-semibold text-[#00a4a6]"
+            : "font-medium";
+          value.textContent = text;
+          return value;
+        };
+
+        const render = () => {
+          const receipts = readReceipts()
+            .slice()
+            .sort((a, b) => b.scannedAt - a.scannedAt);
+          const totals = receipts.reduce(
+            (acc, receipt) => {
+              acc.tax += Number.isFinite(receipt.taxAmount)
+                ? receipt.taxAmount
+                : 0;
+              acc.spend += Number.isFinite(receipt.amount) ? receipt.amount : 0;
+              return acc;
+            },
+            { tax: 0, spend: 0 },
+          );
+
+          summaryClaimable.textContent = formatMoney(totals.tax);
+          summarySpend.textContent = formatMoney(totals.spend);
+          summaryCount.textContent = String(receipts.length);
+
+          receiptList.replaceChildren();
+          receipts.forEach((receipt) => {
+            receiptList.appendChild(createReceiptItem(receipt));
+          });
+
+          const hasReceipts = receipts.length > 0;
+          emptyState.classList.toggle("hidden", hasReceipts);
+        };
+
+        documentDialog.addEventListener("click", (event) => {
+          if (event.target === documentDialog) {
+            documentDialog.close();
+          }
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
