@@ -9,6 +9,9 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Mobile App:** Capacitor by Ionic
 - **Python Tooling:** UV
 - **Web Server:** Caddy
+- **Serving:** Use Caddy to serve the app.
+- **Serving Address:** Bind Caddy to `0.0.0.0`.
+- **Network Access:** Serve every interface. Open the app with the LAN IP address.
 - **Documentation Language:** English
 - **Commit Message Language:** English
 
