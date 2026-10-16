@@ -3,10 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "description": "Frontend for the SIGINT project.",
+  "packageManager": "pnpm@12.11.2",
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i www/input.css -o www/style.css --minify",
+    "copy:neptune": "rm -rf www/vendor/neptune && mkdir -p www/vendor/neptune && cp -R node_modules/@transferwise/neptune-css/dist/css www/vendor/neptune/ && cp -R node_modules/@transferwise/neptune-css/dist/fonts www/vendor/neptune/ && cp -R node_modules/@transferwise/neptune-css/dist/img www/vendor/neptune/ && cp -R node_modules/@transferwise/neptune-css/dist/props www/vendor/neptune/",
+    "prebuild:css": "pnpm run copy:neptune",
+    "build:css": "tailwindcss -i www/input.css -o www/style.css --minify",
+    "postinstall": "pnpm run copy:neptune",
     "lint": "prettier --check \"**/*.{html,css}\"",
     "lint:fix": "prettier --write \"**/*.{html,css}\""
+  },
+  "dependencies": {
+    "@transferwise/neptune-css": "^14.29.6"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",

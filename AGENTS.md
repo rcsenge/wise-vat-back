@@ -6,6 +6,8 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Language:** HTML
 - **Framework:** Tailwind CSS
 - **Design System:** Tailwind v4
+- **Component Library:** Neptune CSS from TransferWise
+- **Package Manager:** pnpm. pnpm is MANDATED over npm and yarn.
 - **Mobile App:** Capacitor by Ionic
 - **Python Tooling:** UV
 - **Web Server:** Caddy
@@ -14,6 +16,13 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Network Access:** Serve every interface. Open the app with the LAN IP address.
 - **Documentation Language:** English
 - **Commit Message Language:** English
+
+## 1.1 Package Management
+- **Mandate:** Install all dependencies only with pnpm. Never use npm or yarn.
+- **Lockfile:** Track `pnpm-lock.yaml`. Reject `package-lock.json` and `yarn.lock`.
+- **Syntax:** Use `pnpm install`, `pnpm add`, and `pnpm run <script-name>`.
+- **Scripts:** Reference local binaries directly. Do not prefix with `npx`.
+- **Build Scripts:** Approve builds in `pnpm-workspace.yaml`. Do not use `--unsafe-perm`.
 
 ## 2. Git & Version Control Workflow
 Apply Trunk-Based Development with strict commit hygiene. Use this workflow for every change, including documentation edits. Git hooks in `.githooks/` enforce the workflow. Never bypass the hooks. A bypass is a critical defect.

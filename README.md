@@ -1,10 +1,16 @@
 # SIGINT Frontend
 
 Frontend for the VATBACK service. Read DESIGN.md for the product concept.
+The app uses pnpm and the Wise Neptune CSS design system.
+
+## Install
+
+1. Install dependencies with pnpm: `pnpm install`
+2. The install copies the Neptune assets to `www/vendor/neptune`.
 
 ## Serve the Employee Demo
 
-1. Build the stylesheet once: `npm run build:css`
+1. Build the stylesheet once: `pnpm run build:css`
 2. Serve the `www` folder with one option.
    - Option A (no install): `python -m http.server 8080 --directory www`
    - Option B (Caddy): `caddy file-server --root www --listen :8080`

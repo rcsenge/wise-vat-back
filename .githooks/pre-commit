@@ -14,13 +14,13 @@ staged="$(git diff --cached --name-only --diff-filter=ACM)"
 styled="$(printf '%s\n' "$staged" | grep -E '\.(html?|css)$' || true)"
 if [ -n "$styled" ]; then
   if [ ! -d node_modules ]; then
-    echo "warning: node_modules missing. run: npm install"
+    echo "warning: node_modules missing. run: pnpm install"
     exit 0
   fi
-  if ! npx prettier --check $styled; then
+  if ! pnpm exec prettier --check $styled; then
     echo "error: prettier with the tailwind plugin reported issues."
     echo "fix formatting with:"
-    echo "  npx prettier --write $styled"
+    echo "  pnpm exec prettier --write $styled"
     exit 1
   fi
 fi
