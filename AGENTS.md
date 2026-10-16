@@ -12,13 +12,24 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Commit Message Language:** English
 
 ## 2. Git & Version Control Workflow
-Apply Trunk-Based Development with feature branching and strict commit hygiene.
-- **Short-Lived Branches:** Branch off `main` for each feature. Keep the branch lifespan under one day and merge back. Do not push directly to `main`.
+Apply Trunk-Based Development with feature branching and strict commit hygiene. Use this workflow for every change, including documentation edits.
+
+### 2.1. Branching
+- **Branch Before Edit:** Create a feature branch off `main` before any edit. Never edit or commit directly on `main`.
+- **Short-Lived Branches:** Keep the branch lifespan under one day. Merge the branch back to `main` when complete.
+- **No Direct Push:** Never push a commit directly to `main`. Push only feature branches.
+
+### 2.2. Committing
 - **Atomic Commits:** A commit must do exactly one thing (one feature, one fix, or one refactor).
 - **Smaller Frequent Commits:** Prefer small, frequent commits over large sprawling ones. Split work into the smallest logically complete units.
 - **Rebase WIPs:** You may write small Work-In-Progress (WIP) commits locally. Before merging, rebase and squash these WIP commits into larger, logically complete atomic commits.
 - **Working State Guarantee:** Every commit must load and render without errors. Do not leave broken states in the commit log.
 - **Conventional Commits:** Prefix all commit messages with standard tags (`feat:`, `fix:`, `refactor:`, `chore:`). Write all commit messages in English.
+
+### 2.3. Merging and Pushing
+- **Merge to Main:** Merge the feature branch into `main` after the final commit.
+- **Push Main:** Push the merged `main` to the remote origin.
+- **Delete Branch:** Delete the feature branch after the merge.
 
 ## 3. Frontend Coding Standards
 We optimize for safety, predictability, and simplicity. Apply these rules to all markup and styling.
