@@ -5,6 +5,9 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 ## 1. Project Configuration
 - **Language:** HTML
 - **Framework:** Tailwind CSS
+- **Design System:** Tailwind v4
+- **Mobile App:** Capacitor by Ionic
+- **Web Server:** Caddy
 - **Documentation Language:** English
 - **Commit Message Language:** English
 
