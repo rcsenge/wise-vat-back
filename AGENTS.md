@@ -12,7 +12,7 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 - **Commit Message Language:** English
 
 ## 2. Git & Version Control Workflow
-Apply Trunk-Based Development with feature branching and strict commit hygiene. Use this workflow for every change, including documentation edits.
+Apply Trunk-Based Development with feature branching and strict commit hygiene. Use this workflow for every change, including documentation edits. Git hooks in `.githooks/` enforce the workflow. Do not bypass the hooks.
 
 ### 2.1. Branching
 - **Branch Before Edit:** Create a feature branch off `main` before any edit. Never edit or commit directly on `main`.

@@ -1,0 +1,14 @@
+{
+  "name": "sigint-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Frontend for the SIGINT project.",
+  "scripts": {
+    "lint": "prettier --check \"**/*.{html,css}\"",
+    "lint:fix": "prettier --write \"**/*.{html,css}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}

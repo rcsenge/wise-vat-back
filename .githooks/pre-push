@@ -1,0 +1,20 @@
+#!/bin/sh
+# Prohibit direct or forced pushes to main.
+set -e
+
+while read local_ref local_sha remote_ref remote_sha; do
+  [ "$remote_ref" = "refs/heads/main" ] || continue
+  case "$local_ref" in
+    +*)
+      echo "error: force push to main is prohibited."
+      exit 1
+      ;;
+  esac
+  if [ "$local_ref" != "refs/heads/main" ]; then
+    echo "error: do not push a feature branch to main."
+    echo "merge the branch into main locally first."
+    exit 1
+  fi
+done
+
+exit 0

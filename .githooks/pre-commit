@@ -1,0 +1,28 @@
+#!/bin/sh
+# Enforce the branch and lint rules before each commit.
+set -e
+
+branch="$(git symbolic-ref --short HEAD 2>/dev/null || echo detached)"
+if [ "$branch" = "main" ]; then
+  echo "error: direct commits on main are prohibited."
+  echo "create a feature branch first:"
+  echo "  git checkout -b feat/my-change"
+  exit 1
+fi
+
+staged="$(git diff --cached --name-only --diff-filter=ACM)"
+styled="$(printf '%s\n' "$staged" | grep -E '\.(html?|css)$' || true)"
+if [ -n "$styled" ]; then
+  if [ ! -d node_modules ]; then
+    echo "warning: node_modules missing. run: npm install"
+    exit 0
+  fi
+  if ! npx prettier --check $styled; then
+    echo "error: prettier with the tailwind plugin reported issues."
+    echo "fix formatting with:"
+    echo "  npx prettier --write $styled"
+    exit 1
+  fi
+fi
+
+exit 0
