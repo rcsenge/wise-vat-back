@@ -1,1 +1,20 @@
-node_modules
+# The ignore list is a whitelist.
+# Ignore every path by default.
+*
+
+# Walk into every directory to find allowed files.
+!*/
+
+# Keep the installed dependencies ignored.
+node_modules/
+
+# Re-include the project files that this repository tracks.
+!*.md
+!*.html
+!*.css
+!package.json
+!package-lock.json
+!.githooks/**
+!.gitignore
+!.prettierrc
+!.prettierignore

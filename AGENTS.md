@@ -31,6 +31,10 @@ Apply Trunk-Based Development with feature branching and strict commit hygiene. 
 - **Push Main:** Push the merged `main` to the remote origin.
 - **Delete Branch:** Delete the feature branch after the merge.
 
+### 2.4. File Tracking
+- **Whitelist Only:** The `.gitignore` is a whitelist. It ignores every path by default. It re-includes only allowed paths.
+- **New File Check:** Confirm an untracked file is allowed before you add it. Do not force-add ignored paths.
+
 ## 3. Frontend Coding Standards
 We optimize for safety, predictability, and simplicity. Apply these rules to all markup and styling.
 
