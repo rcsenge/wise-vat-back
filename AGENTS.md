@@ -27,6 +27,11 @@ You are an AI coding agent operating in a frontend repository. Read and apply th
 ## 2. Git & Version Control Workflow
 Apply Trunk-Based Development with strict commit hygiene. Use this workflow for every change, including documentation edits. Git hooks in `.githooks/` enforce the workflow. Never bypass the hooks. A bypass is a critical defect.
 
+### 2.0. Session Start
+- **Pull First:** Pull the latest `main` at the start of every work session.
+- **Read Changes:** Read every pulled commit. Understand each change before work.
+- **Apply Changes:** Incorporate the new behavior into the design and the work.
+
 ### 2.1. Branching
 - **Branch Before Edit:** Create a feature branch off `main` before any edit. Never commit directly on `main`.
 - **Hard Prohibition:** Never run `git commit` on `main`. Never bypass the hooks. The actions are forbidden in all cases.
