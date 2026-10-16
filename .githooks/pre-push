@@ -1,5 +1,5 @@
 #!/bin/sh
-# Prohibit direct or forced pushes to main.
+# Prohibit every push to main.
 set -e
 
 while read local_ref local_sha remote_ref remote_sha; do
@@ -10,11 +10,11 @@ while read local_ref local_sha remote_ref remote_sha; do
       exit 1
       ;;
   esac
-  if [ "$local_ref" != "refs/heads/main" ]; then
-    echo "error: do not push a feature branch to main."
-    echo "merge the branch into main locally first."
-    exit 1
-  fi
+  echo "error: direct push to main is prohibited."
+  echo "push the feature branch and open a pull request instead:"
+  echo "  git push -u origin <branch>"
+  echo "  gh pr create --fill"
+  exit 1
 done
 
 exit 0
