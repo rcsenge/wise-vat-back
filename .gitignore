@@ -12,6 +12,7 @@ node_modules/
 !*.md
 !*.html
 !*.css
+!/.gitattributes
 !frontend/www/*.js
 !*.svg
 !*.woff2

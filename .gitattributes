@@ -1,0 +1,2 @@
+# Normalize markdown line endings. Agents edit these files on any operating system.
+*.md text eol=lf
