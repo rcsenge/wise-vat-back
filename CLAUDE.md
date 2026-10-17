@@ -9,9 +9,9 @@ These notes govern how Claude works in this monorepo. They complement the shared
 
 ## Coordination
 - You run as a standalone agent. You finish one deep task alone.
-- Pi agents form a swarm. They share state through `MESSAGES.md` and `PLAN.md`.
-- Read `AGENTS.md` section 5.7 for the cooperation rules.
-- Post a message in `MESSAGES.md` when you claim or finish work.
+- Pi agents form a swarm. They share state through `PLAN.md`.
+- Read `AGENTS.md` section 5.6 for the cooperation rules.
+- Append a signed entry in `PLAN.md` when you claim or finish work.
 
 ## Scope
 - Work in ONE project per task. Work in more only when the user asks.

@@ -31,8 +31,7 @@ The repository had uncommitted changes on `main` before the work started.
 git reset --hard HEAD
 ```
 
-The reset removed the staged `MESSAGES.md` change.
-It removed the unstaged changes in three frontend pages.
+The reset removed a staged change and the unstaged changes in three frontend pages.
 The working tree became clean. The reset did not remove untracked files,
 because `git clean -nd` reported none.
 

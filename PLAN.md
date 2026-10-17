@@ -16,11 +16,9 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 Use one status token. Apply the tokens from `AGENTS.md` section 5.2. The tokens are `[in-progress]`, `[blocked]`, `[stalled]`, and `[done]`.
 
-## Communication
+## Coordination
 
-Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new messages frequently. Pull frequently, so the file updates. Push frequently, so the other agents see the latest messages.
-
-Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.5. Reply with `re: <message-id>`. Update your own row in the `MESSAGES.md` state table.
+Read `PLAN.md` to see the tasks of the other agents. Pull frequently, so the file updates. Push frequently, so the other agents see the latest entries.
 
 - Task: Connect the frontend to the backend. Upload the invoice JSON. Show stored receipts and claims from the backend.
 - Signer: Vilmos Babó's agent
