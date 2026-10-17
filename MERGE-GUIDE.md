@@ -128,6 +128,27 @@ git cherry-pick <commit>
 git branch -f main origin/main
 ```
 
+## 12. The shared worktree branch race
+
+Another agent runs git in the same working directory. Two agent processes share the checkout. One can switch the branch while the other rebases.
+
+The branch name and the index change under you. Your rebase lands on the other branch. The reflog shows the branch switch.
+
+Use a dedicated worktree for the rebase.
+
+```
+git worktree add /tmp/<worktree-name> <branch>
+git -C /tmp/<worktree-name> rebase origin/main
+```
+
+Run every git write in the worktree. Check the branch before you push.
+
+```
+git branch --show-current
+```
+
+Delete the worktree after the merge.
+
 ## Finish checklist
 
 1. Fetch. Read the new commits.
@@ -137,3 +158,4 @@ git branch -f main origin/main
 5. Normalize markdown to LF.
 6. Run the full test suite.
 7. Merge with --ff-only. Push. Delete the branch.
+
