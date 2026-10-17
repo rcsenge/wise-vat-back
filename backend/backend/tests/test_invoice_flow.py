@@ -180,3 +180,17 @@ def test_closest_transaction_date_wins(client, engine):
     data["issueDate"] = "2026-09-24"
     body = client.post("/invoices", json=data).json()
     assert body["matched_transaction"]["transaction_id"] == closer_id
+
+
+def test_claims_sum_every_approved_invoice_beyond_the_result_limit(client, monkeypatch):
+    from app.services import invoice_flow
+
+    monkeypatch.setattr(invoice_flow, "MAX_CLAIM_RESULTS", 1)
+    monkeypatch.setattr(invoice_flow, "CLAIM_BATCH_SIZE", 1)
+    client.post("/invoices", json=load_invoice("at_hotel_vienna.json"))
+    client.post("/invoices", json=load_invoice("de_hotel_munich.json"))
+    client.post("/invoices", json=load_invoice("de_taxi_receipt_no_vat_id.json"))
+    body = client.get("/claims").json()
+    totals = {total["country"]: Decimal(total["refundable_vat_total"]) for total in body["per_country"]}
+    assert totals == {"AT": Decimal("26.00"), "DE": Decimal("10.50")}
+    assert [result["status"] for result in body["results"]] == ["rejected"]

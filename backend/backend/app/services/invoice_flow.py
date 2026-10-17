@@ -24,7 +24,8 @@ BACKEND = Path(__file__).resolve().parents[2]
 INVOICES_DIR = BACKEND / "seed" / "invoices"
 
 _CENT = Decimal("0.01")
-MAX_CLAIM_RECORDS = 500
+MAX_CLAIM_RESULTS = 500
+CLAIM_BATCH_SIZE = 500
 # A card payment and its invoice date differ by a few days, for example at a hotel checkout.
 MATCH_WINDOW_DAYS = 14
 MAX_MATCH_CANDIDATES = 100
@@ -197,12 +198,16 @@ def list_receipts(session: Session, limit: int = DEFAULT_RECEIPT_LIMIT) -> list[
 
 
 def compute_claims(session: Session) -> ClaimsSummary:
-    """Sum the stored approved invoices per country and currency."""
-    query = select(InvoiceRecord).order_by(col(InvoiceRecord.id)).limit(MAX_CLAIM_RECORDS)
-    results = [InvoiceResult.model_validate_json(record.result_json) for record in session.exec(query).all()]
+    """Sum every stored approved invoice per country and currency. Add the newest results."""
+    approved = (
+        select(InvoiceRecord.result_json)
+        .where(InvoiceRecord.status == "approved")
+        .order_by(col(InvoiceRecord.id))
+        .execution_options(yield_per=CLAIM_BATCH_SIZE)
+    )
     totals: dict[tuple[str, str], CountryTotal] = {}
-    for result in results:
-        for country_total in result.country_totals:
+    for result_json in session.exec(approved):
+        for country_total in InvoiceResult.model_validate_json(result_json).country_totals:
             key = (country_total.country, country_total.currency)
             current = totals.get(key)
             if current is None:
@@ -215,6 +220,8 @@ def compute_claims(session: Session) -> ClaimsSummary:
                     eligible_line_count=current.eligible_line_count + country_total.eligible_line_count,
                     transaction_ids=current.transaction_ids + country_total.transaction_ids,
                 )
+    newest = select(InvoiceRecord.result_json).order_by(col(InvoiceRecord.id).desc()).limit(MAX_CLAIM_RESULTS)
+    results = [InvoiceResult.model_validate_json(result_json) for result_json in reversed(session.exec(newest).all())]
     return ClaimsSummary(per_country=list(totals.values()), results=results)
 
 
