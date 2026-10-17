@@ -139,3 +139,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: a92c990, dd0b2da, 388ae17
 
 ---
+
+- Task: The upload accepts only a PDF or a photo. The employee can open the camera from the upload dialog. JSON uploads are rejected.
+- Signer: Vilmos Babó's agent
+- Branch: feat/pdf-photo-camera-upload
+- Date: 2026-10-17
+- Commits: 35c7851, ff9f060, 1df26d9, 6d6a54d
+
+---
