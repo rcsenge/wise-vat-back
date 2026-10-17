@@ -87,7 +87,8 @@
     return button;
   };
 
-  const createReceiptItem = (receipt, openDocument) => {
+  // The employer page shows the claim deadline once per country. Its receipts skip it.
+  const createReceiptItem = (receipt, openDocument, showDeadline) => {
     const item = element("li", "flex min-h-18 items-start gap-4 py-3");
 
     const details = element("div", "min-w-0 flex-1");
@@ -108,7 +109,11 @@
         dateFormatter.format(new Date(receipt.scannedAt || 0)),
       ),
     );
-    if (displayStatus(receipt) === "approved" && receipt.claimDeadline) {
+    if (
+      showDeadline &&
+      displayStatus(receipt) === "approved" &&
+      receipt.claimDeadline
+    ) {
       metaRow.append(
         element(
           "span",
@@ -148,10 +153,11 @@
     documentDialog.showModal();
   };
 
-  const createItem = (receipt) => createReceiptItem(receipt, openDocument);
+  const createItem = (receipt) =>
+    createReceiptItem(receipt, openDocument, false);
 
   // The optional onRender callback gets the receipts before the country filter.
-  const create = ({ approvedOnly, onRender }) => {
+  const create = ({ approvedOnly, onRender, showDeadline = false }) => {
     const receiptList = document.getElementById("receipt-list");
     const emptyState = document.getElementById("empty-state");
     const backendError = document.getElementById("backend-error");
@@ -174,7 +180,11 @@
         ? listed.filter((receipt) => receipt.country === selectedCountry)
         : listed;
 
-      receiptList.replaceChildren(...shown.map(createItem));
+      receiptList.replaceChildren(
+        ...shown.map((receipt) =>
+          createReceiptItem(receipt, openDocument, showDeadline),
+        ),
+      );
       emptyState.classList.toggle("hidden", shown.length > 0);
       if (onRender) {
         onRender(listed);

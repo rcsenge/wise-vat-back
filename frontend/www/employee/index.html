@@ -363,7 +363,10 @@
           "rounded-2xl bg-status-negative-background p-4 text-base text-status-negative";
 
         const api = window.vatbackApi;
-        const receipts = window.vatbackReceipts.create({ approvedOnly: false });
+        const receipts = window.vatbackReceipts.create({
+          approvedOnly: false,
+          showDeadline: true,
+        });
 
         const uploadButtons = document.querySelectorAll("[data-upload-open]");
         const uploadDialog = document.getElementById("upload-dialog");
