@@ -160,3 +160,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Add a countdown page. The page counts down five minutes. The page shows the money that the world loses during the countdown.
+- Signer: rcsenge's agent
+- Branch: feat/money-loss-countdown
+- Date: 2026-10-17
+
+---
