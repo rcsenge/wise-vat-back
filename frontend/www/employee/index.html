@@ -20,97 +20,158 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body class="bg-surface-screen text-ink-primary font-sans antialiased">
-    <main
-      class="mx-auto min-h-dvh w-full max-w-md px-4 pb-36 pt-[max(1.5rem,env(safe-area-inset-top))]"
-    >
-      <header class="flex items-center gap-3">
-        <span
-          class="bg-surface-neutral grid h-12 w-12 place-items-center rounded-full text-lg font-semibold"
-          aria-hidden="true"
-          >V</span
-        >
-        <p class="text-base font-semibold">vatback</p>
-      </header>
-
-      <h1 class="text-title-screen text-ink-primary mt-8 font-bold">
-        Receipts
-      </h1>
-
-      <section aria-label="Claim summary" class="mt-6">
-        <p class="text-ink-secondary text-lg">VAT you can claim</p>
-        <p
-          id="summary-claimable"
-          class="text-amount-large mt-1 font-bold tabular-nums tracking-tight"
-        >
-          €0.00
-        </p>
-      </section>
-
-      <p
-        id="backend-error"
-        class="bg-status-negative-background text-status-negative mt-6 hidden rounded-2xl p-4 text-sm"
-      ></p>
-
-      <section aria-labelledby="receipts-heading" class="mt-10">
-        <h2
-          id="receipts-heading"
-          class="text-title-section text-ink-primary font-bold"
-        >
-          Transactions
-        </h2>
-        <ul id="receipt-list" class="mt-2 list-none pl-0"></ul>
-      </section>
-
-      <section
-        id="empty-state"
-        class="mt-6 flex flex-col items-center text-center"
+    <div class="lg:grid lg:min-h-dvh lg:grid-cols-[5fr_7fr]">
+      <aside
+        class="bg-surface-neutral max-lg:hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:p-12 xl:p-16"
       >
-        <span
-          class="bg-brand-bright-green text-brand-forest-green grid h-20 w-20 place-items-center rounded-full"
-          aria-hidden="true"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-9 w-9"
+        <header class="flex items-center gap-3">
+          <span
+            class="bg-surface-screen grid h-12 w-12 place-items-center rounded-full text-lg font-semibold"
+            aria-hidden="true"
+            >V</span
           >
-            <path
-              d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
-            />
-            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-            <path d="M12 17.5v-11" />
-          </svg>
-        </span>
-        <h3
-          class="font-display text-display-medium text-ink-primary mt-8 font-black uppercase"
-        >
-          Scan it,<br />claim it back
-        </h3>
-        <p class="text-ink-secondary mt-4 max-w-xs text-lg">
-          Add your first company receipt. We check the VAT for you.
-        </p>
-      </section>
-
-      <p class="text-ink-tertiary mt-10 text-center text-sm">
+          <p class="text-base font-semibold">vatback</p>
+        </header>
+        <div class="my-auto max-w-md">
+          <span
+            class="bg-brand-bright-green text-brand-forest-green grid h-20 w-20 place-items-center rounded-full"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-9 w-9"
+            >
+              <path
+                d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+              />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+              <path d="M12 17.5v-11" />
+            </svg>
+          </span>
+          <h2
+            class="font-display text-display-large text-ink-primary mt-10 font-black uppercase xl:text-[56px]"
+          >
+            Scan it,<br />claim it back
+          </h2>
+          <p class="text-ink-secondary mt-5 text-lg">
+            Add a company receipt. We check the VAT for you.
+          </p>
+          <button
+            type="button"
+            data-upload-open
+            class="bg-brand-bright-green text-brand-forest-green ease-standard hover:bg-brand-bright-green-pressed active:scale-97 mt-8 flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-full px-6 text-lg font-semibold transition duration-150"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+              aria-hidden="true"
+            >
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+            Add document
+          </button>
+        </div>
         <a
           href="/employer"
-          class="text-brand-forest-green underline-offset-3 text-base font-semibold underline"
+          class="text-brand-forest-green underline-offset-3 self-start text-base font-semibold underline"
           >Open employer review</a
         >
-      </p>
-    </main>
+      </aside>
+
+      <main
+        class="mx-auto min-h-dvh w-full max-w-md px-4 pb-36 pt-[max(1.5rem,env(safe-area-inset-top))] lg:max-w-2xl lg:px-12 lg:pb-16 lg:pt-16"
+      >
+        <header class="flex items-center gap-3 lg:hidden">
+          <span
+            class="bg-surface-neutral grid h-12 w-12 place-items-center rounded-full text-lg font-semibold"
+            aria-hidden="true"
+            >V</span
+          >
+          <p class="text-base font-semibold">vatback</p>
+        </header>
+
+        <h1
+          id="receipts-heading"
+          class="text-title-screen text-ink-primary mt-8 font-bold lg:mt-0"
+        >
+          Receipts
+        </h1>
+
+        <p
+          id="backend-error"
+          class="bg-status-negative-background text-status-negative mt-6 hidden rounded-2xl p-4 text-sm"
+        ></p>
+
+        <ul
+          id="receipt-list"
+          aria-labelledby="receipts-heading"
+          class="mt-4 list-none pl-0"
+        ></ul>
+
+        <section id="empty-state" class="mt-6">
+          <div class="flex flex-col items-center text-center lg:hidden">
+            <span
+              class="bg-brand-bright-green text-brand-forest-green grid h-20 w-20 place-items-center rounded-full"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-9 w-9"
+              >
+                <path
+                  d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+                />
+                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+                <path d="M12 17.5v-11" />
+              </svg>
+            </span>
+            <h2
+              class="font-display text-display-medium text-ink-primary mt-8 font-black uppercase"
+            >
+              Scan it,<br />claim it back
+            </h2>
+            <p class="text-ink-secondary mt-4 max-w-xs text-lg">
+              Add your first company receipt. We check the VAT for you.
+            </p>
+          </div>
+          <p class="text-ink-secondary text-lg max-lg:hidden">
+            No receipts yet. Add your first one on the left.
+          </p>
+        </section>
+
+        <p class="mt-10 text-center lg:hidden">
+          <a
+            href="/employer"
+            class="text-brand-forest-green underline-offset-3 text-base font-semibold underline"
+            >Open employer review</a
+          >
+        </p>
+      </main>
+    </div>
 
     <div
-      class="bg-surface-screen/95 fixed inset-x-0 bottom-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur"
+      class="bg-surface-screen/95 fixed inset-x-0 bottom-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur lg:hidden"
     >
       <div class="mx-auto max-w-md">
         <button
           type="button"
-          id="upload-button"
+          data-upload-open
           class="bg-brand-bright-green text-brand-forest-green ease-standard hover:bg-brand-bright-green-pressed active:scale-97 flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-full px-6 text-lg font-semibold transition duration-150"
         >
           <svg
@@ -134,10 +195,10 @@
     <dialog
       id="upload-dialog"
       aria-labelledby="upload-dialog-title"
-      class="rounded-t-4xl bg-surface-screen text-ink-primary shadow-sheet backdrop:bg-surface-overlay mx-auto mb-0 mt-auto max-h-[90dvh] w-full max-w-md px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2"
+      class="rounded-t-4xl bg-surface-screen text-ink-primary shadow-sheet backdrop:bg-surface-overlay lg:rounded-4xl mx-auto mb-0 mt-auto max-h-[90dvh] w-full max-w-md px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 lg:mb-auto lg:max-w-lg lg:p-8"
     >
       <div
-        class="bg-line-neutral mx-auto mb-6 h-1 w-9 rounded-full"
+        class="bg-line-neutral mx-auto mb-6 h-1 w-9 rounded-full lg:hidden"
         aria-hidden="true"
       ></div>
       <h2
@@ -242,7 +303,7 @@
         const api = window.vatbackApi;
         const receipts = window.vatbackReceipts.create({ approvedOnly: false });
 
-        const uploadButton = document.getElementById("upload-button");
+        const uploadButtons = document.querySelectorAll("[data-upload-open]");
         const uploadDialog = document.getElementById("upload-dialog");
         const uploadForm = document.getElementById("upload-form");
         const invoiceInput = document.getElementById("invoice-input");
@@ -347,7 +408,7 @@
           return `Approved. Refundable VAT: ${api.formatTotals(totals)}`;
         };
 
-        uploadButton.addEventListener("click", () => {
+        const openUploadDialog = () => {
           uploadForm.reset();
           photoDataUrl = null;
           photoPreview.classList.add("hidden");
@@ -355,6 +416,10 @@
           submitButton.disabled = false;
           submitButton.textContent = SUBMIT_LABEL;
           uploadDialog.showModal();
+        };
+
+        uploadButtons.forEach((button) => {
+          button.addEventListener("click", openUploadDialog);
         });
 
         photoInput.addEventListener("change", async () => {
