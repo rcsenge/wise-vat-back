@@ -1,5 +1,6 @@
 """Shared fixtures. Provide an app test client with an in-memory database."""
 import json
+from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
@@ -10,6 +11,7 @@ from sqlmodel import Session, SQLModel, create_engine
 
 from app.db import get_session
 from app.main import app
+from seed.seed import paid_on
 
 BACKEND = Path(__file__).resolve().parents[1]
 INVOICES_DIR = BACKEND / "seed" / "invoices"
@@ -42,14 +44,14 @@ def engine():
         session.add(pln)
         session.flush()
         transactions = [
-            Transaction(account_id=eur.id, amount=Decimal("261.00"), currency="EUR", country="AT", merchant="Hotel Ringstrasse GmbH", kind="card"),
-            Transaction(account_id=eur.id, amount=Decimal("32.10"), currency="EUR", country="DE", merchant="Taxi Beispiel", kind="card"),
-            Transaction(account_id=eur.id, amount=Decimal("160.50"), currency="EUR", country="DE", merchant="Hotel München Mitte GmbH", kind="card"),
-            Transaction(account_id=pln.id, amount=Decimal("368.40"), currency="PLN", country="PL", merchant="Restauracja Przykładowa Sp. z o.o.", kind="card"),
-            Transaction(account_id=eur.id, amount=Decimal("292.50"), currency="EUR", country="DE", merchant="Hotel Spreeufer Berlin GmbH", kind="card"),
-            Transaction(account_id=eur.id, amount=Decimal("47.40"), currency="EUR", country="AT", merchant="Gasthaus Zum Goldenen Hirschen", kind="card"),
+            Transaction(account_id=eur.id, amount=Decimal("261.00"), currency="EUR", country="AT", merchant="Hotel Ringstrasse GmbH", kind="card", created_at=paid_on(date(2026, 9, 17))),
+            Transaction(account_id=eur.id, amount=Decimal("32.10"), currency="EUR", country="DE", merchant="Taxi Beispiel", kind="card", created_at=paid_on(date(2026, 10, 8))),
+            Transaction(account_id=eur.id, amount=Decimal("160.50"), currency="EUR", country="DE", merchant="Hotel München Mitte GmbH", kind="card", created_at=paid_on(date(2026, 9, 28))),
+            Transaction(account_id=pln.id, amount=Decimal("368.40"), currency="PLN", country="PL", merchant="Restauracja Przykładowa Sp. z o.o.", kind="card", created_at=paid_on(date(2026, 10, 2))),
+            Transaction(account_id=eur.id, amount=Decimal("292.50"), currency="EUR", country="DE", merchant="Hotel Spreeufer Berlin GmbH", kind="card", created_at=paid_on(date(2026, 10, 14))),
+            Transaction(account_id=eur.id, amount=Decimal("47.40"), currency="EUR", country="AT", merchant="Gasthaus Zum Goldenen Hirschen", kind="card", created_at=paid_on(date(2026, 10, 11))),
             # VAT back is not supported in the United Kingdom.
-            Transaction(account_id=eur.id, amount=Decimal("120.00"), currency="GBP", country="GB", merchant="London Hotel Ltd", kind="card"),
+            Transaction(account_id=eur.id, amount=Decimal("120.00"), currency="GBP", country="GB", merchant="London Hotel Ltd", kind="card", created_at=paid_on(date(2026, 10, 2))),
         ]
         for transaction in transactions:
             session.add(transaction)

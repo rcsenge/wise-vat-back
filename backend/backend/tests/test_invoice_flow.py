@@ -138,3 +138,45 @@ def test_seed_invoices_keep_non_ascii_names():
 
     names = {invoice.supplier.name for invoice in iter_seed_invoices()}
     assert "Hotel München Mitte GmbH" in names
+
+
+def test_transaction_in_other_country_is_not_matched(client):
+    data = load_invoice("at_hotel_vienna.json")
+    data["supplier"]["address"]["countryCode"] = "DE"
+    body = client.post("/invoices", json=data).json()
+    assert body["status"] == "rejected"
+    assert any("No matching" in reason for reason in body["reasons"])
+
+
+def test_transaction_outside_date_window_is_not_matched(client):
+    data = load_invoice("at_hotel_vienna.json")
+    data["issueDate"] = "2026-06-01"
+    body = client.post("/invoices", json=data).json()
+    assert body["status"] == "rejected"
+    assert any("No matching" in reason for reason in body["reasons"])
+
+
+def test_transaction_a_few_days_off_is_matched(client):
+    data = load_invoice("at_hotel_vienna.json")
+    data["issueDate"] = "2026-09-20"
+    body = client.post("/invoices", json=data).json()
+    assert body["status"] == "approved"
+
+
+def test_closest_transaction_date_wins(client, engine):
+    from datetime import date
+
+    from sqlmodel import Session
+
+    from app.models.transaction import Transaction
+    from seed.seed import paid_on
+
+    with Session(engine) as session:
+        closer = Transaction(account_id=1, amount=Decimal("261.00"), currency="EUR", country="AT", merchant="Hotel Ringstrasse GmbH", kind="card", created_at=paid_on(date(2026, 9, 25)))
+        session.add(closer)
+        session.commit()
+        closer_id = closer.id
+    data = load_invoice("at_hotel_vienna.json")
+    data["issueDate"] = "2026-09-24"
+    body = client.post("/invoices", json=data).json()
+    assert body["matched_transaction"]["transaction_id"] == closer_id

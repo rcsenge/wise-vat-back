@@ -9,6 +9,7 @@ Each sample gets a matching card transaction. One sample has no transaction on p
 
 Run: python -m seed.seed
 """
+from datetime import date, datetime, time, timezone
 from decimal import Decimal
 from pathlib import Path
 
@@ -26,6 +27,11 @@ SAMPLE_INVOICES_DIR = Path(__file__).resolve().parent / "sample_invoices"
 SAMPLE_INVOICE_NUMBERS_WITHOUT_TRANSACTION: frozenset[str] = frozenset({"IT-2026-1444"})
 
 
+def paid_on(day: date) -> datetime:
+    """Return the card payment time on the invoice issue date (UTC noon)."""
+    return datetime.combine(day, time(hour=12), tzinfo=timezone.utc)
+
+
 def sample_transactions(samples: list[InvoiceSubmission], account_ids: dict[str, int]) -> list[Transaction]:
     """Return one card transaction per sample invoice with the same total, currency and country."""
     return [
@@ -36,6 +42,7 @@ def sample_transactions(samples: list[InvoiceSubmission], account_ids: dict[str,
             country=sample.supplier.address.country_code,
             merchant=sample.supplier.name,
             kind="card",
+            created_at=paid_on(sample.issue_date),
         )
         for sample in samples
         if sample.invoice_number not in SAMPLE_INVOICE_NUMBERS_WITHOUT_TRANSACTION
@@ -64,13 +71,13 @@ def run(submit_invoices: bool = False) -> None:
         samples = iter_seed_invoices(SAMPLE_INVOICES_DIR)
 
         transactions = [
-            Transaction(account_id=eur_account.id, amount=Decimal("261.00"), currency="EUR", country="AT", merchant="Hotel Ringstrasse GmbH", kind="card"),
-            Transaction(account_id=eur_account.id, amount=Decimal("32.10"), currency="EUR", country="DE", merchant="Taxi Beispiel", kind="card"),
-            Transaction(account_id=eur_account.id, amount=Decimal("160.50"), currency="EUR", country="DE", merchant="Hotel München Mitte GmbH", kind="card"),
-            Transaction(account_id=pln_account.id, amount=Decimal("368.40"), currency="PLN", country="PL", merchant="Restauracja Przykładowa Sp. z o.o.", kind="card"),
+            Transaction(account_id=eur_account.id, amount=Decimal("261.00"), currency="EUR", country="AT", merchant="Hotel Ringstrasse GmbH", kind="card", created_at=paid_on(date(2026, 9, 17))),
+            Transaction(account_id=eur_account.id, amount=Decimal("32.10"), currency="EUR", country="DE", merchant="Taxi Beispiel", kind="card", created_at=paid_on(date(2026, 10, 8))),
+            Transaction(account_id=eur_account.id, amount=Decimal("160.50"), currency="EUR", country="DE", merchant="Hotel München Mitte GmbH", kind="card", created_at=paid_on(date(2026, 9, 28))),
+            Transaction(account_id=pln_account.id, amount=Decimal("368.40"), currency="PLN", country="PL", merchant="Restauracja Przykładowa Sp. z o.o.", kind="card", created_at=paid_on(date(2026, 10, 2))),
             # The sample PDFs in seed/documents/ match these two transactions.
-            Transaction(account_id=eur_account.id, amount=Decimal("292.50"), currency="EUR", country="DE", merchant="Hotel Spreeufer Berlin GmbH", kind="card"),
-            Transaction(account_id=eur_account.id, amount=Decimal("47.40"), currency="EUR", country="AT", merchant="Gasthaus Zum Goldenen Hirschen", kind="card"),
+            Transaction(account_id=eur_account.id, amount=Decimal("292.50"), currency="EUR", country="DE", merchant="Hotel Spreeufer Berlin GmbH", kind="card", created_at=paid_on(date(2026, 10, 14))),
+            Transaction(account_id=eur_account.id, amount=Decimal("47.40"), currency="EUR", country="AT", merchant="Gasthaus Zum Goldenen Hirschen", kind="card", created_at=paid_on(date(2026, 10, 11))),
         ]
         transactions.extend(sample_transactions(samples, account_ids))
         for transaction in transactions:
