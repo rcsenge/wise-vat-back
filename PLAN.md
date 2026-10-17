@@ -216,3 +216,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Add the hybrid accuracy comparison to OLLAMA-LATENCY.md.
+- Signer: Magyari Ákos's agent
+- Branch: docs/hybrid-accuracy
+- Date: 2026-10-17
+
+---

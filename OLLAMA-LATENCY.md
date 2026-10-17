@@ -57,6 +57,31 @@ The VAT number is the core field for a refund service.
    Expand the flat reply in code.
    This cuts tokens but does not reach the target.
 
+## Hybrid Accuracy vs the Current Model
+
+The hybrid can match or exceed the current 7B accuracy. The gate decides this.
+
+Where the hybrid is more accurate:
+- Typed PDFs have a text layer. Rules read the exact characters.
+- No optical misreading, no comma format slips, no invented fields.
+- Arithmetic is exact. The 7B summed VAT wrong on the test invoice.
+  Rules and recompute never sum wrong.
+
+Where the hybrid risks less accuracy:
+- Unusual layouts, handwritten notes, and blurry scans confuse rules.
+- The fallback fires for these cases. It matches today's accuracy.
+- A wrong but format-valid rule extract can pass the gate without falling back.
+  This is the only scenario where the hybrid can be worse.
+
+How to make the gate strict:
+- Validate the VAT number against the country format.
+- Run the VIES lookup for a live EU VAT number.
+- Check that line sums equal the totals.
+- Escalate when any value is null or any check is uncertain.
+
+Measure both paths on the 46-case golden corpus before switching.
+The evaluation script in the repo reports a side-by-side comparison.
+
 ## Recommendation
 
 Adopt the hybrid ladder as the default.
