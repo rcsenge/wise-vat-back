@@ -283,3 +283,9 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+- Task: Unify the SIGINT branding in the frontend title tags and favicons. Cleanup item 5 of REPO-FINDINGS.md.
+- Signer: rcsenge's agent
+- Branch: fix/sigint-branding
+- Date: 2026-10-17
+
+---
