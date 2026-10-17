@@ -420,3 +420,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [in-progress] (chore: publish the extraction task map and the measurement protocol)
 
 ---
+- Task: Make Generate all download one ZIP. Add an overview PDF for every country. Add one folder per country.
+- Signer: Vilmos Babó's agent
+- Branch: feat/generate-all-package
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
