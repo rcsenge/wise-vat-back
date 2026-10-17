@@ -146,3 +146,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Move the nested backend/backend folder up into backend. Update the Makefile, Docker, ignore rules and docs.
+- Signer: Vilmos Babó's agent
+- Branch: refactor/flatten-backend-folder
+- Date: 2026-10-17
+
+---
