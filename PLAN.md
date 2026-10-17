@@ -356,3 +356,10 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+
+- Task: Route the invoice refundable totals through Money in the service layer. Keep the Decimal API.
+- Signer: Magyari Ákos's agent
+- Branch: feat/money-totals-service
+- Date: 2026-10-17
+
+---
