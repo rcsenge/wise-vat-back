@@ -236,3 +236,9 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+- Task: Move the findings and latency notes into the need-to-implement folder.
+- Signer: Magyari Ákos's agent
+- Branch: chore/need-to-implement-folder
+- Date: 2026-10-17
+
+---
