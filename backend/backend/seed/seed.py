@@ -39,6 +39,9 @@ def run(submit_invoices: bool = False) -> None:
             Transaction(account_id=eur_account.id, amount=Decimal("32.10"), currency="EUR", country="DE", merchant="Taxi Beispiel", kind="card"),
             Transaction(account_id=eur_account.id, amount=Decimal("160.50"), currency="EUR", country="DE", merchant="Hotel München Mitte GmbH", kind="card"),
             Transaction(account_id=pln_account.id, amount=Decimal("368.40"), currency="PLN", country="PL", merchant="Restauracja Przykładowa Sp. z o.o.", kind="card"),
+            # The sample PDFs in seed/documents/ match these two transactions.
+            Transaction(account_id=eur_account.id, amount=Decimal("292.50"), currency="EUR", country="DE", merchant="Hotel Spreeufer Berlin GmbH", kind="card"),
+            Transaction(account_id=eur_account.id, amount=Decimal("47.40"), currency="EUR", country="AT", merchant="Gasthaus Zum Goldenen Hirschen", kind="card"),
         ]
         for transaction in transactions:
             session.add(transaction)

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "4711",
+  "issueDate": "2026-10-11",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Gasthaus Zum Goldenen Hirschen",
+    "vatNumber": null,
+    "address": { "street": "Getreidegasse 9", "postalCode": "5020", "city": "Salzburg", "countryCode": "AT" }
+  },
+  "customer": { "name": null, "vatNumber": null },
+  "lines": [
+    { "description": "Wiener Schnitzel mit Erdäpfelsalat", "category": "FOOD_AND_DRINK", "netAmount": "35.45", "vatRate": 10, "vatAmount": "3.55", "grossAmount": "39.00" },
+    { "description": "Almdudler 0,5 l", "category": "FOOD_AND_DRINK", "netAmount": "7.00", "vatRate": 20, "vatAmount": "1.40", "grossAmount": "8.40" }
+  ],
+  "totals": { "netAmount": "42.45", "vatAmount": "4.95", "grossAmount": "47.40" },
+  "cardLast4": "4821"
+}
