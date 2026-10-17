@@ -8,7 +8,7 @@
     />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <title>vatback - Five Minutes</title>
+    <title>vatback</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,88 +20,41 @@
   </head>
   <body class="bg-surface-screen text-ink-primary font-sans antialiased">
     <main
-      class="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))]"
+      class="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]"
     >
-      <h1
-        class="font-display text-display-large text-center font-black uppercase"
-      >
-        Five minutes.<br />€190,259 lost.
-      </h1>
-      <p class="text-ink-secondary mt-4 text-center text-base">
-        Unclaimed VAT costs the world €20 billion every year. Watch the money
-        go.
-      </p>
+      <progress
+        id="countdown-progress"
+        class="bg-surface-neutral [&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-neutral [&::-webkit-progress-value]:bg-brand-bright-green h-1 w-full appearance-none overflow-hidden rounded-full [&::-moz-progress-bar]:rounded-full [&::-webkit-progress-value]:rounded-full"
+        max="300"
+        value="0"
+        aria-label="Progress"
+      ></progress>
 
       <section
-        class="bg-surface-neutral mt-8 rounded-3xl px-6 py-8 text-center"
-        aria-labelledby="countdown-timer-label"
+        class="flex flex-1 flex-col items-center justify-center text-center"
       >
         <p
-          id="countdown-timer-label"
-          class="text-ink-tertiary text-sm font-semibold"
-        >
-          Time left
-        </p>
-        <p
           id="countdown-timer"
-          class="mt-1 text-[64px] font-bold tabular-nums leading-none"
+          class="bg-brand-light-green text-brand-forest-green flex h-12 items-center rounded-full px-6 text-xl font-semibold tabular-nums"
           role="timer"
-          aria-live="off"
+          aria-label="Timer"
         >
           05:00
         </p>
-        <progress
-          id="countdown-progress"
-          class="[&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-screen [&::-webkit-progress-value]:bg-brand-bright-green bg-surface-screen mt-6 h-3 w-full appearance-none overflow-hidden rounded-full [&::-moz-progress-bar]:rounded-full [&::-webkit-progress-value]:rounded-full"
-          max="300"
-          value="0"
-          aria-label="Countdown progress"
-        ></progress>
-      </section>
-
-      <section class="mt-6 text-center" aria-labelledby="countdown-loss-label">
         <p
-          id="countdown-loss-label"
-          class="text-ink-tertiary text-sm font-semibold"
+          id="countdown-amount"
+          class="font-display mt-10 text-[80px] font-black tabular-nums leading-[0.85] tracking-[-0.015em]"
         >
-          Money lost so far
+          0
         </p>
-        <p class="mt-1 tabular-nums">
-          <span id="countdown-loss" class="text-amount-large font-bold"
-            >€0</span
-          >
-          <span class="text-ink-secondary text-base font-semibold">EUR</span>
-        </p>
+        <p class="text-ink-secondary mt-4 text-lg font-semibold">EUR</p>
       </section>
 
-      <ul class="mt-8 flex flex-col gap-3">
-        <li
-          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
-        >
-          <span class="text-ink-secondary text-base">Every second</span>
-          <span class="text-base font-semibold tabular-nums">€634</span>
-        </li>
-        <li
-          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
-        >
-          <span class="text-ink-secondary text-base">Every minute</span>
-          <span class="text-base font-semibold tabular-nums">€38,052</span>
-        </li>
-        <li
-          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
-        >
-          <span class="text-ink-secondary text-base">Every year</span>
-          <span class="text-base font-semibold tabular-nums"
-            >€20,000,000,000</span
-          >
-        </li>
-      </ul>
-
-      <div class="mt-auto flex flex-col gap-3 pt-8">
+      <div class="flex flex-col gap-3">
         <button
           id="countdown-button-start"
           type="button"
-          class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed h-14 w-full rounded-full text-lg font-semibold"
+          class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed disabled:bg-surface-neutral disabled:text-ink-tertiary h-14 w-full rounded-full text-lg font-semibold"
         >
           Start
         </button>

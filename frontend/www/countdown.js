@@ -1,4 +1,4 @@
-// The countdown page shows the money that the world loses in five minutes.
+// The countdown page shows a growing euro amount during five minutes.
 "use strict";
 
 const COUNTDOWN_DURATION_SECONDS = 300;
@@ -9,13 +9,11 @@ const LOSS_PER_SECOND_EUR = LOSS_PER_YEAR_EUR / SECONDS_PER_YEAR;
 
 const timerElement = document.getElementById("countdown-timer");
 const progressElement = document.getElementById("countdown-progress");
-const lossElement = document.getElementById("countdown-loss");
+const amountElement = document.getElementById("countdown-amount");
 const startButton = document.getElementById("countdown-button-start");
 const resetButton = document.getElementById("countdown-button-reset");
 
-const euroFormat = new Intl.NumberFormat("en-IE", {
-  style: "currency",
-  currency: "EUR",
+const amountFormat = new Intl.NumberFormat("en-IE", {
   maximumFractionDigits: 0,
 });
 
@@ -40,7 +38,7 @@ function render(elapsedSeconds) {
   const seconds = String(remainingSeconds % 60).padStart(2, "0");
   timerElement.textContent = `${minutes}:${seconds}`;
   progressElement.value = elapsedSeconds;
-  lossElement.textContent = euroFormat.format(
+  amountElement.textContent = amountFormat.format(
     elapsedSeconds * LOSS_PER_SECOND_EUR,
   );
 }
