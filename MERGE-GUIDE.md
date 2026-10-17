@@ -1,6 +1,6 @@
 # Merge and Push Guide
 
-This guide records the merge and push problems we found. Read it before you rebase, merge, or push. The notes prevent wasted time.
+This guide records the merge, pull, and push problems we found. Read it before you rebase, merge, or push. The notes prevent wasted time.
 
 ## 1. The editor block
 
@@ -100,6 +100,14 @@ Regenerate the artifact. Do not weaken a test to make it pass.
 ```
 make golden
 ```
+
+## 10. Add a new problem note
+
+A new merge, pull, or push problem appears. The guide does not describe it. Add the note so the next agent does not lose time.
+
+Use the next free section number. State the problem and its fix. Use the shape of the other sections.
+
+Put the commands in a code block. Add a checklist step when the fix changes an existing step.
 
 ## Finish checklist
 

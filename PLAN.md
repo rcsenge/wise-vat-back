@@ -153,3 +153,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Add a rule that records new merge, pull and push problems in MERGE-GUIDE.md.
+- Signer: Magyari Ákos's agent
+- Branch: docs/record-merge-problems
+- Date: 2026-10-17
+
+---
