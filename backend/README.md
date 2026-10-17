@@ -49,6 +49,22 @@ Sample PDFs live in `backend/seed/documents/`:
 
 Each PDF has an `.expected.json` file with the correct extraction. The tests use it in place of the AI. Regenerate the PDFs with `cd backend && uv run --with reportlab python -m seed.make_documents`.
 
+## Testing
+
+Two layers cover the system. Deterministic tests run with `make test`. The stochastic AI measurement runs with `make eval-ai`.
+
+### Golden corpus (`make test`)
+
+`tests/test_golden_corpus.py` runs every invoice in `seed/invoices/` and `seed/sample_invoices/` through the full flow. Each case runs in a fresh database with one matching transaction. The result must match the frozen outcome in `seed/golden/`. The corpus has 46 cases. Pytest reports the pass percentage in its summary.
+
+The unit tests cover the rules, the money math, the schema, and the upload contract. They live in `tests/` and stay deterministic.
+
+Regenerate the golden sidecars with `make golden`. Review the sidecars by hand after a rule change. They are the ground truth of the demo.
+
+### AI extraction measurement (`make eval-ai`)
+
+`evaluation/evaluate_extraction.py` reads the sample PDFs in `seed/documents/` with the local AI and compares the extraction against the hand-checked `.expected.json` sidecars. It also compares the final decision. The script prints per-file mismatches and an aggregate field accuracy. It exits with code 2 when Ollama is not running. Run it several times and report the accuracy range.
+
 ## Layout
 
 ```

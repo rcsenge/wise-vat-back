@@ -24,6 +24,7 @@
 !backend/seed/**/*.json
 !backend/seed/documents/*.pdf
 !backend/tests/**/*.py
+!backend/evaluation/**/*.py
 !backend/schemas/**
 !backend/config/**
 
