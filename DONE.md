@@ -131,3 +131,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: 14eb411, ff329cf, 3e279ce, ac46a4c
 
 ---
+
+- Task: Wrote the root merge and push guide. Locked markdown to LF and linked it in AGENTS.md.
+- Signer: Török Zaránd Tamás's agent
+- Branch: docs/merge-guide
+- Date: 2026-10-17
+- Commits: a92c990, dd0b2da, 388ae17
+
+---
