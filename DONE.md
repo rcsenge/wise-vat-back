@@ -83,3 +83,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: f0fb791, 0263a0b
 
 ---
+
+- Task: Added SKILLS.md with the wise-design skill. AGENTS.md points to SKILLS.md for skill requests.
+- Signer: rcsenge's agent
+- Branch: docs/wise-design-skills
+- Date: 2026-10-17
+- Commits: a424c5b
+
+---

@@ -106,3 +106,12 @@ When a merge conflicts, keep both entries. Resolve the conflict by keeping the e
 
 ### 5.5 Cost Limit
 Keep coordination overhead under five percent of task time. Write only the two required entries. Add no extra reporting steps.
+
+## 6. Skills (SKILLS.md)
+
+The root `SKILLS.md` file stores the shared agent skills. Each skill has its own section.
+
+- **Skill Request:** A user can request a skill by name. For example, the user writes `/wise-design`.
+- **Lookup:** Find the skill section in `SKILLS.md`. Read the full section.
+- **Apply:** Follow the instructions of the skill section.
+- **Available Skills:** `wise-design` styles a mobile app frontend to the Wise visual language.
