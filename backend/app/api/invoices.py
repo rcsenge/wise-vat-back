@@ -1,5 +1,5 @@
 """Invoice intake, receipts list and claim summary endpoints. Keep thin: call the service."""
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Response, UploadFile
 from pydantic import ValidationError
 from sqlmodel import Session
 
@@ -13,7 +13,7 @@ from app.schemas.invoice_flow import (
     InvoiceSubmission,
     ReceiptView,
 )
-from app.services import invoice_flow
+from app.services import claim_package, invoice_flow
 
 router = APIRouter(tags=["invoices"])
 
@@ -60,3 +60,25 @@ def list_receipts(
 @router.get("/claims", response_model=ClaimsSummary)
 def get_claims(session: Session = Depends(get_session)) -> ClaimsSummary:
     return invoice_flow.compute_claims(session)
+
+
+@router.get(
+    "/claims/package",
+    response_class=Response,
+    responses={200: {"content": {"application/zip": {}}, "description": "The claim package as a ZIP file."}},
+)
+def download_claim_package(
+    country: str = Query(pattern=r"^[A-Z]{2}$", description="The Member State of refund, for example AT."),
+    year: int = Query(ge=2000, le=2100, description="The refund period: the calendar year of the invoices."),
+    session: Session = Depends(get_session),
+) -> Response:
+    """Return the package that the accountant needs for the refund application of one country and year."""
+    try:
+        package = claim_package.build_claim_package(session, country, year)
+    except claim_package.PackageError as error:
+        raise HTTPException(status_code=error.status_code, detail={"reasons": error.reasons}) from error
+    return Response(
+        content=package.content,
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="{package.filename}"'},
+    )
