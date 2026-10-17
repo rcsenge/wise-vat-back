@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1007",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Autorimessa Centrale",
+    "vatNumber": "IT12345678901",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "20123",
+      "city": "Milano",
+      "countryCode": "IT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Sosta auto 24 ore",
+      "category": "VEHICLE_EXPENSES",
+      "netAmount": "28.50",
+      "vatRate": "22.0",
+      "vatAmount": "6.27",
+      "grossAmount": "34.77"
+    }
+  ],
+  "totals": {
+    "netAmount": "28.50",
+    "vatAmount": "6.27",
+    "grossAmount": "34.77"
+  },
+  "cardLast4": "4821"
+}

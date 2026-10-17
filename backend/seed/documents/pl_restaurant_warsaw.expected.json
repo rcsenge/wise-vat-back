@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "FV/2026/10/0457",
+  "issueDate": "2026-10-02",
+  "currency": "PLN",
+  "supplier": {
+    "name": "Restauracja Przykładowa Sp. z o.o.",
+    "vatNumber": "PL1234567890",
+    "address": {
+      "street": "ul. Przykładowa 7",
+      "postalCode": "00-001",
+      "city": "Warszawa",
+      "countryCode": "PL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Usługa gastronomiczna",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "250.00",
+      "vatRate": "8",
+      "vatAmount": "20.00",
+      "grossAmount": "270.00"
+    },
+    {
+      "description": "Wino",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "80.00",
+      "vatRate": "23",
+      "vatAmount": "18.40",
+      "grossAmount": "98.40"
+    }
+  ],
+  "totals": {
+    "netAmount": "330.00",
+    "vatAmount": "38.40",
+    "grossAmount": "368.40"
+  },
+  "cardLast4": "4821"
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "NL-2026-1518",
+  "issueDate": "2026-10-03",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Rotterdam Ahoy B.V.",
+    "vatNumber": "NL801234567B01",
+    "address": {
+      "street": "Ahoyweg 10",
+      "postalCode": "3084 BA",
+      "city": "Rotterdam",
+      "countryCode": "NL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Conferentieticket",
+      "category": "FAIR_ADMISSION",
+      "netAmount": "520.00",
+      "vatRate": "21",
+      "vatAmount": "109.20",
+      "grossAmount": "629.20"
+    }
+  ],
+  "totals": {
+    "netAmount": "520.00",
+    "vatAmount": "109.20",
+    "grossAmount": "629.20"
+  },
+  "cardLast4": "4821"
+}

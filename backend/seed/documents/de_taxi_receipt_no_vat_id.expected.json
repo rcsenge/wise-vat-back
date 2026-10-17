@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": null,
+  "issueDate": "2026-10-08",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Taxi Beispiel",
+    "vatNumber": null,
+    "address": {
+      "street": null,
+      "postalCode": null,
+      "city": "München",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": null,
+    "vatNumber": null
+  },
+  "lines": [
+    {
+      "description": "Fahrt Flughafen - Messe",
+      "category": "TRAVEL",
+      "netAmount": "30.00",
+      "vatRate": "7",
+      "vatAmount": "2.10",
+      "grossAmount": "32.10"
+    }
+  ],
+  "totals": {
+    "netAmount": "30.00",
+    "vatAmount": "2.10",
+    "grossAmount": "32.10"
+  },
+  "cardLast4": null
+}

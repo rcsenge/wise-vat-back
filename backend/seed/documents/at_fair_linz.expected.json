@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1017",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Messezentrum Linz GmbH",
+    "vatNumber": "ATU61234567",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "4021",
+      "city": "Linz",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Fachmesse Eintritt",
+      "category": "FAIR_ADMISSION",
+      "netAmount": "46.00",
+      "vatRate": "20.0",
+      "vatAmount": "9.20",
+      "grossAmount": "55.20"
+    }
+  ],
+  "totals": {
+    "netAmount": "46.00",
+    "vatAmount": "9.20",
+    "grossAmount": "55.20"
+  },
+  "cardLast4": "4821"
+}

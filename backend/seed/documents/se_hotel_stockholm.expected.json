@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "SE-2026-1777",
+  "issueDate": "2026-10-14",
+  "currency": "SEK",
+  "supplier": {
+    "name": "Hotel Gamla Stan AB",
+    "vatNumber": "SE556677889901",
+    "address": {
+      "street": "Lilla Nygatan 25",
+      "postalCode": "111 28",
+      "city": "Stockholm",
+      "countryCode": "SE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Logi, 2 nätter",
+      "category": "ACCOMMODATION",
+      "netAmount": "2400.00",
+      "vatRate": "12",
+      "vatAmount": "288.00",
+      "grossAmount": "2688.00"
+    },
+    {
+      "description": "Frukost",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "380.00",
+      "vatRate": "12",
+      "vatAmount": "45.60",
+      "grossAmount": "425.60"
+    }
+  ],
+  "totals": {
+    "netAmount": "2780.00",
+    "vatAmount": "333.60",
+    "grossAmount": "3113.60"
+  },
+  "cardLast4": "4821"
+}

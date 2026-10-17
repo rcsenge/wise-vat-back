@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "IT-2026-1370",
+  "issueDate": "2026-09-24",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hotel Duomo Milano S.r.l.",
+    "vatNumber": "IT07643520965",
+    "address": {
+      "street": "Via San Raffaele 1",
+      "postalCode": "20121",
+      "city": "Milano",
+      "countryCode": "IT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Pernottamento, 3 notti",
+      "category": "ACCOMMODATION",
+      "netAmount": "390.00",
+      "vatRate": "10",
+      "vatAmount": "39.00",
+      "grossAmount": "429.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "390.00",
+    "vatAmount": "39.00",
+    "grossAmount": "429.00"
+  },
+  "cardLast4": "4821"
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CZ-2026-1629",
+  "issueDate": "2026-10-09",
+  "currency": "CZK",
+  "supplier": {
+    "name": "Hotel U Zlaté Studně s.r.o.",
+    "vatNumber": "CZ26745941",
+    "address": {
+      "street": "U Zlaté studně 166/4",
+      "postalCode": "118 00",
+      "city": "Praha",
+      "countryCode": "CZ"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Ubytování, 2 noci",
+      "category": "ACCOMMODATION",
+      "netAmount": "6400.00",
+      "vatRate": "12",
+      "vatAmount": "768.00",
+      "grossAmount": "7168.00"
+    },
+    {
+      "description": "Snídaně",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "850.00",
+      "vatRate": "12",
+      "vatAmount": "102.00",
+      "grossAmount": "952.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "7250.00",
+    "vatAmount": "870.00",
+    "grossAmount": "8120.00"
+  },
+  "cardLast4": "4821"
+}

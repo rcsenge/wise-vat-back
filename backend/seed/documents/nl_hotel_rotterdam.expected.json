@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1009",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hilton Rotterdam",
+    "vatNumber": "NL824567890B01",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "3013",
+      "city": "Rotterdam",
+      "countryCode": "NL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Kamer en ontbijt",
+      "category": "ACCOMMODATION",
+      "netAmount": "190.00",
+      "vatRate": "9.0",
+      "vatAmount": "17.10",
+      "grossAmount": "207.10"
+    }
+  ],
+  "totals": {
+    "netAmount": "190.00",
+    "vatAmount": "17.10",
+    "grossAmount": "207.10"
+  },
+  "cardLast4": "4821"
+}

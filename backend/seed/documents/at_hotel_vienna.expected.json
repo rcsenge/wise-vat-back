@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "RE-2026-08812",
+  "issueDate": "2026-09-17",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hotel Ringstrasse GmbH",
+    "vatNumber": "ATU12345678",
+    "address": {
+      "street": "Beispielring 12",
+      "postalCode": "1010",
+      "city": "Wien",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Übernachtung Standardzimmer, 2 Nächte",
+      "category": "ACCOMMODATION",
+      "netAmount": "180.00",
+      "vatRate": "10",
+      "vatAmount": "18.00",
+      "grossAmount": "198.00"
+    },
+    {
+      "description": "Frühstück",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "30.00",
+      "vatRate": "10",
+      "vatAmount": "3.00",
+      "grossAmount": "33.00"
+    },
+    {
+      "description": "Garage",
+      "category": "OTHER",
+      "netAmount": "25.00",
+      "vatRate": "20",
+      "vatAmount": "5.00",
+      "grossAmount": "30.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "235.00",
+    "vatAmount": "26.00",
+    "grossAmount": "261.00"
+  },
+  "cardLast4": "4821"
+}

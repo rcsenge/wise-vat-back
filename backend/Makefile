@@ -1,7 +1,7 @@
 # The mock mode uses its own database file. The demo database stays untouched.
 MOCK_DATABASE_URL := sqlite:///./mock.db
 
-.PHONY: help install dev-backend dev-mock mock-db printed-reset seed test eval-ai golden demo-reset demo-process
+.PHONY: help install dev-backend dev-mock mock-db printed-reset seed test eval-ai golden corpus-docs demo-reset demo-process
 
 help:
 	@echo "make install      Create the backend venv. Install the dependencies with uv."
@@ -13,6 +13,7 @@ help:
 	@echo "make test         Run the pytest suite. Includes the golden corpus."
 	@echo "make eval-ai      Measure the AI extraction accuracy over the sample PDFs."
 	@echo "make golden       Regenerate the golden outcome sidecars."
+	@echo "make corpus-docs  Render a typed PDF for every golden invoice."
 	@echo "make demo-process Seed, process every invoice, print the claims."
 	@echo "make demo-reset   Reset the simulator state. The backend must run."
 
@@ -42,6 +43,9 @@ eval-ai:
 
 golden:
 	uv run python -m seed.generate_golden
+
+corpus-docs:
+	uv run --with reportlab python -m seed.generate_documents
 
 demo-process:
 	uv run python -m seed.process_demo

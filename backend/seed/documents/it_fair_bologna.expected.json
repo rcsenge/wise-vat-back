@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "IT-2026-1407",
+  "issueDate": "2026-09-25",
+  "currency": "EUR",
+  "supplier": {
+    "name": "BolognaFiere S.p.A.",
+    "vatNumber": "IT00312600372",
+    "address": {
+      "street": "Piazza Costituzione 6",
+      "postalCode": "40128",
+      "city": "Bologna",
+      "countryCode": "IT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Ingresso fiera Cersaie",
+      "category": "FAIR_ADMISSION",
+      "netAmount": "300.00",
+      "vatRate": "22",
+      "vatAmount": "66.00",
+      "grossAmount": "366.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "300.00",
+    "vatAmount": "66.00",
+    "grossAmount": "366.00"
+  },
+  "cardLast4": "4821"
+}

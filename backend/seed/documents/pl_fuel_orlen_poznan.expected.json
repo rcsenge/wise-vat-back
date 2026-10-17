@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "PL-2026-1592",
+  "issueDate": "2026-09-30",
+  "currency": "PLN",
+  "supplier": {
+    "name": "PKN Orlen S.A.",
+    "vatNumber": "PL7740001454",
+    "address": {
+      "street": "ul. Głogowska 210",
+      "postalCode": "60-104",
+      "city": "Poznań",
+      "countryCode": "PL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Olej napędowy 48 l",
+      "category": "FUEL",
+      "netAmount": "320.00",
+      "vatRate": "23",
+      "vatAmount": "73.60",
+      "grossAmount": "393.60"
+    }
+  ],
+  "totals": {
+    "netAmount": "320.00",
+    "vatAmount": "73.60",
+    "grossAmount": "393.60"
+  },
+  "cardLast4": "4821"
+}

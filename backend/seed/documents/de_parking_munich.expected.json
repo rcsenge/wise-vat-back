@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1003",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Parkhaus am Hauptbahnhof GmbH",
+    "vatNumber": "DE812345678",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "80335",
+      "city": "München",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Parken Tagesticket",
+      "category": "OTHER",
+      "netAmount": "30.00",
+      "vatRate": "19.0",
+      "vatAmount": "5.70",
+      "grossAmount": "35.70"
+    }
+  ],
+  "totals": {
+    "netAmount": "30.00",
+    "vatAmount": "5.70",
+    "grossAmount": "35.70"
+  },
+  "cardLast4": "4821"
+}

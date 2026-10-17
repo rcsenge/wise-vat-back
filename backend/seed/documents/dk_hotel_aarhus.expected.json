@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1013",
+  "issueDate": "2026-09-10",
+  "currency": "DKK",
+  "supplier": {
+    "name": "Hotel Scandic Aarhus",
+    "vatNumber": "DK18801017",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "8000",
+      "city": "Aarhus",
+      "countryCode": "DK"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Værelse og morgenmad",
+      "category": "ACCOMMODATION",
+      "netAmount": "1250.00",
+      "vatRate": "25.0",
+      "vatAmount": "312.50",
+      "grossAmount": "1562.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "1250.00",
+    "vatAmount": "312.50",
+    "grossAmount": "1562.50"
+  },
+  "cardLast4": "4821"
+}

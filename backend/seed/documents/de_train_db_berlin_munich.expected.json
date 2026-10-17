@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DE-2026-1222",
+  "issueDate": "2026-10-08",
+  "currency": "EUR",
+  "supplier": {
+    "name": "DB Fernverkehr AG",
+    "vatNumber": "DE260498421",
+    "address": {
+      "street": "Stephensonstraße 1",
+      "postalCode": "60326",
+      "city": "Frankfurt am Main",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "ICE Berlin Hbf – München Hbf",
+      "category": "TRAVEL",
+      "netAmount": "129.00",
+      "vatRate": "7",
+      "vatAmount": "9.03",
+      "grossAmount": "138.03"
+    }
+  ],
+  "totals": {
+    "netAmount": "129.00",
+    "vatAmount": "9.03",
+    "grossAmount": "138.03"
+  },
+  "cardLast4": "4821"
+}

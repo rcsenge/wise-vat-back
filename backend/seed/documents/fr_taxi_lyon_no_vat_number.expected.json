@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "FR-2026-1333",
+  "issueDate": "2026-09-13",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Taxi Lyonnais",
+    "vatNumber": null,
+    "address": {
+      "street": "3 Place Bellecour",
+      "postalCode": "69002",
+      "city": "Lyon",
+      "countryCode": "FR"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Course de taxi",
+      "category": "TRAVEL",
+      "netAmount": "35.00",
+      "vatRate": "10",
+      "vatAmount": "3.50",
+      "grossAmount": "38.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "35.00",
+    "vatAmount": "3.50",
+    "grossAmount": "38.50"
+  },
+  "cardLast4": "4821"
+}

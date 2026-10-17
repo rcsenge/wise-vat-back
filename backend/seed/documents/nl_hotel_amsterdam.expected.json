@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "NL-2026-1481",
+  "issueDate": "2026-10-02",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hotel Canal House B.V.",
+    "vatNumber": "NL812345678B01",
+    "address": {
+      "street": "Keizersgracht 148",
+      "postalCode": "1015 CX",
+      "city": "Amsterdam",
+      "countryCode": "NL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Overnachting, 2 nachten",
+      "category": "ACCOMMODATION",
+      "netAmount": "275.00",
+      "vatRate": "9",
+      "vatAmount": "24.75",
+      "grossAmount": "299.75"
+    }
+  ],
+  "totals": {
+    "netAmount": "275.00",
+    "vatAmount": "24.75",
+    "grossAmount": "299.75"
+  },
+  "cardLast4": "4821"
+}

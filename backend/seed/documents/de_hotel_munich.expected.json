@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "RE-2026-10012",
+  "issueDate": "2026-09-28",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hotel München Mitte GmbH",
+    "vatNumber": "DE123456789",
+    "address": {
+      "street": "Bahnhofsplatz 5",
+      "postalCode": "80335",
+      "city": "München",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Übernachtung Einzelzimmer",
+      "category": "ACCOMMODATION",
+      "netAmount": "150.00",
+      "vatRate": "7",
+      "vatAmount": "10.50",
+      "grossAmount": "160.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "150.00",
+    "vatAmount": "10.50",
+    "grossAmount": "160.50"
+  },
+  "cardLast4": "4821"
+}

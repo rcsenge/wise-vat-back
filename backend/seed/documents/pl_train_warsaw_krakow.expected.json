@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1011",
+  "issueDate": "2026-09-10",
+  "currency": "PLN",
+  "supplier": {
+    "name": "PKP Intercity",
+    "vatNumber": "PL5260007890",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "00-928",
+      "city": "Warszawa",
+      "countryCode": "PL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Bilet EIC Express",
+      "category": "TRAVEL",
+      "netAmount": "189.00",
+      "vatRate": "23.0",
+      "vatAmount": "43.47",
+      "grossAmount": "232.47"
+    }
+  ],
+  "totals": {
+    "netAmount": "189.00",
+    "vatAmount": "43.47",
+    "grossAmount": "232.47"
+  },
+  "cardLast4": "4821"
+}

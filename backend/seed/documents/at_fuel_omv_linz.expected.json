@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "AT-2026-1000",
+  "issueDate": "2026-09-03",
+  "currency": "EUR",
+  "supplier": {
+    "name": "OMV Tankstelle Linz",
+    "vatNumber": "ATU63451289",
+    "address": {
+      "street": "Wiener Straße 140",
+      "postalCode": "4020",
+      "city": "Linz",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Diesel 52,3 l",
+      "category": "FUEL",
+      "netAmount": "85.00",
+      "vatRate": "20",
+      "vatAmount": "17.00",
+      "grossAmount": "102.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "85.00",
+    "vatAmount": "17.00",
+    "grossAmount": "102.00"
+  },
+  "cardLast4": "4821"
+}

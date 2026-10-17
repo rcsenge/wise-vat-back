@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "IT-2026-1444",
+  "issueDate": "2026-09-26",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Parcheggio Termini S.r.l.",
+    "vatNumber": "IT04512870585",
+    "address": {
+      "street": "Via Marsala 29",
+      "postalCode": "00185",
+      "city": "Roma",
+      "countryCode": "IT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Parcheggio, 2 giorni",
+      "category": "VEHICLE_EXPENSES",
+      "netAmount": "24.00",
+      "vatRate": "22",
+      "vatAmount": "5.28",
+      "grossAmount": "29.28"
+    }
+  ],
+  "totals": {
+    "netAmount": "24.00",
+    "vatAmount": "5.28",
+    "grossAmount": "29.28"
+  },
+  "cardLast4": "4821"
+}

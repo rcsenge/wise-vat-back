@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "FR-2026-1259",
+  "issueDate": "2026-09-11",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hôtel Le Marais SAS",
+    "vatNumber": "FR40303265045",
+    "address": {
+      "street": "12 Rue de Turenne",
+      "postalCode": "75004",
+      "city": "Paris",
+      "countryCode": "FR"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Hébergement, 3 nuits",
+      "category": "ACCOMMODATION",
+      "netAmount": "480.00",
+      "vatRate": "10",
+      "vatAmount": "48.00",
+      "grossAmount": "528.00"
+    },
+    {
+      "description": "Petit-déjeuner",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "36.00",
+      "vatRate": "10",
+      "vatAmount": "3.60",
+      "grossAmount": "39.60"
+    }
+  ],
+  "totals": {
+    "netAmount": "516.00",
+    "vatAmount": "51.60",
+    "grossAmount": "567.60"
+  },
+  "cardLast4": "4821"
+}

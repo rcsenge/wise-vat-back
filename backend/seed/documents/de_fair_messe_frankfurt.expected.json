@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DE-2026-1111",
+  "issueDate": "2026-09-15",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Messe Frankfurt GmbH",
+    "vatNumber": "DE114123856",
+    "address": {
+      "street": "Ludwig-Erhard-Anlage 1",
+      "postalCode": "60327",
+      "city": "Frankfurt am Main",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Messeticket IAA, 3 Tage",
+      "category": "FAIR_ADMISSION",
+      "netAmount": "450.00",
+      "vatRate": "19",
+      "vatAmount": "85.50",
+      "grossAmount": "535.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "450.00",
+    "vatAmount": "85.50",
+    "grossAmount": "535.50"
+  },
+  "cardLast4": "4821"
+}

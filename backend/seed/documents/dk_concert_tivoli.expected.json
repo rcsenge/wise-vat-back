@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DK-2026-1740",
+  "issueDate": "2026-10-12",
+  "currency": "DKK",
+  "supplier": {
+    "name": "Tivoli A/S",
+    "vatNumber": "DK10404916",
+    "address": {
+      "street": "Vesterbrogade 3",
+      "postalCode": "1630",
+      "city": "København",
+      "countryCode": "DK"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Koncertbilletter, 2 stk.",
+      "category": "ENTERTAINMENT",
+      "netAmount": "640.00",
+      "vatRate": "25",
+      "vatAmount": "160.00",
+      "grossAmount": "800.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "640.00",
+    "vatAmount": "160.00",
+    "grossAmount": "800.00"
+  },
+  "cardLast4": "4821"
+}

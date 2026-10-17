@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1001",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Gasthof Goldener Hirsch GmbH",
+    "vatNumber": "ATU74091653",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "8010",
+      "city": "Graz",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Steirisches Backhendl",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "34.18",
+      "vatRate": "10.0",
+      "vatAmount": "3.42",
+      "grossAmount": "37.60"
+    },
+    {
+      "description": "Veltliner Wein",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "12.73",
+      "vatRate": "20.0",
+      "vatAmount": "2.55",
+      "grossAmount": "15.28"
+    }
+  ],
+  "totals": {
+    "netAmount": "46.91",
+    "vatAmount": "5.97",
+    "grossAmount": "52.88"
+  },
+  "cardLast4": "4821"
+}

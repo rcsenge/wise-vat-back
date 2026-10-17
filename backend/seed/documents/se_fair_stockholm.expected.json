@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1016",
+  "issueDate": "2026-09-10",
+  "currency": "SEK",
+  "supplier": {
+    "name": "Stockholmsmässan AB",
+    "vatNumber": "SE556014455601",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "125 80",
+      "city": "Stockholm",
+      "countryCode": "SE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Mässbiljett",
+      "category": "FAIR_ADMISSION",
+      "netAmount": "1250.00",
+      "vatRate": "25.0",
+      "vatAmount": "312.50",
+      "grossAmount": "1562.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "1250.00",
+    "vatAmount": "312.50",
+    "grossAmount": "1562.50"
+  },
+  "cardLast4": "4821"
+}

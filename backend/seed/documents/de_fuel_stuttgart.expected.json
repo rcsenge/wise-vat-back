@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1018",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "ARAL Tankstelle",
+    "vatNumber": "DE301876543",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "70173",
+      "city": "Stuttgart",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Super E10",
+      "category": "FUEL",
+      "netAmount": "68.32",
+      "vatRate": "19.0",
+      "vatAmount": "12.98",
+      "grossAmount": "81.30"
+    }
+  ],
+  "totals": {
+    "netAmount": "68.32",
+    "vatAmount": "12.98",
+    "grossAmount": "81.30"
+  },
+  "cardLast4": "4821"
+}

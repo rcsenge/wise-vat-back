@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1012",
+  "issueDate": "2026-09-10",
+  "currency": "CZK",
+  "supplier": {
+    "name": "Čepro a.s.",
+    "vatNumber": "CZ26177005",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "150 00",
+      "city": "Praha",
+      "countryCode": "CZ"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Natural 95",
+      "category": "FUEL",
+      "netAmount": "1450.00",
+      "vatRate": "21.0",
+      "vatAmount": "304.50",
+      "grossAmount": "1754.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "1450.00",
+    "vatAmount": "304.50",
+    "grossAmount": "1754.50"
+  },
+  "cardLast4": "4821"
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1002",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Wiener Taxi Zentrale",
+    "vatNumber": "ATU11304368",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "1030",
+      "city": "Wien",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Fahrt zum Flughafen",
+      "category": "TRAVEL",
+      "netAmount": "23.00",
+      "vatRate": "13.0",
+      "vatAmount": "2.99",
+      "grossAmount": "25.99"
+    }
+  ],
+  "totals": {
+    "netAmount": "23.00",
+    "vatAmount": "2.99",
+    "grossAmount": "25.99"
+  },
+  "cardLast4": "4821"
+}
