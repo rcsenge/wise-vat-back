@@ -3,6 +3,9 @@
 	root * www
 	encode gzip
 
+	# The browser checks every file again on each load. A new deploy never mixes old CSS with new HTML.
+	header Cache-Control "no-cache"
+
 	# The landing index lives only at the root path.
 	@indexaccess path /index /index.html
 	respond @indexaccess 404
