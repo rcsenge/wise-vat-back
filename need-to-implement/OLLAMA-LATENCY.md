@@ -88,3 +88,34 @@ Adopt the hybrid ladder as the default.
 Use Apple Vision OCR and rules for the fast path.
 Keep qwen2.5vl:7b as the fallback for messy scans.
 This is the only path to both speed and accuracy on this hardware.
+
+## Measurement Protocol
+
+Run the measurement before the ladder becomes the default.
+The golden document corpus holds one PDF per golden case.
+The corpus lives in `backend/seed/documents/`.
+The evaluation script reports the side-by-side comparison.
+
+Run this command from `backend/`.
+
+```
+make eval-ai
+```
+
+Run the fast path alone first.
+Run the AI path alone second.
+Run the hybrid third.
+Record the three results in the table below.
+Report the warm latency per path.
+Report the correctness per path.
+
+| Path | Warm latency | Correctness |
+| --- | --- | --- |
+| Rules fast path | to measure | to measure |
+| Ollama qwen2.5vl:7b | to measure | to measure |
+| Hybrid ladder | to measure | to measure |
+
+A path is correct when it meets the strict gate.
+The gate checks the VAT format, the VIES status, and the line sums.
+Measure on the same MacBook as the latency findings.
+Use the same one-page hotel invoice for the latency rows.

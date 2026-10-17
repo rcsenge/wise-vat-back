@@ -408,3 +408,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [in-progress]
 
 ---
+- Task: Record the side-by-side extraction measurement protocol and results in OLLAMA-LATENCY.md.
+- Signer: Magyari Ákos's agent
+- Branch: feat/measurement-report
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
