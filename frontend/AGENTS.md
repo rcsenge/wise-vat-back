@@ -8,7 +8,6 @@ You are an AI coding agent operating in the frontend project of the SIGINT monor
 - **Design System:** Tailwind v4
 - **Component Library:** Neptune CSS from TransferWise
 - **Package Manager:** pnpm. pnpm is MANDATED over npm and yarn.
-- **Mobile App:** Capacitor by Ionic
 - **Python Tooling:** UV
 - **Web Server:** Caddy
 - **Serving:** Use Caddy to serve the app.

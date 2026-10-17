@@ -2,30 +2,29 @@
 
 ## Purpose
 
-The frontend connects a company with the VATBACK service. Employees scan company receipts with a mobile app. Employers review the scanned documents and see the total money the company can claim from the government.
+The frontend connects a company with the VATBACK service. Employees scan company receipts in the web app. Employers review the scanned documents and see the total money the company can claim from the government.
 
 ## Stack
 
 - HTML5 markup.
 - Tailwind CSS v4 for styling.
-- Capacitor by Ionic for the mobile app.
 - Caddy as the web server.
 
 ## Deliverables
 
 - A web application for the employer.
-- A mobile app for the employee.
+- A web application for the employee.
 - No government integration in this phase.
 
 ## Views
 
 ### 1. Transaction History (Employee App)
 
-The employee app shows every scanned company receipt. Each entry shows the scanned document and its transaction details. The app renders the list from local storage until the backend exists.
+The employee app shows every scanned company receipt. Each entry shows the scanned document and its transaction details. The app renders the list from the backend API.
 
 ### 2. Document Scan (Employee App)
 
-The employee presses the new document option. The app opens the camera. The camera captures the receipt image and stores the image in the history view.
+The employee presses the new document option. The page opens the camera. The camera captures the receipt image and stores the image in the history view.
 
 ### 3. Employer Review (Web)
 
