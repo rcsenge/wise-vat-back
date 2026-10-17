@@ -237,7 +237,7 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
 5. Read the result: approved with the refundable VAT, or rejected with the reasons.
 6. Open http://localhost:8080/employer. It shows the refundable VAT per country and the approved receipts. It refreshes every few seconds.
-7. The hero shows one total in EUR. Other currencies count at the demo exchange rates. **Generate all** downloads the claim package of every open year in every country.
+7. The hero shows one total in EUR. Other currencies count at the demo exchange rates. **Generate all** downloads one ZIP with the claim packages of every open year in every country.
 8. Every country card lists its open refund years. Each year has a deadline bar and a **Generate package** button. The button downloads the ZIP file for the accountant.
 
 **Reset the demo.** A card transaction can back only one invoice. A second upload of the same invoice is rejected on purpose. To start again, stop the backend and run `make seed` (or `docker compose restart backend`, which seeds on start).
@@ -345,6 +345,8 @@ When the deadline passes, the year leaves the open total. Its money moves to the
 | `04_decision_log.csv` | Why each invoice is claimable: required fields, VAT number check, card payment and country rule per line |
 | `05_application_data.json` | The same data for software import |
 
+**Every package at once.** `GET /claims/package/all` returns `SIGINT-VAT-refund-all-<date>.zip`. The **Generate all** button downloads it. It holds `00_overview.pdf` and one folder per open refund period, for example `DE_2026/`. Each folder holds the package above. The overview lists every application with its invoice count, deductible VAT, EUR equivalent, deadline and folder. It also repeats the warnings of every country.
+
 The summary warns when the total is below the EUR 50 annual minimum (Art. 17), when an invoice reaches the copy limit (EUR 1,000, or EUR 250 for fuel, Art. 10), when an original copy is missing, and when the deadline is near or passed.
 
 The applicant data comes from the settings (`APPLICANT_NAME`, `APPLICANT_VAT_NUMBER`, `APPLICANT_ADDRESS`, `APPLICANT_EMAIL`, `APPLICANT_IBAN`, `APPLICANT_BIC`, `APPLICANT_ACTIVITY`). The defaults hold demo values. The code lives in `backend/app/services/claim_package.py`.
@@ -364,6 +366,7 @@ Interactive docs: http://localhost:8000/docs. The OpenAPI contract: http://local
 | `GET` | `/receipts` | Stored invoices in the frontend receipt shape, newest first. |
 | `GET` | `/claims` | Refundable VAT per country, the open refund periods per year, the expired totals, the reference date and every stored result. |
 | `GET` | `/claims/package?country=DE&year=2026` | The claim package ZIP for one refund country and year. |
+| `GET` | `/claims/package/all` | One ZIP with an overview PDF and the package of every open refund period. |
 | `GET` | `/health` | Liveness check. |
 | `GET` | `/rates?source=CZK&target=EUR` | One exchange rate. The mock Wise client reads the demo table in `backend/seed/rates_cache.json`. |
 | `GET` | `/rates/table` | The whole demo rate table (EUR base). The employer page converts its total to EUR with it. |
