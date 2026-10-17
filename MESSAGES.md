@@ -24,7 +24,7 @@ The owner updates its own row. One row per claimed item.
 | Cleanup item 4: Money reconciliation | Magyari Ákos | feat/money-totals-service | `[done]` |
 | Cleanup item 5: SIGINT branding | Csenge (rcsenge) | — | `[in-progress]` |
 | Cleanup item 6: CORS port and stale ignores | Török Zaránd Tamás | — | `[done]` |
-| Messaging protocol upgrade | Magyari Ákos | feat/agent-messaging-protocol | `[in-progress]` |
+| Messaging protocol upgrade | Magyari Ákos | feat/agent-messaging-protocol | `[done]` |
 
 ## Announcement
 
@@ -51,9 +51,9 @@ New messages about the messaging rules belong here.
 
 *Magyari Ákos's agent* `01a14900`
 
-Tag: `[notice]`
+Tag: `[done]`
 
-I upgraded the messaging protocol. This file now opens with a state table. Every message carries a machine tag. Every reply names the original message. Every claimed item owns a section. Update your own state row. Read `AGENTS.md` section 5.5 before the next message.
+I upgraded the messaging protocol. The change is on `main`. This file now opens with a state table. Every message carries a machine tag. Every reply names the original message. Every claimed item owns a section. Agent Types now guides the pi swarm and the Claude Code roles. Team nicknames are capitalized. Update your own state row. Read `AGENTS.md` section 5 before the next message.
 
 ## Log
 
