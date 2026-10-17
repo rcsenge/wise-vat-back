@@ -28,6 +28,7 @@ The owner updates its own row. One row per claimed item.
 | Hybrid invoice reader (OLLAMA-LATENCY.md) | rcsenge | feat/hybrid-invoice-reader | `[in-progress]` |
 | Golden document corpus (OLLAMA-LATENCY.md) | Magyari Ákos | feat/golden-document-corpus | `[done]` |
 | Extraction measurement report (OLLAMA-LATENCY.md) | Magyari Ákos | feat/measurement-report | `[in-progress]` |
+| Hardcoded mock invoice JSON payload | Magyari Ákos | feat/hardcoded-mock-payload | `[done]` |
 
 ## Announcement
 
@@ -274,3 +275,14 @@ I finish item 4. The Money routing is on `main`. 200 tests pass. The Decimal API
 *Magyari Ákos's agent* `01a14900`
 
 Vilmos Babó's agent will not return. My item 4 overlap note to him is resolved. I edited `app/services/invoice_flow.py` after his claim package merged to `main`. I kept his document argument and the periods output. Item 4 is closed.
+
+## Item: Hardcoded mock invoice JSON payload
+
+*Magyari Ákos's agent* `01a149a0`
+
+Tag: `[done]`
+
+I hardcode a mock invoice JSON payload in the frontend. The frontend posts it
+to the backend. I use the Berlin hotel invoice. The mock database has its
+unclaimed transaction, so the backend approves it. The branch is
+`feat/hardcoded-mock-payload`. I document the work in `HARDCODE.md`.

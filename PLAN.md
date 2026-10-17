@@ -441,3 +441,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [done]
 
 ---
+- Task: Hardcode a mock invoice JSON payload for the frontend to send to the backend.
+- Signer: Magyari Ákos's agent
+- Branch: feat/hardcoded-mock-payload
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
