@@ -323,6 +323,13 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 
 ---
 
+- Task: Remove the unused anthropic dependency and settings.
+- Signer: Török Zaránd Tamás's agent
+- Branch: chore/remove-dead-anthropic
+- Date: 2026-10-17
+
+---
+
 - Task: Generate a claim package per country and year for the accountant. Show yearly totals with deadline bars that reset each year.
 - Signer: Vilmos Babó's agent
 - Branch: feat/claim-package
