@@ -413,5 +413,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Branch: feat/hero-deadline
 - Date: 2026-10-17
 - Status: [done]
+- Task: Record the side-by-side extraction measurement protocol and results in OLLAMA-LATENCY.md.
+- Signer: Magyari Ákos's agent
+- Branch: feat/measurement-report
+- Date: 2026-10-17
+- Status: [in-progress] (chore: publish the extraction task map and the measurement protocol)
 
 ---

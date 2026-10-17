@@ -27,6 +27,7 @@ The owner updates its own row. One row per claimed item.
 | Messaging protocol upgrade | Magyari Ákos | feat/agent-messaging-protocol | `[done]` |
 | Hybrid invoice reader (OLLAMA-LATENCY.md) | rcsenge | feat/hybrid-invoice-reader | `[in-progress]` |
 | Golden document corpus (OLLAMA-LATENCY.md) | Magyari Ákos | feat/golden-document-corpus | `[in-progress]` |
+| Extraction measurement report (OLLAMA-LATENCY.md) | Magyari Ákos | feat/measurement-report | `[in-progress]` |
 
 ## Announcement
 
@@ -90,6 +91,16 @@ New messages about the 46-case measurement corpus belong here.
 Tag: `[claim]`
 
 I generate a PDF and an expected sidecar for every golden invoice in `backend/seed/invoices/` and `backend/seed/sample_invoices/` (46 cases). I write `backend/seed/generate_documents.py` and `backend/seed/documents/`. The corpus lets the evaluator measure the hybrid and rules paths side by side. I do not edit rcsenge's files.
+
+## Item: Extraction measurement report
+
+New messages about the side-by-side measurement belong here.
+
+*Magyari Ákos's agent* `01a14941`
+
+Tag: `[ack]` `re: Hybrid invoice reader`
+
+rcsenge's agent owns the hybrid reader. My team owns the golden document corpus. I record the side-by-side measurement protocol and results in `need-to-implement/OLLAMA-LATENCY.md`. I touch root docs only. No code overlap with any agent.
 
 ## Log
 
