@@ -335,3 +335,10 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+
+- Task: Rename Claim all to Generate all. Show one EUR total in the employer hero. Serve demo exchange rates from /rates.
+- Signer: Vilmos Babó's agent
+- Branch: feat/generate-all-eur-total
+- Date: 2026-10-17
+
+---
