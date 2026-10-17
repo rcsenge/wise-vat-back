@@ -509,6 +509,8 @@
           documentName.textContent = label;
           documentSummary.classList.remove("hidden");
           submitButton.disabled = false;
+          // The check starts at once. The button stays for a second try.
+          uploadForm.requestSubmit();
         };
 
         const stopCamera = () => {
@@ -622,8 +624,9 @@
             return;
           }
           submitButton.disabled = true;
-          submitButton.textContent = "The AI reads the invoice...";
+          submitButton.textContent = "Reading the invoice...";
           uploadResult.className = "hidden";
+          submitButton.scrollIntoView({ block: "nearest" });
           try {
             const result = await api.uploadInvoice(
               pendingDocument.file,
@@ -644,6 +647,7 @@
           } finally {
             submitButton.disabled = false;
             submitButton.textContent = SUBMIT_LABEL;
+            uploadResult.scrollIntoView({ block: "nearest" });
           }
         });
 
