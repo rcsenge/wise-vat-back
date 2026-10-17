@@ -205,7 +205,7 @@
             .sort((first, second) => first.year - second.year);
 
         // The bar fills from 1 January of the year to the claim deadline.
-        const createDeadlineBar = (period) => {
+        const createDeadlineBar = (period, trackClass) => {
           const start = dayNumber(period.period_start);
           const end = dayNumber(period.claim_deadline);
           const today = dayNumber(referenceDate ?? period.period_start);
@@ -225,7 +225,7 @@
 
           const track = element(
             "div",
-            "bg-line-neutral mt-3 h-2 w-full overflow-hidden rounded-full",
+            `${trackClass} mt-2 h-2 w-full overflow-hidden rounded-full`,
           );
           track.setAttribute("role", "progressbar");
           track.setAttribute(
@@ -241,31 +241,20 @@
           return { track, daysLeft };
         };
 
+        // Every country shares the claim deadline of a year. The hero shows it once.
         const createPeriodRow = (period) => {
           const row = element("div", "bg-surface-screen rounded-2xl p-4");
-          const { track, daysLeft } = createDeadlineBar(period);
 
           const header = element(
             "div",
             "flex items-start justify-between gap-3",
           );
-          const text = element("div", "min-w-0");
-          text.append(
+          header.append(
             element(
               "p",
-              "text-ink-primary text-base font-semibold",
+              "text-ink-primary min-w-0 text-base font-semibold",
               `${period.year} claim · ${period.invoice_count} invoice${period.invoice_count === 1 ? "" : "s"}`,
             ),
-            element(
-              "p",
-              daysLeft <= URGENT_DAYS
-                ? "text-status-negative text-sm font-semibold"
-                : "text-ink-secondary text-sm",
-              `Claim by ${window.vatbackReceipts.formatDay(period.claim_deadline)} · ${daysLeft} days left`,
-            ),
-          );
-          header.append(
-            text,
             element(
               "p",
               "text-ink-primary shrink-0 text-base font-bold tabular-nums",
@@ -285,7 +274,7 @@
           );
           download.setAttribute("download", "");
 
-          row.append(header, track, download);
+          row.append(header, download);
           return row;
         };
 
@@ -434,7 +423,6 @@
         const toHeroCurrency = (totals) => {
           let amount = 0;
           let converted = false;
-          let missingRate = false;
           totals.forEach((total) => {
             const value = Number(total.refundable_vat_total);
             if (total.currency === HERO_CURRENCY) {
@@ -443,13 +431,40 @@
             }
             const rate = Number(ratesTable?.rates?.[total.currency]);
             if (!Number.isFinite(rate) || rate <= 0) {
-              missingRate = true;
               return;
             }
             amount += value / rate;
             converted = true;
           });
-          return { amount, converted, missingRate };
+          return { amount, converted };
+        };
+
+        // One deadline row per open year. The first period of a year gives the dates.
+        const createHeroDeadlines = () => {
+          const periodByYear = new Map();
+          periods.forEach((period) => {
+            if (!periodByYear.has(period.year)) {
+              periodByYear.set(period.year, period);
+            }
+          });
+          return [...periodByYear.values()]
+            .sort((first, second) => first.year - second.year)
+            .map((period) => {
+              const { track, daysLeft } = createDeadlineBar(
+                period,
+                "bg-white/15",
+              );
+              const row = element("div", "mt-5");
+              row.append(
+                element(
+                  "p",
+                  "text-brand-light-green text-sm font-medium",
+                  `${period.year} invoices · Claim by ${window.vatbackReceipts.formatDay(period.claim_deadline)} · ${daysLeft} days left`,
+                ),
+                track,
+              );
+              return row;
+            });
         };
 
         const renderHero = () => {
@@ -462,18 +477,7 @@
               `${open.converted ? "≈ " : ""}${api.formatMoney(open.amount, HERO_CURRENCY)}`,
             ),
           ];
-          if (open.converted || open.missingRate) {
-            children.push(
-              element(
-                "p",
-                "text-brand-light-green mt-1 text-xs",
-                open.missingRate
-                  ? "Some exchange rates are missing. The total leaves out those currencies."
-                  : `Other currencies converted at the ${ratesTable.source} rates of ${window.vatbackReceipts.formatDay(ratesTable.as_of)}.`,
-              ),
-            );
-          }
-          children.push(generateAllButton);
+          children.push(generateAllButton, ...createHeroDeadlines());
           heroTotals.replaceChildren(...children);
           const countryCount = new Set(
             countryTotals.map((total) => total.country),
