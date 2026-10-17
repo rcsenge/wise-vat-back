@@ -14,6 +14,8 @@ node_modules/
 !*.css
 !/.gitattributes
 !frontend/www/*.js
+!frontend/www/vendor/globe/*.js
+!frontend/www/vendor/globe/*.json
 !*.svg
 !*.woff2
 !package.json

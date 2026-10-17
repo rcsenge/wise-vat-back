@@ -6,14 +6,18 @@
   "packageManager": "pnpm@12.11.2",
   "scripts": {
     "copy:neptune": "rm -rf www/vendor/neptune && mkdir -p www/vendor/neptune/fonts && cp -R node_modules/@transferwise/neptune-css/dist/css www/vendor/neptune/ && cp -R node_modules/@transferwise/neptune-css/dist/props www/vendor/neptune/ && cp -R node_modules/@transferwise/neptune-css/dist/img www/vendor/neptune/ && for f in inter-cyrillic-variable-wghtOnly-normal.woff2 inter-cyrillic-ext-variable-wghtOnly-normal.woff2 inter-greek-variable-wghtOnly-normal.woff2 inter-greek-ext-variable-wghtOnly-normal.woff2 inter-latin-variable-wghtOnly-normal.woff2 inter-latin-ext-variable-wghtOnly-normal.woff2 inter-vietnamese-variable-wghtOnly-normal.woff2 WiseSans-Heavy.woff2; do cp \"node_modules/@transferwise/neptune-css/dist/fonts/$f\" \"www/vendor/neptune/fonts/$f\"; done",
-    "prebuild:css": "pnpm run copy:neptune",
+    "copy:globe": "rm -rf www/vendor/globe && mkdir -p www/vendor/globe && cp node_modules/three/build/three.module.js node_modules/three/build/three.core.js node_modules/topojson-client/dist/topojson-client.min.js node_modules/world-atlas/land-50m.json www/vendor/globe/",
+    "prebuild:css": "pnpm run copy:neptune && pnpm run copy:globe",
     "build:css": "tailwindcss -i www/input.css -o www/style.css --minify",
-    "postinstall": "pnpm run copy:neptune",
+    "postinstall": "pnpm run copy:neptune && pnpm run copy:globe",
     "lint": "prettier --check \"**/*.{html,css,js}\"",
     "lint:fix": "prettier --write \"**/*.{html,css,js}\""
   },
   "dependencies": {
-    "@transferwise/neptune-css": "^14.29.6"
+    "@transferwise/neptune-css": "^14.29.6",
+    "three": "^0.186.1",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
