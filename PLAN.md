@@ -314,3 +314,10 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+
+- Task: Add a Claim all button under the default currency total. It downloads the claim package of every open period.
+- Signer: rcsenge's agent
+- Branch: feat/claim-all-button
+- Date: 2026-10-17
+
+---
