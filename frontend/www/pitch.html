@@ -85,15 +85,72 @@
       a {
         color: #0b5cc4;
       }
+      .pitch-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #ffffff;
+        border-bottom: 1px solid #e6e6e6;
+        margin: -3rem -1.25rem 2rem;
+        padding: 1rem 1.25rem;
+      }
+      .pitch-header-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .timer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+      }
+      .timer-display {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        font-size: 1.25rem;
+        min-width: 4ch;
+        text-align: center;
+        background: #f0f0f0;
+        border-radius: 999px;
+        padding: 0.2rem 0.8rem;
+      }
+      .timer-button {
+        font: inherit;
+        border: 1px solid #ccc;
+        background: #ffffff;
+        border-radius: 999px;
+        padding: 0.2rem 0.8rem;
+        cursor: pointer;
+      }
+      .timer-button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
     </style>
   </head>
   <body>
-    <header>
-      <h1>SIGINT · Wise VAT Back</h1>
-      <p class="subtitle">
-        The five minute pitch. Why VAT back is hard, and how SIGINT makes it
-        easy.
-      </p>
+    <header class="pitch-header">
+      <div class="pitch-header-row">
+        <div>
+          <h1>SIGINT · Wise VAT Back</h1>
+          <p class="subtitle">
+            The five minute pitch. Why VAT back is hard, and how SIGINT makes it
+            easy.
+          </p>
+        </div>
+        <div class="timer" role="timer" aria-label="Pitch timer">
+          <span id="pitch-timer" class="timer-display">05:00</span>
+          <button id="pitch-timer-start" type="button" class="timer-button">
+            Start
+          </button>
+          <button id="pitch-timer-reset" type="button" class="timer-button">
+            Reset
+          </button>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -305,5 +362,84 @@
     <footer>
       <p><a href="/">Back to SIGINT</a></p>
     </footer>
+    <script>
+      (function () {
+        var DURATION_SECONDS = 300;
+        var display = document.getElementById("pitch-timer");
+        var startButton = document.getElementById("pitch-timer-start");
+        var resetButton = document.getElementById("pitch-timer-reset");
+        var remaining = DURATION_SECONDS;
+        var intervalId = null;
+        var isRunning = false;
+
+        function render() {
+          var minutes = Math.floor(remaining / 60);
+          var seconds = remaining % 60;
+          display.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+        }
+
+        function stopAtEnd() {
+          remaining = 0;
+          render();
+          clearInterval(intervalId);
+          intervalId = null;
+          isRunning = false;
+          startButton.textContent = "Done";
+          startButton.disabled = true;
+        }
+
+        function tick() {
+          remaining -= 1;
+          if (remaining <= 0) {
+            stopAtEnd();
+            return;
+          }
+          render();
+        }
+
+        function start() {
+          if (isRunning || remaining <= 0) {
+            return;
+          }
+          isRunning = true;
+          startButton.textContent = "Pause";
+          intervalId = setInterval(tick, 1000);
+        }
+
+        function pause() {
+          if (!isRunning) {
+            return;
+          }
+          isRunning = false;
+          clearInterval(intervalId);
+          intervalId = null;
+          startButton.textContent = "Resume";
+        }
+
+        function reset() {
+          isRunning = false;
+          clearInterval(intervalId);
+          intervalId = null;
+          remaining = DURATION_SECONDS;
+          startButton.textContent = "Start";
+          startButton.disabled = false;
+          render();
+        }
+
+        startButton.addEventListener("click", function () {
+          if (isRunning) {
+            pause();
+          } else {
+            start();
+          }
+        });
+        resetButton.addEventListener("click", reset);
+
+        render();
+      })();
+    </script>
   </body>
 </html>
