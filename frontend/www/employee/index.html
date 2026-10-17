@@ -17,13 +17,12 @@
     />
     <link rel="stylesheet" href="/vendor/neptune/props/custom-media.css" />
     <link rel="stylesheet" href="/vendor/neptune/props/neptune-tokens.css" />
-    <link rel="stylesheet" href="/vendor/neptune/css/neptune.css" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body
     class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
   >
-    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pt-6 pb-10 sm:px-6">
+    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-10 pt-6 sm:px-6">
       <header
         class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
@@ -48,7 +47,7 @@
             </svg>
           </span>
           <div>
-            <h1 class="text-xl leading-tight font-semibold tracking-tight">
+            <h1 class="text-xl font-semibold leading-tight tracking-tight">
               vatback
             </h1>
             <p class="text-sm text-[#6b7a78]">Money without borders</p>
@@ -57,7 +56,7 @@
         <button
           type="button"
           id="upload-button"
-          class="inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] px-4! py-2! text-sm font-semibold text-[#00a4a6]! transition-colors hover:bg-[#00a4a6]/10"
+          class="px-4! py-2! text-[#00a4a6]! inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] text-sm font-semibold transition-colors hover:bg-[#00a4a6]/10"
         >
           Add New Document
         </button>
@@ -72,7 +71,7 @@
         <h2 id="receipts-heading" class="text-lg font-semibold">
           Scanned receipts
         </h2>
-        <ul id="receipt-list" class="mt-4 list-none space-y-3 pl-0!"></ul>
+        <ul id="receipt-list" class="pl-0! mt-4 list-none space-y-3"></ul>
       </section>
 
       <section
@@ -169,14 +168,14 @@
           <button
             type="button"
             id="close-button"
-            class="flex-1 rounded-full border border-[#e6e9ea] px-4! py-2.5! text-sm font-semibold text-[#6b7a78]! transition-colors hover:bg-[#f5f7fa]"
+            class="px-4! py-2.5! text-[#6b7a78]! flex-1 rounded-full border border-[#e6e9ea] text-sm font-semibold transition-colors hover:bg-[#f5f7fa]"
           >
             Close
           </button>
           <button
             type="submit"
             id="submit-button"
-            class="flex-1 rounded-full bg-[#00a4a6] px-4! py-2.5! text-sm font-semibold text-white! shadow-sm transition-colors hover:bg-[#009094] disabled:opacity-50"
+            class="px-4! py-2.5! text-white! flex-1 rounded-full bg-[#00a4a6] text-sm font-semibold shadow-sm transition-colors hover:bg-[#009094] disabled:opacity-50"
           >
             Check invoice
           </button>

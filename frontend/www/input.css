@@ -1,1 +1,57 @@
+/* The neptune layer comes first. Tailwind utilities override the Neptune rules. */
+@layer neptune;
+@import url("/vendor/neptune/css/neptune.css") layer(neptune);
 @import "tailwindcss";
+
+/* Wise mobile design tokens. Pages use these tokens only. */
+@theme {
+  --color-brand-bright-green: #9fe870;
+  --color-brand-bright-green-pressed: #80e142;
+  --color-brand-forest-green: #163300;
+  --color-brand-light-green: #e2f6d5;
+  --color-brand-light-green-pressed: #cdefb8;
+
+  --color-ink-primary: #0e0f0c;
+  --color-ink-secondary: #454745;
+  --color-ink-tertiary: #6a6c6a;
+
+  --color-surface-screen: #ffffff;
+  --color-surface-neutral: #f2f4ef;
+  --color-surface-neutral-pressed: #e8ebe5;
+  --color-surface-overlay: rgb(14 15 12 / 0.4);
+
+  --color-line-neutral: #e0e2de;
+  --color-line-subtle: #ecedea;
+
+  --color-status-positive: #2f5711;
+  --color-status-positive-background: #e2f6d5;
+  --color-status-negative: #a8200d;
+  --color-status-negative-background: #ffe6e1;
+
+  --font-sans:
+    "Inter", -apple-system, "SF Pro Text", Roboto, system-ui, sans-serif;
+  --font-display: "Wise Sans", "Inter", system-ui, sans-serif;
+
+  --text-display-large: 44px;
+  --text-display-large--line-height: 0.88;
+  --text-display-large--letter-spacing: -0.015em;
+  --text-display-medium: 36px;
+  --text-display-medium--line-height: 0.88;
+  --text-display-medium--letter-spacing: -0.015em;
+  --text-title-screen: 32px;
+  --text-title-screen--line-height: 38px;
+  --text-amount-large: 40px;
+  --text-amount-large--line-height: 46px;
+  --text-title-section: 24px;
+  --text-title-section--line-height: 30px;
+  --text-title-item: 18px;
+  --text-title-item--line-height: 24px;
+  --text-label-tab: 12px;
+  --text-label-tab--line-height: 16px;
+
+  --shadow-floating:
+    0 8px 24px rgb(14 15 12 / 0.1), 0 1px 3px rgb(14 15 12 / 0.06);
+  --shadow-sheet: 0 -8px 32px rgb(14 15 12 / 0.12);
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
