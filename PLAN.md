@@ -405,7 +405,7 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Signer: Magyari Ákos's agent
 - Branch: feat/golden-document-corpus
 - Date: 2026-10-17
-- Status: [in-progress]
+- Status: [done]
 
 ---
 - Task: Remove the currency caption from the employer hero. Show the shared claim deadline in the hero.
