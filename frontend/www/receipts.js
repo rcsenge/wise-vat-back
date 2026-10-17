@@ -10,12 +10,27 @@
       "inline-flex h-6 items-center rounded-full bg-brand-light-green px-2 text-xs font-semibold text-brand-forest-green",
     rejected:
       "inline-flex h-6 items-center rounded-full bg-status-negative-background px-2 text-xs font-semibold text-status-negative",
+    expired:
+      "inline-flex h-6 items-center rounded-full bg-surface-neutral px-2 text-xs font-semibold text-ink-secondary",
+  };
+  const STATUS_LABEL = {
+    approved: "Approved",
+    rejected: "Rejected",
+    expired: "Expired",
   };
 
   const api = window.vatbackApi;
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
   });
+
+  // An approved invoice turns expired after its claim deadline.
+  const displayStatus = (receipt) =>
+    receipt.expired ? "expired" : receipt.status;
+
+  // The API sends dates as YYYY-MM-DD. Local midnight keeps the day stable.
+  const formatDay = (isoDate) =>
+    dateFormatter.format(new Date(`${isoDate}T00:00:00`));
 
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -31,7 +46,7 @@
   const createAmounts = (receipt) => {
     const wrapper = element("div", "shrink-0 text-right tabular-nums");
     const claim = api.formatMoney(receipt.taxAmount, receipt.currency);
-    const isApproved = receipt.status === "approved";
+    const isApproved = displayStatus(receipt) === "approved";
     wrapper.append(
       element(
         "p",
@@ -83,8 +98,9 @@
     metaRow.append(
       element(
         "span",
-        STATUS_BADGE_CLASS[receipt.status] ?? STATUS_BADGE_CLASS.rejected,
-        receipt.status === "approved" ? "Approved" : "Rejected",
+        STATUS_BADGE_CLASS[displayStatus(receipt)] ??
+          STATUS_BADGE_CLASS.rejected,
+        STATUS_LABEL[displayStatus(receipt)] ?? STATUS_LABEL.rejected,
       ),
       element(
         "span",
@@ -92,6 +108,15 @@
         dateFormatter.format(new Date(receipt.scannedAt || 0)),
       ),
     );
+    if (displayStatus(receipt) === "approved" && receipt.claimDeadline) {
+      metaRow.append(
+        element(
+          "span",
+          "truncate",
+          `Claim by ${formatDay(receipt.claimDeadline)}`,
+        ),
+      );
+    }
     details.append(
       element(
         "p",
@@ -100,7 +125,7 @@
       ),
       metaRow,
     );
-    if (receipt.status !== "approved") {
+    if (displayStatus(receipt) !== "approved") {
       receipt.reasons.slice(0, MAX_REASONS_SHOWN).forEach((reason) => {
         details.appendChild(
           element("p", "mt-1 text-sm text-status-negative", reason),
@@ -175,5 +200,5 @@
     return { refresh, setCountry };
   };
 
-  window.vatbackReceipts = { create, createItem };
+  window.vatbackReceipts = { create, createItem, formatDay };
 })();
