@@ -32,3 +32,8 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: rcsenge's agent
 - Branch: feat/wise-design-employee
 - Date: 2026-10-17
+
+- Task: Read invoice PDFs and photos with a local Ollama vision model. Send the extracted JSON through the existing invoice flow.
+- Signer: Vilmos Babó's agent
+- Branch: feat/ollama-invoice-reader
+- Date: 2026-10-17
