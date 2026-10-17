@@ -76,3 +76,20 @@ def test_json_with_a_pdf_name_is_rejected(client, ai_reads_vienna_hotel):
 def test_unknown_document_type_is_rejected(client, ai_reads_vienna_hotel):
     response = upload(client, b"plain text", "notes.txt", "text/plain")
     assert response.status_code == 415
+
+
+def test_upload_stores_the_original_document(client, engine, ai_reads_vienna_hotel):
+    from sqlmodel import Session, select
+
+    from app.models.invoice_document import InvoiceDocument
+    from app.models.invoice_record import InvoiceRecord
+
+    upload(client, PDF_BYTES, "hotel.pdf", "application/pdf")
+    with Session(engine) as session:
+        record = session.exec(select(InvoiceRecord)).one()
+        stored = session.exec(select(InvoiceDocument)).one()
+    assert stored.record_id == record.id
+    assert stored.filename == "hotel.pdf"
+    assert stored.media_type == "application/pdf"
+    assert stored.content == PDF_BYTES
+    assert '"vatNumber":"ATU12345678"' in record.invoice_json

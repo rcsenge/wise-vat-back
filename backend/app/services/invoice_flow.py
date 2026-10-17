@@ -1,4 +1,5 @@
 """Invoice processing flow. Orchestrates validation, VIES, matching, and rules."""
+from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
@@ -9,6 +10,7 @@ from app.config import settings
 from app.domain import vat_rules
 from app.domain.claim_deadline import claim_deadline, expiry_reason, is_expired
 from app.integrations.vies import validate_vat_number
+from app.models.invoice_document import InvoiceDocument
 from app.models.invoice_record import InvoiceRecord
 from app.models.transaction import Transaction
 from app.schemas.invoice import ExtractedInvoice
@@ -184,8 +186,19 @@ def iter_seed_invoices(directory: Path = INVOICES_DIR) -> list[InvoiceSubmission
     return invoices
 
 
-def submit_invoice(session: Session, submission: InvoiceSubmission) -> InvoiceResult:
-    """Run the full flow for one invoice. Store the result. Return the result."""
+@dataclass(frozen=True)
+class OriginalDocument:
+    """The uploaded PDF or photo. The claim package attaches it as the invoice copy."""
+
+    filename: str
+    media_type: str
+    content: bytes
+
+
+def submit_invoice(
+    session: Session, submission: InvoiceSubmission, document: OriginalDocument | None = None
+) -> InvoiceResult:
+    """Run the full flow for one invoice. Store the result and the document. Return the result."""
     result = process_invoice(session, submission)
     refundable = sum((total.refundable_vat_total for total in result.country_totals), Decimal("0"))
     matched = result.matched_transaction
@@ -201,8 +214,19 @@ def submit_invoice(session: Session, submission: InvoiceSubmission) -> InvoiceRe
         transaction_id=matched.transaction_id if matched else None,
         image_data_url=submission.image_data_url,
         result_json=result.model_dump_json(),
+        invoice_json=submission.model_dump_json(by_alias=True, exclude={"image_data_url"}),
     )
     session.add(record)
+    session.flush()
+    if document is not None:
+        session.add(
+            InvoiceDocument(
+                record_id=record.id,
+                filename=document.filename,
+                media_type=document.media_type,
+                content=document.content,
+            )
+        )
     session.commit()
     return result
 

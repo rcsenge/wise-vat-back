@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from sqlmodel import Session
 
 from app.db import get_session
-from app.integrations.extraction import MAX_DOCUMENT_BYTES, DocumentError, extract_invoice
+from app.integrations.extraction import MAX_DOCUMENT_BYTES, DocumentError, detect_media_type, extract_invoice
 from app.integrations.ollama_reader import InvoiceReader, get_invoice_reader
 from app.schemas.invoice_flow import (
     MAX_IMAGE_DATA_URL_LENGTH,
@@ -41,7 +41,12 @@ def upload_invoice(
         raise HTTPException(status_code=error.status_code, detail={"reasons": error.reasons}) from error
     except ValidationError as error:
         raise HTTPException(status_code=422, detail={"reasons": [item["msg"] for item in error.errors()]}) from error
-    return invoice_flow.submit_invoice(session, submission)
+    original = invoice_flow.OriginalDocument(
+        filename=document.filename or "invoice",
+        media_type=detect_media_type(content) or "application/octet-stream",
+        content=content,
+    )
+    return invoice_flow.submit_invoice(session, submission, original)
 
 
 @router.get("/receipts", response_model=list[ReceiptView])

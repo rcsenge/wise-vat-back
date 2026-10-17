@@ -18,4 +18,5 @@ class InvoiceRecord(SQLModel, table=True):
     transaction_id: int | None = Field(default=None, foreign_key="transaction.id")
     image_data_url: str | None = None
     result_json: str  # The full InvoiceResult as JSON
+    invoice_json: str | None = None  # The full ExtractedInvoice as JSON. The claim package reads it.
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
