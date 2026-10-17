@@ -9,8 +9,8 @@
     "prebuild:css": "pnpm run copy:neptune",
     "build:css": "tailwindcss -i www/input.css -o www/style.css --minify",
     "postinstall": "pnpm run copy:neptune",
-    "lint": "prettier --check \"**/*.{html,css}\"",
-    "lint:fix": "prettier --write \"**/*.{html,css}\""
+    "lint": "prettier --check \"**/*.{html,css,js}\"",
+    "lint:fix": "prettier --write \"**/*.{html,css,js}\""
   },
   "dependencies": {
     "@transferwise/neptune-css": "^14.29.6"

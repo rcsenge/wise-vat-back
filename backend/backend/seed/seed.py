@@ -1,9 +1,8 @@
 """Create the database tables and load the mock demo data.
 
-The script also stores the result of every seed invoice.
-
 The demo data matches the seed invoices in seed/invoices/. The script drops the
 tables first so a schema change never leaves a stale database behind.
+The card transactions stay unclaimed. Upload a seed invoice in the frontend to claim one.
 
 Run: python -m seed.seed
 """
@@ -18,7 +17,7 @@ from app.models.user import User
 from app.services.invoice_flow import iter_seed_invoices, submit_invoice
 
 
-def run() -> None:
+def run(submit_invoices: bool = False) -> None:
     import app.models  # noqa: F401  (register tables)
 
     SQLModel.metadata.drop_all(engine)
@@ -46,8 +45,9 @@ def run() -> None:
 
         session.commit()
 
-        for invoice in iter_seed_invoices():
-            submit_invoice(session, invoice)
+        if submit_invoices:
+            for invoice in iter_seed_invoices():
+                submit_invoice(session, invoice)
 
     print("Database seeded.")
 

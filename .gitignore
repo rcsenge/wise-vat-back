@@ -12,6 +12,7 @@ node_modules/
 !*.md
 !*.html
 !*.css
+!frontend/www/*.js
 !*.svg
 !*.woff2
 !package.json

@@ -2,7 +2,7 @@
 
 help:
 	@echo "make install      Create the backend venv. Install the dependencies with uv."
-	@echo "make dev-backend  Start Uvicorn with reload on port 8000."
+	@echo "make dev-backend  Start Uvicorn with reload on port 8000 on every interface."
 	@echo "make seed         Create the database tables and load demo data."
 	@echo "make test         Run the pytest suite."
 	@echo "make demo-process Seed, process every invoice, print the claims."
@@ -12,7 +12,7 @@ install:
 	cd backend && uv sync --extra dev
 
 dev-backend:
-	cd backend && uv run uvicorn app.main:app --reload --port 8000
+	cd backend && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 seed:
 	cd backend && uv run python -m seed.seed

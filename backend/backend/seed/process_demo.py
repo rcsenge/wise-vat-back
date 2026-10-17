@@ -12,7 +12,7 @@ from seed.seed import run as seed_run
 
 
 def run() -> None:
-    seed_run()
+    seed_run(submit_invoices=True)
     with Session(engine) as session:
         claims = invoice_flow.compute_claims(session)
         print(json.dumps(claims.model_dump(), indent=2, default=str))

@@ -23,7 +23,7 @@
   <body
     class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
   >
-    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pt-6 pb-10 sm:px-6">
+    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-10 pt-6 sm:px-6">
       <header
         class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
@@ -46,7 +46,7 @@
             </svg>
           </span>
           <div>
-            <h1 class="text-xl leading-tight font-semibold tracking-tight">
+            <h1 class="text-xl font-semibold leading-tight tracking-tight">
               vatback
             </h1>
             <p class="text-sm text-[#6b7a78]">Employer review</p>
@@ -71,26 +71,41 @@
           <p class="text-sm font-medium text-[#d6f6f6]">Total claimable</p>
           <p id="summary-claimable" class="mt-1 text-3xl font-bold">€0.00</p>
           <p class="mt-1 text-xs text-[#d6f6f6]">
-            Sum of VAT across all receipts
+            Refundable VAT on approved receipts
           </p>
         </div>
         <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
           <p class="text-sm font-medium text-[#6b7a78]">Total spend</p>
           <p id="summary-spend" class="mt-1 text-2xl font-bold">€0.00</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Sum of receipt amounts</p>
+          <p class="mt-1 text-xs text-[#6b7a78]">Sum of approved receipts</p>
         </div>
         <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
           <p class="text-sm font-medium text-[#6b7a78]">Receipts</p>
           <p id="summary-count" class="mt-1 text-2xl font-bold">0</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Claimable documents</p>
+          <p class="mt-1 text-xs text-[#6b7a78]">Approved documents</p>
         </div>
+      </section>
+
+      <p
+        id="backend-error"
+        class="alert alert-negative mt-6 hidden text-sm"
+      ></p>
+
+      <section aria-labelledby="countries-heading" class="mt-8">
+        <h2 id="countries-heading" class="text-lg font-semibold">
+          Claims per country
+        </h2>
+        <ul
+          id="country-list"
+          class="pl-0! mt-4 grid list-none gap-3 sm:grid-cols-3"
+        ></ul>
       </section>
 
       <section aria-labelledby="receipts-heading" class="mt-8">
         <h2 id="receipts-heading" class="text-lg font-semibold">
           Claimable receipts
         </h2>
-        <ul id="receipt-list" class="mt-4 space-y-3"></ul>
+        <ul id="receipt-list" class="pl-0! mt-4 list-none space-y-3"></ul>
       </section>
 
       <section
@@ -120,7 +135,7 @@
           </div>
           <h3 class="mt-4 text-base font-semibold">No receipts to review</h3>
           <p class="mt-1 text-sm text-[#6b7a78]">
-            Scan company receipts in the employee app first.
+            Upload company invoices in the employee app first.
           </p>
         </div>
       </section>
@@ -129,8 +144,8 @@
         class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
       >
         <p>
-          The employee scanner stores receipts on this device. This review sees
-          the same local data.
+          The backend stores every checked invoice. This review refreshes every
+          few seconds.
         </p>
       </footer>
     </main>
@@ -146,141 +161,57 @@
       />
     </dialog>
 
+    <script src="api.js"></script>
+    <script src="receipts.js"></script>
     <script>
       (() => {
         "use strict";
 
-        const STORAGE_KEY = "vatback-receipts";
+        const REFRESH_INTERVAL_MS = 5000;
+        const COUNTRY_NAMES = { AT: "Austria", DE: "Germany" };
 
-        const currencyFormatter = new Intl.NumberFormat(undefined, {
-          style: "currency",
-          currency: "EUR",
-        });
+        const api = window.vatbackApi;
+        const receipts = window.vatbackReceipts.create({ approvedOnly: true });
+        const countryList = document.getElementById("country-list");
 
-        const receiptList = document.getElementById("receipt-list");
-        const summaryClaimable = document.getElementById("summary-claimable");
-        const summarySpend = document.getElementById("summary-spend");
-        const summaryCount = document.getElementById("summary-count");
-        const emptyState = document.getElementById("empty-state");
-        const documentDialog = document.getElementById("document-dialog");
-        const documentImage = document.getElementById("document-image");
-
-        const readReceipts = () => {
-          try {
-            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            return Array.isArray(stored) ? stored : [];
-          } catch (error) {
-            return [];
-          }
-        };
-
-        const formatMoney = (value) => {
-          return currencyFormatter.format(Number.isFinite(value) ? value : 0);
-        };
-
-        const createReceiptItem = (receipt) => {
+        const createCountryItem = (total) => {
           const item = document.createElement("li");
           item.className =
-            "flex items-center gap-4 rounded-2xl border border-[#e6e9ea] bg-white p-4 shadow-sm";
-
-          const thumbButton = document.createElement("button");
-          thumbButton.type = "button";
-          thumbButton.className =
-            "shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00a4a6]";
-          thumbButton.setAttribute("aria-label", "View receipt document");
-          thumbButton.addEventListener("click", () => {
-            documentImage.src = receipt.imageDataUrl;
-            documentDialog.showModal();
-          });
-
-          const image = document.createElement("img");
-          image.src = receipt.imageDataUrl;
-          image.alt = "Scanned receipt preview";
-          image.className = "h-16 w-16 rounded-xl object-cover";
-          thumbButton.appendChild(image);
-
-          const details = document.createElement("div");
-          details.className = "min-w-0 flex-1";
-
-          const merchant = document.createElement("p");
-          merchant.className = "truncate text-sm font-medium";
-          merchant.textContent = receipt.merchant || "Untitled receipt";
-
-          const time = document.createElement("p");
-          time.className = "text-xs text-[#6b7a78]";
-          time.textContent = new Date(receipt.scannedAt || 0).toLocaleString();
-
-          details.append(merchant, time);
-
-          const spend = document.createElement("div");
-          spend.className = "hidden text-right sm:block";
-          spend.append(
-            createLabel("Amount"),
-            createValue(formatMoney(receipt.amount)),
+            "rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm";
+          const name = document.createElement("p");
+          name.className = "text-sm font-medium text-[#6b7a78]";
+          name.textContent = COUNTRY_NAMES[total.country] ?? total.country;
+          const amount = document.createElement("p");
+          amount.className = "mt-1 text-2xl font-bold text-[#00a4a6]";
+          amount.textContent = api.formatMoney(
+            total.refundable_vat_total,
+            total.currency,
           );
-
-          const claim = document.createElement("div");
-          claim.className = "text-right";
-          claim.append(
-            createLabel("Claimable VAT"),
-            createValue(formatMoney(receipt.taxAmount), true),
-          );
-
-          item.append(thumbButton, details, spend, claim);
+          const detail = document.createElement("p");
+          detail.className = "mt-1 text-xs text-[#6b7a78]";
+          detail.textContent = `${total.transaction_ids.length} transactions, ${total.eligible_line_count} eligible lines`;
+          item.append(name, amount, detail);
           return item;
         };
 
-        const createLabel = (text) => {
-          const label = document.createElement("p");
-          label.className = "text-xs text-[#6b7a78]";
-          label.textContent = text;
-          return label;
-        };
-
-        const createValue = (text, isClaim) => {
-          const value = document.createElement("p");
-          value.className = isClaim
-            ? "font-semibold text-[#00a4a6]"
-            : "font-medium";
-          value.textContent = text;
-          return value;
-        };
-
-        const render = () => {
-          const receipts = readReceipts()
-            .slice()
-            .sort((a, b) => b.scannedAt - a.scannedAt);
-          const totals = receipts.reduce(
-            (acc, receipt) => {
-              acc.tax += Number.isFinite(receipt.taxAmount)
-                ? receipt.taxAmount
-                : 0;
-              acc.spend += Number.isFinite(receipt.amount) ? receipt.amount : 0;
-              return acc;
-            },
-            { tax: 0, spend: 0 },
-          );
-
-          summaryClaimable.textContent = formatMoney(totals.tax);
-          summarySpend.textContent = formatMoney(totals.spend);
-          summaryCount.textContent = String(receipts.length);
-
-          receiptList.replaceChildren();
-          receipts.forEach((receipt) => {
-            receiptList.appendChild(createReceiptItem(receipt));
-          });
-
-          const hasReceipts = receipts.length > 0;
-          emptyState.classList.toggle("hidden", hasReceipts);
-        };
-
-        documentDialog.addEventListener("click", (event) => {
-          if (event.target === documentDialog) {
-            documentDialog.close();
+        const refreshCountries = async () => {
+          try {
+            const claims = await api.getClaims();
+            countryList.replaceChildren(
+              ...claims.per_country.map(createCountryItem),
+            );
+          } catch (error) {
+            countryList.replaceChildren();
           }
-        });
+        };
 
-        render();
+        const refresh = () => {
+          receipts.refresh();
+          refreshCountries();
+        };
+
+        refresh();
+        setInterval(refresh, REFRESH_INTERVAL_MS);
       })();
     </script>
   </body>
