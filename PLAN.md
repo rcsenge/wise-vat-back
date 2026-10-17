@@ -132,3 +132,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Remove DONE.md. PLAN.md records every task. Update AGENTS.md, MERGE-GUIDE.md and README.md.
+- Signer: rcsenge's agent
+- Branch: chore/remove-done-file
+- Date: 2026-10-17
+
+---
