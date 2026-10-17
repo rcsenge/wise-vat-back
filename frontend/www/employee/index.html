@@ -208,45 +208,106 @@
         Add document
       </h2>
       <p class="text-ink-secondary mt-2 text-base">
-        Select a PDF or a photo of the invoice. The AI reads it. A JSON file
-        skips the AI.
+        Take a photo of the invoice or select a PDF. The AI reads it.
       </p>
       <form id="upload-form" class="mt-6 space-y-4">
-        <div>
-          <label
-            for="invoice-input"
-            class="text-ink-secondary mb-2 block text-sm font-medium"
+        <div id="choice-panel" class="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            id="camera-button"
+            class="bg-surface-neutral text-ink-primary ease-standard hover:bg-surface-neutral-pressed active:scale-97 flex h-24 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl px-4 text-base font-semibold transition duration-150"
           >
-            Invoice (PDF, photo or JSON)
-          </label>
-          <input
-            id="invoice-input"
-            type="file"
-            accept="application/pdf,image/*,.json,application/json"
-            required
-            class="border-line-neutral bg-surface-screen file:bg-surface-neutral focus:outline-brand-forest-green w-full rounded-2xl border p-4 text-base file:mr-3 file:rounded-full file:border-0 file:px-4 file:py-2 file:font-semibold focus:outline-2"
-          />
-        </div>
-        <div>
-          <label
-            for="photo-input"
-            class="text-ink-secondary mb-2 block text-sm font-medium"
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-7 w-7"
+              aria-hidden="true"
+            >
+              <path
+                d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
+              />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+            Take photo
+          </button>
+          <button
+            type="button"
+            id="file-button"
+            class="bg-surface-neutral text-ink-primary ease-standard hover:bg-surface-neutral-pressed active:scale-97 flex h-24 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl px-4 text-base font-semibold transition duration-150"
           >
-            Receipt photo (optional)
-          </label>
-          <input
-            id="photo-input"
-            type="file"
-            accept="image/*"
-            capture="environment"
-            class="border-line-neutral bg-surface-screen file:bg-surface-neutral focus:outline-brand-forest-green w-full rounded-2xl border p-4 text-base file:mr-3 file:rounded-full file:border-0 file:px-4 file:py-2 file:font-semibold focus:outline-2"
-          />
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-7 w-7"
+              aria-hidden="true"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              />
+              <path d="M14 2v6h6" />
+            </svg>
+            PDF or photo
+          </button>
         </div>
-        <img
-          id="photo-preview"
-          alt="Receipt preview"
-          class="bg-surface-neutral hidden h-36 w-full rounded-3xl object-cover"
+        <input
+          id="camera-input"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          class="hidden"
+          aria-label="Take a photo of the invoice"
         />
+        <input
+          id="file-input"
+          type="file"
+          accept="application/pdf,image/*"
+          class="hidden"
+          aria-label="Select a PDF or a photo of the invoice"
+        />
+        <div id="camera-panel" class="hidden space-y-3">
+          <video
+            id="camera-video"
+            autoplay
+            playsinline
+            muted
+            class="aspect-[3/4] w-full rounded-3xl bg-black object-cover lg:aspect-video"
+          ></video>
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              id="camera-cancel-button"
+              class="bg-surface-neutral text-ink-primary ease-standard hover:bg-surface-neutral-pressed active:scale-97 h-14 w-full cursor-pointer rounded-full px-6 text-lg font-semibold transition duration-150"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="camera-capture-button"
+              class="bg-brand-bright-green text-brand-forest-green ease-standard hover:bg-brand-bright-green-pressed active:scale-97 h-14 w-full cursor-pointer rounded-full px-6 text-lg font-semibold transition duration-150"
+            >
+              Capture
+            </button>
+          </div>
+        </div>
+        <div id="document-summary" class="hidden">
+          <img
+            id="document-preview"
+            alt="Invoice preview"
+            class="bg-surface-neutral hidden h-36 w-full rounded-3xl object-cover"
+          />
+          <p
+            id="document-name"
+            class="text-ink-secondary mt-2 truncate text-sm font-medium"
+          ></p>
+        </div>
         <div id="upload-result" class="hidden">
           <p id="upload-result-title" class="font-semibold"></p>
           <ul
@@ -295,6 +356,7 @@
         const UPLOAD_IMAGE_DIMENSION = 2000;
         const UPLOAD_IMAGE_QUALITY = 0.9;
         const SUBMIT_LABEL = "Check invoice";
+        const PDF_TYPE = "application/pdf";
         const RESULT_APPROVED_CLASS =
           "rounded-2xl bg-status-positive-background p-4 text-base text-brand-forest-green";
         const RESULT_REJECTED_CLASS =
@@ -306,9 +368,22 @@
         const uploadButtons = document.querySelectorAll("[data-upload-open]");
         const uploadDialog = document.getElementById("upload-dialog");
         const uploadForm = document.getElementById("upload-form");
-        const invoiceInput = document.getElementById("invoice-input");
-        const photoInput = document.getElementById("photo-input");
-        const photoPreview = document.getElementById("photo-preview");
+        const choicePanel = document.getElementById("choice-panel");
+        const cameraButton = document.getElementById("camera-button");
+        const fileButton = document.getElementById("file-button");
+        const cameraInput = document.getElementById("camera-input");
+        const fileInput = document.getElementById("file-input");
+        const cameraPanel = document.getElementById("camera-panel");
+        const cameraVideo = document.getElementById("camera-video");
+        const cameraCancelButton = document.getElementById(
+          "camera-cancel-button",
+        );
+        const cameraCaptureButton = document.getElementById(
+          "camera-capture-button",
+        );
+        const documentSummary = document.getElementById("document-summary");
+        const documentPreview = document.getElementById("document-preview");
+        const documentName = document.getElementById("document-name");
         const uploadResult = document.getElementById("upload-result");
         const uploadResultTitle = document.getElementById(
           "upload-result-title",
@@ -319,69 +394,16 @@
         const submitButton = document.getElementById("submit-button");
         const closeButton = document.getElementById("close-button");
 
-        let photoDataUrl = null;
+        // The upload document: the file for the backend and an optional thumbnail.
+        let pendingDocument = null;
+        let cameraStream = null;
 
-        // Phone photos are large. The backend gets a JPEG of at most 2000 px.
-        const shrinkPhotoForUpload = (file) => {
-          return new Promise((resolve, reject) => {
-            const url = URL.createObjectURL(file);
-            const image = new Image();
-            image.onload = () => {
-              URL.revokeObjectURL(url);
-              const scale = Math.min(
-                1,
-                UPLOAD_IMAGE_DIMENSION / Math.max(image.width, image.height),
-              );
-              const canvas = document.createElement("canvas");
-              canvas.width = Math.max(1, Math.round(image.width * scale));
-              canvas.height = Math.max(1, Math.round(image.height * scale));
-              canvas
-                .getContext("2d")
-                .drawImage(image, 0, 0, canvas.width, canvas.height);
-              canvas.toBlob(
-                (blob) =>
-                  resolve(
-                    new File([blob], "invoice-photo.jpg", {
-                      type: "image/jpeg",
-                    }),
-                  ),
-                "image/jpeg",
-                UPLOAD_IMAGE_QUALITY,
-              );
-            };
-            image.onerror = () => {
-              URL.revokeObjectURL(url);
-              reject(new Error("The photo cannot be read."));
-            };
-            image.src = url;
-          });
-        };
-
-        const downscaleImage = (file) => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-              const image = new Image();
-              image.onload = () => {
-                const scale = Math.min(
-                  1,
-                  MAX_IMAGE_DIMENSION / Math.max(image.width, image.height),
-                );
-                const width = Math.max(1, Math.round(image.width * scale));
-                const height = Math.max(1, Math.round(image.height * scale));
-                const canvas = document.createElement("canvas");
-                canvas.width = width;
-                canvas.height = height;
-                canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-                resolve(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
-              };
-              image.onerror = reject;
-              image.src = reader.result;
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-        };
+        // Phones open the native camera app. Desktops show a live camera in the dialog.
+        // The live camera needs a secure context: https or localhost.
+        const useLiveCamera = () =>
+          window.isSecureContext &&
+          Boolean(navigator.mediaDevices?.getUserMedia) &&
+          !window.matchMedia("(pointer: coarse)").matches;
 
         const showResult = (approved, title, reasons) => {
           uploadResult.className = approved
@@ -408,12 +430,143 @@
           return `Approved. Refundable VAT: ${api.formatTotals(totals)}`;
         };
 
+        const drawScaled = (source, width, height, maximumDimension) => {
+          const scale = Math.min(1, maximumDimension / Math.max(width, height));
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.round(width * scale));
+          canvas.height = Math.max(1, Math.round(height * scale));
+          canvas
+            .getContext("2d")
+            .drawImage(source, 0, 0, canvas.width, canvas.height);
+          return canvas;
+        };
+
+        const canvasToFile = (canvas) => {
+          return new Promise((resolve, reject) => {
+            canvas.toBlob(
+              (blob) =>
+                blob
+                  ? resolve(
+                      new File([blob], "invoice-photo.jpg", {
+                        type: "image/jpeg",
+                      }),
+                    )
+                  : reject(new Error("The photo cannot be saved.")),
+              "image/jpeg",
+              UPLOAD_IMAGE_QUALITY,
+            );
+          });
+        };
+
+        const loadImage = (file) => {
+          return new Promise((resolve, reject) => {
+            const url = URL.createObjectURL(file);
+            const image = new Image();
+            image.onload = () => {
+              URL.revokeObjectURL(url);
+              resolve(image);
+            };
+            image.onerror = () => {
+              URL.revokeObjectURL(url);
+              reject(new Error("The photo cannot be read."));
+            };
+            image.src = url;
+          });
+        };
+
+        // Phone photos are large. The backend gets a JPEG of at most 2000 px.
+        const preparePhoto = async (source, width, height) => {
+          const uploadCanvas = drawScaled(
+            source,
+            width,
+            height,
+            UPLOAD_IMAGE_DIMENSION,
+          );
+          const thumbnailCanvas = drawScaled(
+            source,
+            width,
+            height,
+            MAX_IMAGE_DIMENSION,
+          );
+          return {
+            file: await canvasToFile(uploadCanvas),
+            thumbnail: thumbnailCanvas.toDataURL("image/jpeg", JPEG_QUALITY),
+          };
+        };
+
+        const showDocument = (preparedDocument, label) => {
+          pendingDocument = preparedDocument;
+          documentPreview.classList.toggle(
+            "hidden",
+            !preparedDocument.thumbnail,
+          );
+          if (preparedDocument.thumbnail) {
+            documentPreview.src = preparedDocument.thumbnail;
+          }
+          documentName.textContent = label;
+          documentSummary.classList.remove("hidden");
+          submitButton.disabled = false;
+        };
+
+        const stopCamera = () => {
+          cameraStream?.getTracks().forEach((track) => track.stop());
+          cameraStream = null;
+          cameraVideo.srcObject = null;
+          cameraPanel.classList.add("hidden");
+          choicePanel.classList.remove("hidden");
+        };
+
+        const startLiveCamera = async () => {
+          try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: "environment" },
+              audio: false,
+            });
+          } catch (error) {
+            showResult(false, "The camera is not available.", [
+              "Allow camera access in the browser. Or select a PDF or a photo.",
+            ]);
+            return;
+          }
+          cameraVideo.srcObject = cameraStream;
+          choicePanel.classList.add("hidden");
+          cameraPanel.classList.remove("hidden");
+        };
+
+        const acceptFile = async (file) => {
+          uploadResult.className = "hidden";
+          if (!file) {
+            return;
+          }
+          if (file.type === PDF_TYPE) {
+            showDocument({ file, thumbnail: null }, `PDF: ${file.name}`);
+            return;
+          }
+          if (!file.type.startsWith("image/")) {
+            showResult(false, "This file type is not supported.", [
+              "Select a PDF or a photo of the invoice.",
+            ]);
+            return;
+          }
+          try {
+            const image = await loadImage(file);
+            showDocument(
+              await preparePhoto(image, image.width, image.height),
+              `Photo: ${file.name}`,
+            );
+          } catch (error) {
+            showResult(false, "The photo cannot be read.", [error.message]);
+          }
+        };
+
         const openUploadDialog = () => {
           uploadForm.reset();
-          photoDataUrl = null;
-          photoPreview.classList.add("hidden");
+          stopCamera();
+          pendingDocument = null;
+          documentSummary.classList.add("hidden");
+          documentPreview.classList.add("hidden");
           uploadResult.className = "hidden";
-          submitButton.disabled = false;
+          submitButton.disabled = true;
           submitButton.textContent = SUBMIT_LABEL;
           uploadDialog.showModal();
         };
@@ -422,42 +575,57 @@
           button.addEventListener("click", openUploadDialog);
         });
 
-        photoInput.addEventListener("change", async () => {
-          const file = photoInput.files[0];
-          photoDataUrl = null;
-          photoPreview.classList.add("hidden");
-          if (!file || !file.type.startsWith("image/")) {
+        cameraButton.addEventListener("click", () => {
+          if (useLiveCamera()) {
+            startLiveCamera();
             return;
           }
-          photoDataUrl = await downscaleImage(file);
-          photoPreview.src = photoDataUrl;
-          photoPreview.classList.remove("hidden");
+          cameraInput.click();
         });
+
+        fileButton.addEventListener("click", () => {
+          fileInput.click();
+        });
+
+        cameraInput.addEventListener("change", () => {
+          acceptFile(cameraInput.files[0]);
+        });
+
+        fileInput.addEventListener("change", () => {
+          acceptFile(fileInput.files[0]);
+        });
+
+        cameraCancelButton.addEventListener("click", stopCamera);
+
+        cameraCaptureButton.addEventListener("click", async () => {
+          const width = cameraVideo.videoWidth;
+          const height = cameraVideo.videoHeight;
+          if (!width || !height) {
+            return;
+          }
+          const photo = await preparePhoto(cameraVideo, width, height);
+          stopCamera();
+          showDocument(photo, "Photo from the camera");
+        });
+
+        uploadDialog.addEventListener("close", stopCamera);
 
         uploadForm.addEventListener("submit", async (event) => {
           event.preventDefault();
-          const selectedFile = invoiceInput.files[0];
-          if (!selectedFile) {
-            showResult(false, "Select a file.", [
-              "Select a PDF, a photo or an invoice JSON file.",
+          if (!pendingDocument) {
+            showResult(false, "Add a document first.", [
+              "Take a photo or select a PDF of the invoice.",
             ]);
             return;
           }
-          const isPhoto = selectedFile.type.startsWith("image/");
-          const isJson = selectedFile.name.toLowerCase().endsWith(".json");
           submitButton.disabled = true;
-          submitButton.textContent = isJson
-            ? "Checking..."
-            : "The AI reads the invoice...";
+          submitButton.textContent = "The AI reads the invoice...";
           uploadResult.className = "hidden";
           try {
-            const invoiceFile = isPhoto
-              ? await shrinkPhotoForUpload(selectedFile)
-              : selectedFile;
-            const thumbnail =
-              photoDataUrl ??
-              (isPhoto ? await downscaleImage(selectedFile) : null);
-            const result = await api.uploadInvoice(invoiceFile, thumbnail);
+            const result = await api.uploadInvoice(
+              pendingDocument.file,
+              pendingDocument.thumbnail,
+            );
             showResult(
               result.status === "approved",
               describeResult(result),
