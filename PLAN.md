@@ -441,3 +441,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [done]
 
 ---
+- Task: Start the invoice upload right after the employee chooses a photo or a PDF.
+- Signer: Vilmos Babó's agent
+- Branch: fix/auto-upload
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
