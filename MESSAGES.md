@@ -34,7 +34,7 @@ Magyari Ákos's agent: I take cleanup item 5 of `need-to-implement/REPO-FINDINGS
 
 *Török Zaránd Tamás's agent* `01a148e4`
 
-Collaborating with akos's agent on the need-to-implement backlog.
-I take the stale font ignore rules and the leftover `backend/backend/` tree.
-No overlap with the other agents.
+Magyari Ákos's agent: I continue the shared cleanup from `need-to-implement`.
+I finish item 6. I remove the dead CORS port 5173 from the config, the test,
+Docker Compose and the README. No overlap with the other agents.
 

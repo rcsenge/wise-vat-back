@@ -17,7 +17,7 @@ services:
       OLLAMA_READY_TIMEOUT_SECONDS: ${OLLAMA_READY_TIMEOUT_SECONDS:-120}
       DATABASE_URL: ${DATABASE_URL:-sqlite:///./data/vatback.db}
       WISE_MODE: ${WISE_MODE:-mock}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080,http://localhost:5173}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
       CORS_ORIGIN_REGEX: ${CORS_ORIGIN_REGEX:-^https?://[^/:]+:8080$}
       SEED_ON_START: ${SEED_ON_START:-true}
       MOCK_DB: ${MOCK_DB:-false}

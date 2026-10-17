@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     applicant_establishment_portal: str = "the NAV online portal (Hungary)"
 
     database_url: str = "sqlite:///./vatback.db"
-    cors_origins: str = "http://localhost:5173,http://localhost:8080"
+    cors_origins: str = "http://localhost:8080"
     # The regex allows any host on the frontend port. A phone opens the frontend by LAN IP.
     cors_origin_regex: str = r"^https?://[^/:]+:8080$"
 

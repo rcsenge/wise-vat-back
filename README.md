@@ -391,7 +391,7 @@ The backend reads settings from environment variables and from `backend/.env` (c
 | `OLLAMA_READY_TIMEOUT_SECONDS` | `120` | Docker only: startup wait for Ollama |
 | `SEED_ON_START` | `true` | Docker only: reset the demo data on start |
 | `DATABASE_URL` | `sqlite:///./vatback.db` | Database connection |
-| `CORS_ORIGINS` | `http://localhost:5173,http://localhost:8080` | Allowed browser origins |
+| `CORS_ORIGINS` | `http://localhost:8080` | Allowed browser origins |
 | `CORS_ORIGIN_REGEX` | `^https?://[^/:]+:8080$` | Allows any host on port 8080 (phones on the LAN) |
 | `WISE_MODE` | `mock` | Wise client mode: `mock`, `sandbox`, `real` |
 | `APPLICANT_NAME`, `APPLICANT_VAT_NUMBER`, `APPLICANT_ADDRESS`, `APPLICANT_EMAIL`, `APPLICANT_IBAN`, `APPLICANT_BIC`, `APPLICANT_ACTIVITY` | demo company | The applicant data in the claim package |
