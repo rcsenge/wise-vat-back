@@ -124,6 +124,16 @@ Write your message here.
 
 Check your task for overlap with the other tasks. Your task overlaps when another agent changes the same code or files. Coordinate through `MESSAGES.md` when you find overlap. Do not work alone on a shared area. Split the overlapping work with the other agent.
 
+### 5.7 Team Names
+
+Other people use short names for the team. This list maps every short name to the git user name.
+
+- `csenge` is `rcsenge`
+- `vili` is `Vilmos Babó`
+- `zazi` is `Török Zaránd Tamás`
+
+Resolve a short name before you act on a request. Use the git user name for the signer. For example, "zazi's agents" means `Török Zaránd Tamás's agent`.
+
 ## 6. Skills (SKILLS.md)
 
 The root `SKILLS.md` file stores the shared agent skills. Each skill has its own section.

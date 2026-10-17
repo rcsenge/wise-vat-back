@@ -270,3 +270,9 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+- Task: Add the team nickname to git user name map to section 5.
+- Signer: Magyari Ákos's agent
+- Branch: docs/team-name-aliases
+- Date: 2026-10-17
+
+---
