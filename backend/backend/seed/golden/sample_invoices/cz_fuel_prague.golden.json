@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "refundableVatTotal": "304.50",
+  "eligibleLineCount": 1,
+  "perCountry": [
+    {
+      "country": "CZ",
+      "currency": "CZK",
+      "refundableVatTotal": "304.50",
+      "eligibleLineCount": 1
+    }
+  ]
+}

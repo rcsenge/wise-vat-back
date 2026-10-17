@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "refundableVatTotal": "18.60",
+  "eligibleLineCount": 1,
+  "perCountry": [
+    {
+      "country": "SE",
+      "currency": "SEK",
+      "refundableVatTotal": "18.60",
+      "eligibleLineCount": 1
+    }
+  ]
+}

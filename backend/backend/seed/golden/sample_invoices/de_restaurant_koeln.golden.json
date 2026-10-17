@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "refundableVatTotal": "14.44",
+  "eligibleLineCount": 1,
+  "perCountry": [
+    {
+      "country": "DE",
+      "currency": "EUR",
+      "refundableVatTotal": "14.44",
+      "eligibleLineCount": 1
+    }
+  ]
+}
