@@ -195,3 +195,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Remove the explaining text from the countdown page. Restyle the timer and the amount to the Wise visual language.
+- Signer: rcsenge's agent
+- Branch: feat/countdown-hide-explanation
+- Date: 2026-10-17
+
+---
