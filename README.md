@@ -32,7 +32,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
 
 ```
  Employee page (/employee)
-   │  PDF, photo or invoice JSON
+   │  PDF, photo or camera picture
    ▼
  POST /invoices/upload ──────────────► Ollama on the host (qwen3-vl:8b)
    │                                    PDF pages + text layer → JSON in the invoice schema
@@ -49,7 +49,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
 
 Every decision carries a plain-English reason, for example *"The invoice has no supplier VAT number."* or *"Entertainment expenses are not refundable in Denmark."*
 
-A JSON file in the invoice schema skips the AI step. This keeps the demo usable on a machine without Ollama.
+The upload accepts only a PDF or a photo. The employee can also take the photo from the upload dialog. A JSON invoice can go only to `POST /invoices`, for tests and development.
 
 ---
 
@@ -229,7 +229,9 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 
 1. Open http://localhost:8080/employee.
 2. Tap **Add New Document**.
-3. Select a sample PDF from `backend/backend/seed/documents/`, a photo of a receipt, or a JSON file from `backend/backend/seed/invoices/`.
+3. Tap **Take photo** to photograph a receipt, or **PDF or photo** to select a file. A sample PDF is in `backend/backend/seed/documents/`.
+   - On a phone, **Take photo** opens the camera app.
+   - On a laptop, **Take photo** shows a live camera in the dialog. Tap **Capture**. The live camera needs `localhost` or https. The browser asks for camera access once.
 4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
 5. Read the result: approved with the refundable VAT, or rejected with the reasons.
 6. Open http://localhost:8080/employer. It shows the refundable VAT per country and the approved receipts. It refreshes every few seconds.
@@ -258,9 +260,9 @@ cd backend/backend
 uv run --with reportlab python -m seed.make_documents
 ```
 
-### Invoice JSON files (no AI needed)
+### Invoice JSON files (API and tests only)
 
-`backend/backend/seed/invoices/`
+`backend/backend/seed/invoices/`. The upload does not accept JSON. Send these files to `POST /invoices`, for example in the Swagger UI.
 
 | File | Expected result |
 | --- | --- |
@@ -271,7 +273,7 @@ uv run --with reportlab python -m seed.make_documents
 
 ### Multi-country samples
 
-`backend/backend/seed/sample_invoices/` holds 24 invoices from 9 countries. They fill the employer view with realistic data. 19 are approved. Some approvals refund only part of the VAT, for example `fr_hotel_paris.json` (€3.60, France refunds no VAT on the hotel room) and `pl_fuel_orlen_poznan.json` (36.80 PLN, Poland refunds 50% on fuel). Five show a rejection:
+`backend/backend/seed/sample_invoices/` holds 42 invoices from 9 countries. They fill the employer view with realistic data. 37 are approved. Some approvals refund only part of the VAT, for example `fr_hotel_paris.json` (€3.60, France refunds no VAT on the hotel room) and `pl_fuel_orlen_poznan.json` (36.80 PLN, Poland refunds 50% on fuel). Five show a rejection:
 
 | File | Rejection reason |
 | --- | --- |
@@ -321,7 +323,7 @@ Interactive docs: http://localhost:8000/docs. The OpenAPI contract: http://local
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/invoices/upload` | **Frontend entry point.** Multipart form: `document` (PDF, photo or JSON), optional `image_data_url` thumbnail. |
+| `POST` | `/invoices/upload` | **Frontend entry point.** Multipart form: `document` (PDF or photo), optional `image_data_url` thumbnail. |
 | `POST` | `/invoices` | The same flow with an `ExtractedInvoice` JSON body. |
 | `GET` | `/receipts` | Stored invoices in the frontend receipt shape, newest first. |
 | `GET` | `/claims` | Refundable VAT per country and currency, plus every stored result. |
@@ -334,8 +336,8 @@ Upload errors return `{"detail": {"reasons": [...]}}` with a status code:
 | Status | Meaning |
 | --- | --- |
 | `413` | The document is larger than 20 MB. |
-| `415` | The file is not a PDF, an image or JSON. |
-| `422` | The JSON or the AI output does not match the invoice schema. |
+| `415` | The file is not a PDF or an image. JSON is rejected too. |
+| `422` | The AI output does not match the invoice schema. |
 | `503` | Ollama is not running, or the model is missing. |
 | `504` | Ollama did not answer in time. |
 
@@ -366,7 +368,7 @@ cd backend
 make test
 ```
 
-Or, from `backend/backend`: `uv run pytest`. The suite has 118 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
+Or, from `backend/backend`: `uv run pytest`. The suite has 170 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
 
 Frontend formatting:
 

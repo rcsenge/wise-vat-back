@@ -28,7 +28,7 @@ The SQLite database persists in the `backend-data` Docker volume.
 
 ## Local AI invoice reader
 
-`POST /invoices/upload` takes a PDF, a photo or an invoice JSON file. A local Ollama vision model reads PDFs and photos. It needs no API key, no account and has no usage limit.
+`POST /invoices/upload` takes a PDF or a photo. It rejects JSON with status 415. A JSON invoice goes only to `POST /invoices`. A local Ollama vision model reads PDFs and photos. It needs no API key, no account and has no usage limit.
 
 Set up the machine that runs the backend once:
 
