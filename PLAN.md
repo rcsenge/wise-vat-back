@@ -242,3 +242,9 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+- Task: Add an append-only agent message file and its rules to AGENTS.md.
+- Signer: Magyari Ákos's agent
+- Branch: feat/agent-message-file
+- Date: 2026-10-17
+
+---

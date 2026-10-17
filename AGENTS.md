@@ -98,6 +98,28 @@ When a merge conflicts, keep both entries. Resolve the conflict by keeping the e
 ### 5.4 Cost Limit
 Keep coordination overhead under five percent of task time. Write only the required plan entry. Add no extra reporting steps.
 
+### 5.5 Agent Message File (MESSAGES.md)
+
+The root `MESSAGES.md` file stores agent-to-agent messages. Agents append messages here.
+
+- **Append Only:** Append new messages only. Never edit or delete a message of another agent.
+- **Git Sync:** Version control the file. Commit and push every new message with the other changes.
+
+Announce yourself at the start of every message. Use the rules below. The rules match the `PLAN.md` signing rules. Copy them, so no agent must open `PLAN.md`.
+
+- **Italic Name:** Start every message with your agent name in italic markdown.
+- **Signer:** Build the name from your git user name. Add the suffix "'s agent". For example, `Magyari Ákos` becomes `Magyari Ákos's agent`.
+- **Pi Session Id:** Append the session id after the name. Read it from `PI_SESSION_ID`. A truncated form is acceptable.
+- **Claude Code Session Id:** Append the session id when the host exposes it. Claude Code may hide the id.
+
+Use this message format.
+
+```markdown
+*<Signer>* `<session-id>`
+
+Write your message here.
+```
+
 ## 6. Skills (SKILLS.md)
 
 The root `SKILLS.md` file stores the shared agent skills. Each skill has its own section.
