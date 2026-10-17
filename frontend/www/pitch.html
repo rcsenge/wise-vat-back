@@ -133,6 +133,9 @@
       .timer-display.pop {
         animation: timer-pop 0.8s ease-out;
       }
+      time.pop {
+        animation: timer-pop 0.8s ease-out;
+      }
       @keyframes timer-pop {
         0% {
           transform: scale(1);
@@ -173,7 +176,7 @@
 
     <main>
       <section>
-        <time datetime="0">0:00</time>
+        <time data-remaining="300">05:00</time>
         <h2>The hook</h2>
         <ul>
           <li>A number companies never see.</li>
@@ -184,7 +187,7 @@
       </section>
 
       <section>
-        <time datetime="45">0:45</time>
+        <time data-remaining="255">04:15</time>
         <h2>The problem</h2>
         <ul>
           <li>Your team travels for business.</li>
@@ -206,7 +209,7 @@
       </section>
 
       <section>
-        <time datetime="105">1:45</time>
+        <time data-remaining="195">03:15</time>
         <h2>Why it is hard</h2>
         <ul>
           <li>
@@ -238,7 +241,7 @@
       </section>
 
       <section>
-        <time datetime="150">2:30</time>
+        <time data-remaining="150">02:30</time>
         <h2>The solution</h2>
         <p>SIGINT makes it automatic. You do the trip. It does the rest.</p>
         <ol>
@@ -267,7 +270,7 @@
       </section>
 
       <section>
-        <time datetime="210">3:30</time>
+        <time data-remaining="90">01:30</time>
         <h2>What the employer sees</h2>
         <ul>
           <li>One page.</li>
@@ -294,7 +297,7 @@
       </section>
 
       <section>
-        <time datetime="255">4:15</time>
+        <time data-remaining="45">00:45</time>
         <h2>Why it is a quality-of-life win</h2>
         <ul>
           <li>Not a flashy dashboard. <strong>Quality of life.</strong></li>
@@ -316,7 +319,7 @@
       </section>
 
       <section>
-        <time datetime="285">4:45</time>
+        <time data-remaining="15">00:15</time>
         <h2>Close</h2>
         <ul>
           <li>
@@ -389,15 +392,25 @@
         var remaining = DURATION_SECONDS;
         var intervalId = null;
         var isRunning = false;
-        // The pitch sections start at these elapsed seconds: 0, 0:45, 1:45, 2:30, 3:30, 4:15, 4:45.
-        // The timer pops when the remaining time reaches the start of a section.
-        var sectionTimes = [0, 45, 105, 150, 210, 255, 285];
+        // The pitch sections start at these remaining seconds: 05:00, 04:15, 03:15, 02:30, 01:30, 00:45, 00:15.
+        var sectionRemaining = [300, 255, 195, 150, 90, 45, 15];
         var poppedSections = [];
 
         function popTimer() {
           display.classList.remove("pop");
           void display.offsetWidth;
           display.classList.add("pop");
+        }
+
+        function popTimestamp(value) {
+          var timestamp = document.querySelector(
+            '[data-remaining="' + value + '"]',
+          );
+          if (timestamp) {
+            timestamp.classList.remove("pop");
+            void timestamp.offsetWidth;
+            timestamp.classList.add("pop");
+          }
         }
 
         function render() {
@@ -425,13 +438,13 @@
             stopAtEnd();
             return;
           }
-          var elapsed = DURATION_SECONDS - remaining;
           if (
-            sectionTimes.indexOf(elapsed) !== -1 &&
-            poppedSections.indexOf(elapsed) === -1
+            sectionRemaining.indexOf(remaining) !== -1 &&
+            poppedSections.indexOf(remaining) === -1
           ) {
-            poppedSections.push(elapsed);
+            poppedSections.push(remaining);
             popTimer();
+            popTimestamp(remaining);
           }
           render();
         }
@@ -442,9 +455,10 @@
           }
           isRunning = true;
           startButton.textContent = "Pause";
-          if (poppedSections.indexOf(0) === -1) {
-            poppedSections.push(0);
+          if (poppedSections.indexOf(DURATION_SECONDS) === -1) {
+            poppedSections.push(DURATION_SECONDS);
             popTimer();
+            popTimestamp(DURATION_SECONDS);
           }
           intervalId = setInterval(tick, 1000);
         }
@@ -466,6 +480,10 @@
           remaining = DURATION_SECONDS;
           poppedSections = [];
           display.classList.remove("pop");
+          var timestamps = document.querySelectorAll("[data-remaining]");
+          timestamps.forEach(function (timestamp) {
+            timestamp.classList.remove("pop");
+          });
           startButton.textContent = "Start";
           startButton.disabled = false;
           render();
