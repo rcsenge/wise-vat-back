@@ -427,3 +427,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [done]
 
 ---
+- Task: Fix the page links. Link to the file paths so every web server finds the pages.
+- Signer: Vilmos Babó's agent
+- Branch: fix/page-links
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
