@@ -25,15 +25,15 @@ def submit_invoice(submission: InvoiceSubmission, session: Session = Depends(get
 
 @router.post("/invoices/upload", response_model=InvoiceResult)
 def upload_invoice(
-    document: UploadFile = File(description="The invoice as a PDF, a photo or an ExtractedInvoice JSON file."),
+    document: UploadFile = File(description="The invoice as a PDF or a photo."),
     image_data_url: str | None = Form(default=None, max_length=MAX_IMAGE_DATA_URL_LENGTH),
     session: Session = Depends(get_session),
     read_with_ai: InvoiceReader = Depends(get_invoice_reader),
 ) -> InvoiceResult:
-    """The frontend entry point. The local AI reads a PDF or a photo. A JSON file skips the AI."""
+    """The frontend entry point. The local AI reads the PDF or the photo."""
     content = document.file.read(MAX_DOCUMENT_BYTES + 1)
     try:
-        invoice = extract_invoice(content, document.content_type, document.filename, read_with_ai)
+        invoice = extract_invoice(content, read_with_ai)
         submission = InvoiceSubmission.model_validate(
             {**invoice.model_dump(mode="json", by_alias=True), "imageDataUrl": image_data_url}
         )

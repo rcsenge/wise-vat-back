@@ -108,7 +108,7 @@ def evaluate_documents(directory: Path) -> int:
         expected = ExtractedInvoice.model_validate_json(expected_path.read_text(encoding="utf-8"))
         content = document.read_bytes()
         try:
-            actual = extract_invoice(content, "application/pdf", document.name, reader)
+            actual = extract_invoice(content, reader)
         except DocumentError as error:
             if any("not running" in reason for reason in error.reasons):
                 print("The local AI is not running. Start Ollama and pull the model first.")

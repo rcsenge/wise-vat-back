@@ -1,60 +1,78 @@
-"""Upload entry point tests. The frontend sends the invoice JSON as a file."""
+"""Upload entry point tests. The upload takes only a PDF or a photo. A fake AI reads it."""
+import io
 import json
 from decimal import Decimal
 
+import pytest
+from PIL import Image
+
+from app.integrations.ollama_reader import get_invoice_reader
+from app.main import app
+from app.schemas.invoice import ExtractedInvoice
 from tests.helpers import load_invoice
 
 IMAGE_DATA_URL = "data:image/jpeg;base64,AAAA"
+PDF_BYTES = b"%PDF-1.4 sample invoice"
 
 
-def upload(client, data: dict | str, filename: str = "invoice.json", content_type: str = "application/json", **form):
-    content = data if isinstance(data, str) else json.dumps(data)
+def photo_bytes() -> bytes:
+    buffer = io.BytesIO()
+    Image.new("RGB", (40, 30), "white").save(buffer, format="JPEG")
+    return buffer.getvalue()
+
+
+@pytest.fixture
+def ai_reads_vienna_hotel(client):
+    """The fake AI returns the Vienna hotel invoice for every document."""
+    invoice = ExtractedInvoice.model_validate(load_invoice("at_hotel_vienna.json"))
+    app.dependency_overrides[get_invoice_reader] = lambda: lambda content, media_type: invoice
+
+
+def upload(client, content: bytes, filename: str, content_type: str, **form):
     return client.post("/invoices/upload", files={"document": (filename, content, content_type)}, data=form)
 
 
-def test_json_upload_is_approved(client):
-    response = upload(client, load_invoice("at_hotel_vienna.json"))
+def test_photo_upload_is_approved(client, ai_reads_vienna_hotel):
+    response = upload(client, photo_bytes(), "receipt.jpg", "image/jpeg")
     body = response.json()
     assert response.status_code == 200
     assert body["status"] == "approved"
     assert Decimal(body["country_totals"][0]["refundable_vat_total"]) == Decimal("26.00")
 
 
-def test_upload_stores_the_receipt_with_image(client):
-    upload(client, load_invoice("at_hotel_vienna.json"), image_data_url=IMAGE_DATA_URL)
+def test_pdf_upload_is_approved(client, ai_reads_vienna_hotel):
+    response = upload(client, PDF_BYTES, "invoice.pdf", "application/pdf")
+    assert response.json()["status"] == "approved"
+
+
+def test_upload_stores_the_receipt_with_image(client, ai_reads_vienna_hotel):
+    upload(client, photo_bytes(), "receipt.jpg", "image/jpeg", image_data_url=IMAGE_DATA_URL)
     receipts = client.get("/receipts").json()
     assert len(receipts) == 1
     assert receipts[0]["merchant"] == "Hotel Ringstrasse GmbH"
     assert receipts[0]["imageDataUrl"] == IMAGE_DATA_URL
 
 
-def test_json_file_name_is_enough(client):
-    response = upload(client, load_invoice("at_hotel_vienna.json"), content_type="application/octet-stream")
-    assert response.json()["status"] == "approved"
-
-
-def test_second_upload_of_same_invoice_is_rejected(client):
-    upload(client, load_invoice("at_hotel_vienna.json"))
-    body = upload(client, load_invoice("at_hotel_vienna.json")).json()
+def test_second_upload_of_same_invoice_is_rejected(client, ai_reads_vienna_hotel):
+    upload(client, PDF_BYTES, "invoice.pdf", "application/pdf")
+    body = upload(client, PDF_BYTES, "invoice.pdf", "application/pdf").json()
     assert body["status"] == "rejected"
     assert any("No matching" in reason for reason in body["reasons"])
 
 
-def test_unknown_document_type_is_rejected(client):
-    response = upload(client, "plain text", filename="notes.txt", content_type="text/plain")
+def test_json_upload_is_rejected(client, ai_reads_vienna_hotel):
+    content = json.dumps(load_invoice("at_hotel_vienna.json")).encode()
+    response = upload(client, content, "invoice.json", "application/json")
     assert response.status_code == 415
-    assert response.json()["detail"]["reasons"]
+    assert response.json()["detail"]["reasons"] == ["Upload a PDF or a photo of the invoice (JPEG, PNG, GIF or WebP)."]
 
 
-def test_broken_json_is_rejected_with_reasons(client):
-    response = upload(client, "{not json")
-    assert response.status_code == 422
-    assert response.json()["detail"]["reasons"]
+def test_json_with_a_pdf_name_is_rejected(client, ai_reads_vienna_hotel):
+    content = json.dumps(load_invoice("at_hotel_vienna.json")).encode()
+    response = upload(client, content, "invoice.pdf", "application/pdf")
+    assert response.status_code == 415
 
 
-def test_missing_field_is_reported(client):
-    data = load_invoice("at_hotel_vienna.json")
-    del data["totals"]
-    response = upload(client, data)
-    assert response.status_code == 422
-    assert any("totals" in reason for reason in response.json()["detail"]["reasons"])
+def test_unknown_document_type_is_rejected(client, ai_reads_vienna_hotel):
+    response = upload(client, b"plain text", "notes.txt", "text/plain")
+    assert response.status_code == 415
