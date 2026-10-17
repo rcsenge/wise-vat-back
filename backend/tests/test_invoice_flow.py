@@ -91,7 +91,13 @@ def test_receipts_list_frontend_shape(client):
     assert response.status_code == 200
     assert len(receipts) == 1
     receipt = receipts[0]
-    assert set(receipt) == {"id", "merchant", "amount", "taxAmount", "currency", "country", "scannedAt", "imageDataUrl", "status", "reasons"}
+    assert set(receipt) == {
+        "id", "merchant", "amount", "taxAmount", "currency", "country", "scannedAt", "imageDataUrl", "status", "reasons",
+        "issueDate", "claimDeadline", "expired",
+    }
+    assert receipt["issueDate"] == "2026-09-17"
+    assert receipt["claimDeadline"] == "2027-09-30"
+    assert receipt["expired"] is False
     assert isinstance(receipt["id"], str)
     assert isinstance(receipt["scannedAt"], int)
     assert receipt["imageDataUrl"] == "data:image/jpeg;base64,AAAA"

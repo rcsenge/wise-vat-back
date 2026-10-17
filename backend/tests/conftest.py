@@ -17,8 +17,19 @@ BACKEND = Path(__file__).resolve().parents[1]
 INVOICES_DIR = BACKEND / "seed" / "invoices"
 
 
+# The claim deadline depends on today. The tests fix today, so they do not age.
+TEST_REFERENCE_DATE = date(2026, 10, 17)
+
+
 def load_invoice(name: str) -> dict:
     return json.loads((INVOICES_DIR / name).read_text(encoding="utf-8"))
+
+
+@pytest.fixture(autouse=True)
+def fixed_reference_date(monkeypatch):
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "claim_reference_date", TEST_REFERENCE_DATE)
 
 
 @pytest.fixture

@@ -1,4 +1,5 @@
 """API contracts for the invoice processing and claims flow."""
+from datetime import date
 from decimal import Decimal
 from typing import Literal
 
@@ -46,8 +47,19 @@ class InvoiceResult(BaseModel):
     country_totals: list[CountryTotal] = Field(default_factory=list)
 
 
+class ClaimDeadline(BaseModel):
+    """Refundable VAT of one country that shares one claim deadline."""
+
+    country: str
+    currency: str
+    claim_deadline: date
+    refundable_vat_total: Decimal
+
+
 class ClaimsSummary(BaseModel):
-    per_country: list[CountryTotal] = Field(default_factory=list)
+    per_country: list[CountryTotal] = Field(default_factory=list)  # Only invoices inside the deadline
+    expired_per_country: list[CountryTotal] = Field(default_factory=list)  # Approved, but the deadline passed
+    deadlines: list[ClaimDeadline] = Field(default_factory=list)  # Earliest deadline first
     results: list[InvoiceResult] = Field(default_factory=list)
 
 
@@ -72,3 +84,6 @@ class ReceiptView(BaseModel):
     image_data_url: str | None
     status: InvoiceStatus
     reasons: list[str] = Field(default_factory=list)
+    issue_date: date | None = None
+    claim_deadline: date | None = None
+    expired: bool = False  # An approved invoice after its claim deadline

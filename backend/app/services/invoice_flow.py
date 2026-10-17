@@ -1,16 +1,19 @@
 """Invoice processing flow. Orchestrates validation, VIES, matching, and rules."""
-from datetime import datetime, time, timedelta, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
 from sqlmodel import Session, col, select
 
+from app.config import settings
 from app.domain import vat_rules
+from app.domain.claim_deadline import claim_deadline, expiry_reason, is_expired
 from app.integrations.vies import validate_vat_number
 from app.models.invoice_record import InvoiceRecord
 from app.models.transaction import Transaction
 from app.schemas.invoice import ExtractedInvoice
 from app.schemas.invoice_flow import (
+    ClaimDeadline,
     ClaimsSummary,
     CountryTotal,
     InvoiceResult,
@@ -30,6 +33,11 @@ CLAIM_BATCH_SIZE = 500
 MATCH_WINDOW_DAYS = 14
 MAX_MATCH_CANDIDATES = 100
 DEFAULT_RECEIPT_LIMIT = 50
+
+
+def reference_date() -> date:
+    """Return the date that the claim deadline check uses as today."""
+    return settings.claim_reference_date or datetime.now(timezone.utc).date()
 
 
 def validate_invoice(invoice: ExtractedInvoice) -> list[str]:
@@ -84,6 +92,13 @@ def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResul
     reasons = validate_invoice(invoice)
     if reasons:
         return InvoiceResult(status="rejected", invoice_number=invoice.invoice_number, reasons=reasons)
+
+    if is_expired(invoice.issue_date, reference_date()):
+        return InvoiceResult(
+            status="rejected",
+            invoice_number=invoice.invoice_number,
+            reasons=[expiry_reason(invoice.issue_date)],
+        )
 
     if not validate_vat_number(invoice.supplier.vat_number):
         return InvoiceResult(
@@ -177,6 +192,7 @@ def submit_invoice(session: Session, submission: InvoiceSubmission) -> InvoiceRe
     record = InvoiceRecord(
         status=result.status,
         invoice_number=result.invoice_number,
+        issue_date=submission.issue_date,
         merchant=submission.supplier.name,
         currency=submission.currency,
         gross_amount=submission.totals.gross_amount,
@@ -194,41 +210,68 @@ def submit_invoice(session: Session, submission: InvoiceSubmission) -> InvoiceRe
 def list_receipts(session: Session, limit: int = DEFAULT_RECEIPT_LIMIT) -> list[ReceiptView]:
     """Return the stored invoices in the frontend receipt shape, newest first."""
     query = select(InvoiceRecord).order_by(col(InvoiceRecord.id).desc()).limit(limit)
-    return [_receipt_view(record) for record in session.exec(query).all()]
+    today = reference_date()
+    return [_receipt_view(record, today) for record in session.exec(query).all()]
+
+
+def _add_country_total(totals: dict[tuple[str, str], CountryTotal], country_total: CountryTotal) -> None:
+    key = (country_total.country, country_total.currency)
+    current = totals.get(key)
+    if current is None:
+        totals[key] = country_total
+        return
+    totals[key] = CountryTotal(
+        country=current.country,
+        currency=current.currency,
+        refundable_vat_total=(current.refundable_vat_total + country_total.refundable_vat_total).quantize(_CENT),
+        eligible_line_count=current.eligible_line_count + country_total.eligible_line_count,
+        transaction_ids=current.transaction_ids + country_total.transaction_ids,
+    )
+
+
+def _is_record_expired(issue_date: date | None, today: date) -> bool:
+    # A record from before the issue date column has no date. It stays claimable.
+    return issue_date is not None and is_expired(issue_date, today)
 
 
 def compute_claims(session: Session) -> ClaimsSummary:
-    """Sum every stored approved invoice per country and currency. Add the newest results."""
+    """Sum the approved invoices per country and currency. Split them by the claim deadline."""
+    today = reference_date()
     approved = (
-        select(InvoiceRecord.result_json)
+        select(InvoiceRecord.result_json, InvoiceRecord.issue_date)
         .where(InvoiceRecord.status == "approved")
         .order_by(col(InvoiceRecord.id))
         .execution_options(yield_per=CLAIM_BATCH_SIZE)
     )
     totals: dict[tuple[str, str], CountryTotal] = {}
-    for result_json in session.exec(approved):
+    expired_totals: dict[tuple[str, str], CountryTotal] = {}
+    deadline_totals: dict[tuple[str, str, date], Decimal] = {}
+    for result_json, issue_date in session.exec(approved):
+        expired = _is_record_expired(issue_date, today)
         for country_total in InvoiceResult.model_validate_json(result_json).country_totals:
-            key = (country_total.country, country_total.currency)
-            current = totals.get(key)
-            if current is None:
-                totals[key] = country_total
-            else:
-                totals[key] = CountryTotal(
-                    country=current.country,
-                    currency=current.currency,
-                    refundable_vat_total=(current.refundable_vat_total + country_total.refundable_vat_total).quantize(_CENT),
-                    eligible_line_count=current.eligible_line_count + country_total.eligible_line_count,
-                    transaction_ids=current.transaction_ids + country_total.transaction_ids,
-                )
+            _add_country_total(expired_totals if expired else totals, country_total)
+            if issue_date is not None and not expired:
+                key = (country_total.country, country_total.currency, claim_deadline(issue_date))
+                deadline_totals[key] = deadline_totals.get(key, Decimal("0")) + country_total.refundable_vat_total
+    deadlines = [
+        ClaimDeadline(country=country, currency=currency, claim_deadline=deadline, refundable_vat_total=amount.quantize(_CENT))
+        for (country, currency, deadline), amount in sorted(deadline_totals.items(), key=lambda item: (item[0][2], item[0][0]))
+    ]
     newest = select(InvoiceRecord.result_json).order_by(col(InvoiceRecord.id).desc()).limit(MAX_CLAIM_RESULTS)
     results = [InvoiceResult.model_validate_json(result_json) for result_json in reversed(session.exec(newest).all())]
-    return ClaimsSummary(per_country=list(totals.values()), results=results)
+    return ClaimsSummary(
+        per_country=list(totals.values()),
+        expired_per_country=list(expired_totals.values()),
+        deadlines=deadlines,
+        results=results,
+    )
 
 
-def _receipt_view(record: InvoiceRecord) -> ReceiptView:
+def _receipt_view(record: InvoiceRecord, today: date) -> ReceiptView:
     # SQLite returns a naive datetime. The stored value is UTC.
     created_at = record.created_at.replace(tzinfo=timezone.utc)
     result = InvoiceResult.model_validate_json(record.result_json)
+    expired = result.status == "approved" and _is_record_expired(record.issue_date, today)
     return ReceiptView(
         id=str(record.id),
         merchant=record.merchant,
@@ -239,5 +282,8 @@ def _receipt_view(record: InvoiceRecord) -> ReceiptView:
         scanned_at=int(created_at.timestamp() * 1000),
         image_data_url=record.image_data_url,
         status=result.status,
-        reasons=result.reasons,
+        reasons=[expiry_reason(record.issue_date)] if expired else result.reasons,
+        issue_date=record.issue_date,
+        claim_deadline=claim_deadline(record.issue_date) if record.issue_date else None,
+        expired=expired,
     )

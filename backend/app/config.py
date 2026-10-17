@@ -1,4 +1,5 @@
 """App settings, read from environment / .env (see ../.env.example)."""
+from datetime import date
 from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -8,6 +9,10 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=(".env", "../.env"), extra="ignore")
 
     wise_mode: Literal["mock", "sandbox", "real"] = "mock"
+
+    # The claim deadline check uses this date as today. Empty means the real date.
+    # Tests fix it. A demo can set a future date to show expired invoices.
+    claim_reference_date: date | None = None
     wise_api_token: str = ""
     wise_sandbox_url: str = "https://api.sandbox.transferwise.tech"
     wise_real_url: str = "https://api.transferwise.com"

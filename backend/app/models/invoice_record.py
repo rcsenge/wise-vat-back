@@ -1,5 +1,5 @@
 """One stored result of the invoice flow. The receipts list and the claims read it."""
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from decimal import Decimal
 
 from sqlmodel import Field, SQLModel
@@ -9,6 +9,7 @@ class InvoiceRecord(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     status: str = Field(max_length=16)  # "approved" or "rejected"
     invoice_number: str | None = None
+    issue_date: date | None = None  # The claim deadline depends on the invoice year
     merchant: str = ""
     currency: str = Field(max_length=3)
     gross_amount: Decimal = Field(max_digits=18, decimal_places=4)
