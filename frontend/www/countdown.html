@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>vatback - Five Minutes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="vendor/neptune/props/neptune-tokens.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-surface-screen text-ink-primary font-sans antialiased">
+    <main
+      class="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))]"
+    >
+      <h1
+        class="font-display text-display-large text-center font-black uppercase"
+      >
+        Five minutes.<br />€190,259 lost.
+      </h1>
+      <p class="text-ink-secondary mt-4 text-center text-base">
+        Unclaimed VAT costs the world €20 billion every year. Watch the money
+        go.
+      </p>
+
+      <section
+        class="bg-surface-neutral mt-8 rounded-3xl px-6 py-8 text-center"
+        aria-labelledby="countdown-timer-label"
+      >
+        <p
+          id="countdown-timer-label"
+          class="text-ink-tertiary text-sm font-semibold"
+        >
+          Time left
+        </p>
+        <p
+          id="countdown-timer"
+          class="mt-1 text-[64px] font-bold tabular-nums leading-none"
+          role="timer"
+          aria-live="off"
+        >
+          05:00
+        </p>
+        <progress
+          id="countdown-progress"
+          class="[&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-screen [&::-webkit-progress-value]:bg-brand-bright-green bg-surface-screen mt-6 h-3 w-full appearance-none overflow-hidden rounded-full [&::-moz-progress-bar]:rounded-full [&::-webkit-progress-value]:rounded-full"
+          max="300"
+          value="0"
+          aria-label="Countdown progress"
+        ></progress>
+      </section>
+
+      <section class="mt-6 text-center" aria-labelledby="countdown-loss-label">
+        <p
+          id="countdown-loss-label"
+          class="text-ink-tertiary text-sm font-semibold"
+        >
+          Money lost so far
+        </p>
+        <p class="mt-1 tabular-nums">
+          <span id="countdown-loss" class="text-amount-large font-bold"
+            >€0</span
+          >
+          <span class="text-ink-secondary text-base font-semibold">EUR</span>
+        </p>
+      </section>
+
+      <ul class="mt-8 flex flex-col gap-3">
+        <li
+          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
+        >
+          <span class="text-ink-secondary text-base">Every second</span>
+          <span class="text-base font-semibold tabular-nums">€634</span>
+        </li>
+        <li
+          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
+        >
+          <span class="text-ink-secondary text-base">Every minute</span>
+          <span class="text-base font-semibold tabular-nums">€38,052</span>
+        </li>
+        <li
+          class="bg-surface-neutral flex items-center justify-between rounded-2xl px-4 py-4"
+        >
+          <span class="text-ink-secondary text-base">Every year</span>
+          <span class="text-base font-semibold tabular-nums"
+            >€20,000,000,000</span
+          >
+        </li>
+      </ul>
+
+      <div class="mt-auto flex flex-col gap-3 pt-8">
+        <button
+          id="countdown-button-start"
+          type="button"
+          class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed h-14 w-full rounded-full text-lg font-semibold"
+        >
+          Start
+        </button>
+        <button
+          id="countdown-button-reset"
+          type="button"
+          class="bg-brand-light-green text-brand-forest-green active:bg-brand-light-green-pressed h-14 w-full rounded-full text-lg font-semibold"
+        >
+          Reset
+        </button>
+      </div>
+    </main>
+    <script src="countdown.js"></script>
+  </body>
+</html>
