@@ -4,7 +4,7 @@ This is a rough idea of the system design, so you understand the idea.
 - Once the user confirms everything is done for the demo and how much time is left, the determining of what should be prioritized to actually implement can start
 
 System design so far:
-- The invoice uploading is the task of the other team, don't worry about it. We first just will use hardcoding
+- A local Ollama vision model reads the invoice PDFs and photos. The backend extracts the fields itself.
 - The invoice uploading will output the json schema already in the repo, we will work with this but if neccessary we can slightly modify it.
 - When we receive this json object the first thing to check is to validate the data. Does it have everything to determine whether all required fields have a non null value.
   - If it has a null but required value always send it back with a fail
@@ -13,7 +13,7 @@ System design so far:
 - If it didn't fail by this point: find the transaction that matches the total price of the invoice and map the invoice to the transaction
 - then send it to the VAT back rule machine
 - The vat back machine:
-  - only for these countries (from the transaction): Austria, Germany hard code the VAT back regulation rules (maybe in the sqlite)
+  - only for these countries (from the transaction): Austria, Germany, France, Italy, Netherlands, Poland, Czechia, Denmark, Sweden; the VAT back rules live in `app/domain/vat_rules.py`
   - goes through each item on the invoice finds the country and subcategory rule applying to it
     - if it eligible for the vat back add it to a list of sorts
     - if at least one item on the receipt is eligible add it to the wise account holder (each country collected separately)
