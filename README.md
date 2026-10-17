@@ -393,6 +393,7 @@ pnpm run lint
 | An invoice that worked before is now rejected | Its card transaction is already claimed. Run `make seed` to reset. |
 | The Docker backend cannot reach Ollama on Linux | Run Ollama with `OLLAMA_HOST=0.0.0.0:11434 ollama serve`. |
 | Port 8000 or 8080 is in use | Stop the other dev server, or the Docker stack. |
+| A page looks broken after an update (huge icons, stacked buttons) | The browser uses an old cached `style.css`. Press Ctrl+F5 (Cmd+Shift+R on macOS). Caddy prevents this, but the Python server does not. |
 
 ---
 
