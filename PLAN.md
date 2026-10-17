@@ -276,3 +276,10 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+
+- Task: Restyle the countdown globe after the Wise campaign page. Add a darker background and a faint SIGINT word.
+- Signer: rcsenge's agent
+- Branch: feat/countdown-globe-redesign
+- Date: 2026-10-17
+
+---
