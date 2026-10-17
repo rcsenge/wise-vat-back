@@ -1,4 +1,7 @@
-"""Picks the WiseClient implementation based on WISE_MODE."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Picks the WiseClient implementation based on WISE_MODE.
+"""
 from functools import lru_cache
 
 from app.config import settings

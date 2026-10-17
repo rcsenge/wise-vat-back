@@ -1,4 +1,7 @@
-"""Demo control panel endpoints. Also stands in for Wise webhooks."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Demo control panel endpoints. Also stands in for Wise webhooks.
+"""
 from fastapi import APIRouter
 
 from app.simulator import events as sim

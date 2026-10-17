@@ -1,4 +1,7 @@
-"""WiseClient interface. Business logic depends on this, never on a concrete client."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+WiseClient interface. Business logic depends on this, never on a concrete client.
+"""
 from decimal import Decimal
 from typing import Any, Protocol
 

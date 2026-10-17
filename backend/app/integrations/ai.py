@@ -1,4 +1,7 @@
-"""Optional Claude integration (explanations, categorization, natural-language rules)."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Optional Claude integration (explanations, categorization, natural-language rules).
+"""
 from typing import Any
 
 from app.config import settings

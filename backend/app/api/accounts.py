@@ -1,4 +1,7 @@
-"""Accounts / balances / transactions. Keep thin: call services, return schemas."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Accounts / balances / transactions. Keep thin: call services, return schemas.
+"""
 from fastapi import APIRouter
 
 router = APIRouter(prefix="/accounts", tags=["accounts"])

@@ -1,4 +1,7 @@
-"""Fake events for the demo panel. Each should persist + run rules + publish to SSE."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Fake events for the demo panel. Each should persist + run rules + publish to SSE.
+"""
 from typing import Any
 
 
@@ -13,5 +16,5 @@ def skip_time(days: int) -> dict[str, Any]:
 
 
 def reset() -> dict[str, Any]:
-    # TODO: drop + reseed DB
-    return {"ok": True, "todo": "reset"}
+    # UNWIRED. The simulator keeps no state. Nothing resets.
+    return {"ok": False, "reason": "reset is not implemented. The simulator keeps no state."}

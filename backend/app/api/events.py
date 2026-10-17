@@ -1,4 +1,7 @@
-"""Server-Sent Events stream for live dashboard updates."""
+"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
+
+Server-Sent Events stream for live dashboard updates.
+"""
 import asyncio
 import json
 
