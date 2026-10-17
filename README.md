@@ -133,6 +133,8 @@ The backend container waits up to 120 seconds for Ollama. It then seeds the demo
 
 ## Local AI setup (Ollama)
 
+**Demo mode is the default.** `INVOICE_READER=demo` needs no AI. Every PDF or photo becomes the Berlin hotel invoice (`backend/seed/documents/pass_de_hotel_berlin.pdf`) after 3 seconds. The upload then passes. A new upload of the same invoice replaces the earlier one, so the demo passes every time. Set `INVOICE_READER=ollama` to read the documents with the AI below.
+
 [Ollama](https://ollama.com) is open source. It runs AI models on your machine and serves them on `http://localhost:11434`. The project uses **Qwen2.5-VL 7B**, a vision model that reads documents. It is free and has no usage limit.
 
 Do this once on the machine that runs the backend.
@@ -391,6 +393,8 @@ The backend reads settings from environment variables and from `backend/.env` (c
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
+| `INVOICE_READER` | `demo` | `demo` returns the Berlin hotel invoice for every upload. `ollama` reads the document with the AI. |
+| `DEMO_READER_DELAY_SECONDS` | `3` | The wait of the demo reader before the result |
 | `OLLAMA_URL` | `http://localhost:11434` (Docker: `http://host.docker.internal:11434`) | Where the backend finds Ollama |
 | `OLLAMA_MODEL` | `qwen2.5vl:7b` | Vision model for PDFs and photos |
 | `OLLAMA_TIMEOUT_SECONDS` | `300` | Maximum wait for one extraction |
