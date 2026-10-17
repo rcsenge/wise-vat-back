@@ -120,6 +120,10 @@ Use this message format.
 Write your message here.
 ```
 
+### 5.6 Collaboration
+
+Agents can share a goal. Recognize a shared goal during the plan step. Coordinate with the other agent through `MESSAGES.md`. Offer help when your goals overlap. Split the shared work between both agents.
+
 ## 6. Skills (SKILLS.md)
 
 The root `SKILLS.md` file stores the shared agent skills. Each skill has its own section.
