@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#00a4a6" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="favicon-employer.svg?v=2" />
     <title>vatback - Employer Review</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,148 +15,107 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"
+    />
     <link rel="stylesheet" href="vendor/neptune/props/custom-media.css" />
     <link rel="stylesheet" href="vendor/neptune/props/neptune-tokens.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body
-    class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
-  >
-    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-10 pt-6 sm:px-6">
-      <header
-        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div class="flex items-center gap-3">
-          <span
-            class="grid h-11 w-11 place-items-center rounded-2xl bg-[#00a4a6] text-white"
-            aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-6 w-6"
-            >
-              <path d="M3 3v18h18" />
-              <path d="m7 14 4-4 3 3 5-6" />
-            </svg>
-          </span>
-          <div>
-            <h1 class="text-xl font-semibold leading-tight tracking-tight">
-              vatback
-            </h1>
-            <p class="text-sm text-[#6b7a78]">Employer review</p>
-          </div>
-        </div>
+  <body class="bg-surface-screen text-ink-primary font-sans antialiased">
+    <main
+      class="mx-auto min-h-dvh w-full max-w-6xl px-4 pb-16 pt-[max(1.5rem,env(safe-area-inset-top))] sm:px-6 lg:px-8 lg:pt-10"
+    >
+      <header class="flex items-center gap-3">
+        <span
+          class="bg-surface-neutral grid h-12 w-12 place-items-center rounded-full text-lg font-semibold"
+          aria-hidden="true"
+          >V</span
+        >
+        <p class="text-base font-semibold">vatback</p>
         <a
           href="/employee"
-          class="inline-flex items-center justify-center gap-2 rounded-full border border-[#00a4a6] px-4 py-2 text-sm font-semibold text-[#00a4a6] transition-colors hover:bg-[#00a4a6]/10"
+          class="text-brand-forest-green underline-offset-3 ml-auto text-base font-semibold underline"
+          >Employee app</a
         >
-          Open employee scanner
-        </a>
       </header>
 
-      <section
-        id="summary-section"
-        aria-label="Claim summary"
-        class="mt-6 grid gap-4 sm:grid-cols-3"
+      <div
+        class="mt-8 lg:mt-10 lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8 xl:gap-12"
       >
-        <div
-          class="rounded-2xl border border-[#00a4a6]/30 bg-[#00a4a6] p-5 text-white shadow-sm"
-        >
-          <p class="text-sm font-medium text-[#d6f6f6]">Total claimable</p>
-          <p id="summary-claimable" class="mt-1 text-3xl font-bold">€0.00</p>
-          <p class="mt-1 text-xs text-[#d6f6f6]">
-            Refundable VAT on approved receipts
-          </p>
-        </div>
-        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
-          <p class="text-sm font-medium text-[#6b7a78]">Total spend</p>
-          <p id="summary-spend" class="mt-1 text-2xl font-bold">€0.00</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Sum of approved receipts</p>
-        </div>
-        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
-          <p class="text-sm font-medium text-[#6b7a78]">Receipts</p>
-          <p id="summary-count" class="mt-1 text-2xl font-bold">0</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Approved documents</p>
-        </div>
-      </section>
+        <div>
+          <h1 class="text-title-screen text-ink-primary font-bold">VAT back</h1>
 
-      <p
-        id="backend-error"
-        class="alert alert-negative mt-6 hidden text-sm"
-      ></p>
-
-      <section aria-labelledby="countries-heading" class="mt-8">
-        <h2 id="countries-heading" class="text-lg font-semibold">
-          Claims per country
-        </h2>
-        <ul
-          id="country-list"
-          class="pl-0! mt-4 grid list-none gap-3 sm:grid-cols-3"
-        ></ul>
-      </section>
-
-      <section aria-labelledby="receipts-heading" class="mt-8">
-        <h2 id="receipts-heading" class="text-lg font-semibold">
-          Claimable receipts
-        </h2>
-        <ul id="receipt-list" class="pl-0! mt-4 list-none space-y-3"></ul>
-      </section>
-
-      <section
-        id="empty-state"
-        class="mt-10 rounded-2xl bg-white p-10 shadow-sm"
-      >
-        <div class="mx-auto max-w-sm text-center">
-          <div
-            class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#00a4a6]/10 text-[#00a4a6]"
-            aria-hidden="true"
+          <section
+            aria-label="Total refundable VAT"
+            class="bg-brand-forest-green mt-6 rounded-3xl p-6 sm:p-8"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-8 w-8"
-            >
-              <path
-                d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
-              />
-              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-              <path d="M12 17.5v-11" />
-            </svg>
-          </div>
-          <h3 class="mt-4 text-base font-semibold">No receipts to review</h3>
-          <p class="mt-1 text-sm text-[#6b7a78]">
-            Upload company invoices in the employee app first.
-          </p>
-        </div>
-      </section>
+            <p class="text-brand-light-green text-base font-medium">
+              Total refundable VAT
+            </p>
+            <div id="hero-totals" class="mt-3"></div>
+            <p
+              id="hero-meta"
+              class="text-brand-light-green mt-5 text-sm font-medium"
+            ></p>
+          </section>
 
-      <footer
-        class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
-      >
-        <p>
-          The backend stores every checked invoice. This review refreshes every
-          few seconds.
-        </p>
-      </footer>
+          <p
+            id="backend-error"
+            class="bg-status-negative-background text-status-negative mt-6 hidden rounded-2xl p-4 text-sm"
+          ></p>
+
+          <section aria-labelledby="countries-heading" class="mt-10">
+            <h2
+              id="countries-heading"
+              class="text-title-section text-ink-primary font-bold"
+            >
+              By country
+            </h2>
+            <ul id="country-list" class="mt-4 list-none space-y-3 pl-0"></ul>
+          </section>
+        </div>
+
+        <aside
+          aria-labelledby="receipts-heading"
+          class="border-line-neutral max-lg:hidden lg:sticky lg:top-10 lg:max-h-[calc(100dvh-5rem)] lg:self-start lg:overflow-y-auto lg:rounded-3xl lg:border lg:p-6"
+        >
+          <div class="flex items-center gap-3">
+            <h2
+              id="receipts-heading"
+              class="text-title-section text-ink-primary font-bold"
+            >
+              Receipts
+            </h2>
+            <button
+              type="button"
+              id="filter-chip"
+              class="bg-brand-light-green text-brand-forest-green hover:bg-brand-light-green-pressed ml-auto inline-flex h-10 cursor-pointer items-center gap-2 rounded-full px-4 text-base font-semibold transition"
+            ></button>
+            <p
+              id="filter-all"
+              class="text-ink-tertiary ml-auto text-sm font-medium"
+            >
+              All countries
+            </p>
+          </div>
+          <ul id="receipt-list" class="mt-2 list-none pl-0"></ul>
+          <p id="empty-state" class="text-ink-secondary mt-4 text-base">
+            No approved receipts yet.
+          </p>
+        </aside>
+      </div>
     </main>
 
     <dialog
       id="document-dialog"
-      class="m-auto max-w-lg rounded-3xl bg-white p-3 shadow-2xl [&::backdrop]:bg-black/60"
+      class="bg-surface-screen shadow-sheet backdrop:bg-surface-overlay m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl p-3"
     >
       <img
         id="document-image"
         alt="Scanned receipt"
-        class="max-h-[75vh] w-full rounded-2xl object-contain"
+        class="max-h-[75dvh] w-full rounded-2xl object-contain"
       />
     </dialog>
 
@@ -167,46 +126,223 @@
         "use strict";
 
         const REFRESH_INTERVAL_MS = 5000;
-        const COUNTRY_NAMES = { AT: "Austria", DE: "Germany" };
+        const COUNTRY_CODE_PATTERN = /^[A-Z]{2}$/;
+        const FIRST_CURRENCY = "EUR";
 
         const api = window.vatbackApi;
-        const receipts = window.vatbackReceipts.create({ approvedOnly: true });
+        const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+        const heroTotals = document.getElementById("hero-totals");
+        const heroMeta = document.getElementById("hero-meta");
         const countryList = document.getElementById("country-list");
+        const filterChip = document.getElementById("filter-chip");
+        const filterAll = document.getElementById("filter-all");
 
-        const createCountryItem = (total) => {
-          const item = document.createElement("li");
-          item.className =
-            "rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm";
-          const name = document.createElement("p");
-          name.className = "text-sm font-medium text-[#6b7a78]";
-          name.textContent = COUNTRY_NAMES[total.country] ?? total.country;
-          const amount = document.createElement("p");
-          amount.className = "mt-1 text-2xl font-bold text-[#00a4a6]";
-          amount.textContent = api.formatMoney(
-            total.refundable_vat_total,
-            total.currency,
+        let countryTotals = [];
+        let approvedReceipts = [];
+        let selectedCountry = null;
+        let renderedState = "";
+
+        const element = (tag, className, text) => {
+          const node = document.createElement(tag);
+          node.className = className;
+          if (text !== undefined) {
+            node.textContent = text;
+          }
+          return node;
+        };
+
+        const countryName = (code) =>
+          COUNTRY_CODE_PATTERN.test(code) ? regionNames.of(code) : code;
+
+        const receiptsOf = (code) =>
+          approvedReceipts.filter((receipt) => receipt.country === code);
+
+        const createFlag = (code) => {
+          const flag = element(
+            "span",
+            "fi fis shrink-0 rounded-full text-[40px] ring-1 ring-black/5 sm:text-[48px]",
           );
-          const detail = document.createElement("p");
-          detail.className = "mt-1 text-xs text-[#6b7a78]";
-          detail.textContent = `${total.transaction_ids.length} transactions, ${total.eligible_line_count} eligible lines`;
-          item.append(name, amount, detail);
+          if (COUNTRY_CODE_PATTERN.test(code)) {
+            flag.classList.add(`fi-${code.toLowerCase()}`);
+          }
+          flag.setAttribute("aria-hidden", "true");
+          return flag;
+        };
+
+        const chevronIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>`;
+
+        const createCountryCard = (total) => {
+          const isSelected = total.country === selectedCountry;
+          const receiptCount = receiptsOf(total.country).length;
+          const listId = `country-receipts-${total.country}`;
+
+          const item = element(
+            "li",
+            isSelected
+              ? "bg-surface-neutral-pressed ring-brand-forest-green rounded-3xl ring-2"
+              : "bg-surface-neutral rounded-3xl",
+          );
+          const button = element(
+            "button",
+            "focus-visible:ring-brand-forest-green flex w-full cursor-pointer items-center gap-3 rounded-3xl p-4 text-left focus:outline-none focus-visible:ring-2 sm:gap-4 sm:p-5",
+          );
+          button.type = "button";
+          button.setAttribute("aria-expanded", String(isSelected));
+          button.setAttribute("aria-controls", listId);
+          button.addEventListener("click", () => selectCountry(total.country));
+
+          const label = element("span", "min-w-0 flex-1");
+          label.append(
+            element(
+              "span",
+              "text-ink-primary block truncate text-base font-semibold sm:text-xl",
+              countryName(total.country),
+            ),
+            element(
+              "span",
+              "text-ink-secondary block whitespace-nowrap text-sm",
+              `${receiptCount} receipt${receiptCount === 1 ? "" : "s"}`,
+            ),
+          );
+
+          const amount = element("span", "shrink-0 text-right tabular-nums");
+          amount.append(
+            element(
+              "span",
+              "text-ink-primary block text-lg font-bold tracking-tight sm:text-2xl lg:text-[28px]",
+              api.formatMoney(total.refundable_vat_total, total.currency),
+            ),
+            element(
+              "span",
+              "text-ink-tertiary block text-xs font-semibold",
+              total.currency,
+            ),
+          );
+
+          const chevron = element(
+            "span",
+            isSelected
+              ? "text-ink-primary rotate-180 transition-transform lg:hidden"
+              : "text-ink-primary transition-transform lg:hidden",
+          );
+          chevron.innerHTML = chevronIcon;
+
+          button.append(createFlag(total.country), label, amount, chevron);
+
+          const receiptList = element(
+            "ul",
+            isSelected
+              ? "list-none px-4 pb-2 pl-4 sm:px-5 lg:hidden"
+              : "hidden list-none pl-0",
+          );
+          receiptList.id = listId;
+          receiptList.append(
+            ...receiptsOf(total.country).map(window.vatbackReceipts.createItem),
+          );
+
+          item.append(button, receiptList);
           return item;
         };
 
-        const refreshCountries = async () => {
+        const renderHero = () => {
+          const totals = api.sumByCurrency(
+            countryTotals,
+            (total) => total.refundable_vat_total,
+          );
+          const ordered = Array.from(totals).sort(([first], [second]) => {
+            if (first === FIRST_CURRENCY) {
+              return -1;
+            }
+            if (second === FIRST_CURRENCY) {
+              return 1;
+            }
+            return first.localeCompare(second);
+          });
+          const [main, ...others] = ordered.length
+            ? ordered
+            : [[FIRST_CURRENCY, 0]];
+          const otherRow = element("p", "mt-3 flex flex-wrap gap-x-6 gap-y-2");
+          otherRow.append(
+            ...others.map(([currency, amount]) =>
+              element(
+                "span",
+                "font-display text-brand-bright-green text-[28px] leading-none uppercase tabular-nums sm:text-[32px]",
+                api.formatMoney(amount, currency),
+              ),
+            ),
+          );
+          heroTotals.replaceChildren(
+            element(
+              "p",
+              "font-display text-display-large text-brand-bright-green tabular-nums sm:text-[64px]",
+              api.formatMoney(main[1], main[0]),
+            ),
+            otherRow,
+          );
+          const countryCount = new Set(
+            countryTotals.map((total) => total.country),
+          ).size;
+          heroMeta.textContent = `${approvedReceipts.length} approved receipts · ${countryCount} countries`;
+        };
+
+        const renderFilter = () => {
+          filterChip.classList.toggle("hidden", !selectedCountry);
+          filterAll.classList.toggle("hidden", Boolean(selectedCountry));
+          filterChip.textContent = selectedCountry
+            ? `${countryName(selectedCountry)} ×`
+            : "";
+        };
+
+        // The page refreshes often. It redraws only when the data changes.
+        const render = () => {
+          const state = JSON.stringify([
+            countryTotals,
+            approvedReceipts.map((receipt) => receipt.id),
+            selectedCountry,
+          ]);
+          if (state === renderedState) {
+            return;
+          }
+          renderedState = state;
+          renderHero();
+          renderFilter();
+          const sorted = [...countryTotals].sort((first, second) =>
+            countryName(first.country).localeCompare(
+              countryName(second.country),
+            ),
+          );
+          countryList.replaceChildren(...sorted.map(createCountryCard));
+        };
+
+        const receipts = window.vatbackReceipts.create({
+          approvedOnly: true,
+          onRender: (approved) => {
+            approvedReceipts = approved;
+            render();
+          },
+        });
+
+        const selectCountry = (code) => {
+          selectedCountry = selectedCountry === code ? null : code;
+          receipts.setCountry(selectedCountry);
+        };
+
+        filterChip.addEventListener("click", () => selectCountry(null));
+
+        const refreshClaims = async () => {
           try {
             const claims = await api.getClaims();
-            countryList.replaceChildren(
-              ...claims.per_country.map(createCountryItem),
-            );
+            countryTotals = claims.per_country;
+            render();
           } catch (error) {
-            countryList.replaceChildren();
+            countryTotals = [];
+            render();
           }
         };
 
         const refresh = () => {
           receipts.refresh();
-          refreshCountries();
+          refreshClaims();
         };
 
         refresh();

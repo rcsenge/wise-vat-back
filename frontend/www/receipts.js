@@ -1,6 +1,6 @@
-// Shared receipt list and summary. Both pages load this file after api.js.
+// Shared receipt list. Both pages load this file after api.js.
 // The page must contain the receipt-list, empty-state and dialog elements.
-// Each summary element is optional. A page shows only the elements it contains.
+// The employer page filters the list per country with setCountry.
 (() => {
   "use strict";
 
@@ -116,20 +116,24 @@
     return item;
   };
 
-  const create = ({ approvedOnly }) => {
+  // The document dialog belongs to the page. The lookup happens on first use.
+  const openDocument = (imageDataUrl) => {
+    const documentDialog = document.getElementById("document-dialog");
+    document.getElementById("document-image").src = imageDataUrl;
+    documentDialog.showModal();
+  };
+
+  const createItem = (receipt) => createReceiptItem(receipt, openDocument);
+
+  // The optional onRender callback gets the receipts before the country filter.
+  const create = ({ approvedOnly, onRender }) => {
     const receiptList = document.getElementById("receipt-list");
-    const summaryClaimable = document.getElementById("summary-claimable");
-    const summarySpend = document.getElementById("summary-spend");
-    const summaryCount = document.getElementById("summary-count");
     const emptyState = document.getElementById("empty-state");
     const backendError = document.getElementById("backend-error");
     const documentDialog = document.getElementById("document-dialog");
-    const documentImage = document.getElementById("document-image");
 
-    const openDocument = (imageDataUrl) => {
-      documentImage.src = imageDataUrl;
-      documentDialog.showModal();
-    };
+    let latestReceipts = [];
+    let selectedCountry = null;
 
     documentDialog.addEventListener("click", (event) => {
       if (event.target === documentDialog) {
@@ -137,45 +141,39 @@
       }
     });
 
-    const render = (allReceipts) => {
-      const approved = allReceipts.filter(
-        (receipt) => receipt.status === "approved",
-      );
-      const shown = approvedOnly ? approved : allReceipts;
+    const render = () => {
+      const listed = approvedOnly
+        ? latestReceipts.filter((receipt) => receipt.status === "approved")
+        : latestReceipts;
+      const shown = selectedCountry
+        ? listed.filter((receipt) => receipt.country === selectedCountry)
+        : listed;
 
-      if (summaryClaimable) {
-        summaryClaimable.textContent = api.formatTotals(
-          api.sumByCurrency(approved, (receipt) => receipt.taxAmount),
-        );
-      }
-      if (summarySpend) {
-        summarySpend.textContent = api.formatTotals(
-          api.sumByCurrency(shown, (receipt) => receipt.amount),
-        );
-      }
-      if (summaryCount) {
-        summaryCount.textContent = String(approved.length);
-      }
-
-      receiptList.replaceChildren(
-        ...shown.map((receipt) => createReceiptItem(receipt, openDocument)),
-      );
+      receiptList.replaceChildren(...shown.map(createItem));
       emptyState.classList.toggle("hidden", shown.length > 0);
+      if (onRender) {
+        onRender(listed);
+      }
     };
 
     const refresh = async () => {
       try {
-        const allReceipts = await api.listReceipts();
+        latestReceipts = await api.listReceipts();
         backendError.classList.add("hidden");
-        render(allReceipts);
+        render();
       } catch (error) {
         backendError.textContent = error.message;
         backendError.classList.remove("hidden");
       }
     };
 
-    return { refresh };
+    const setCountry = (country) => {
+      selectedCountry = country;
+      render();
+    };
+
+    return { refresh, setCountry };
   };
 
-  window.vatbackReceipts = { create };
+  window.vatbackReceipts = { create, createItem };
 })();
