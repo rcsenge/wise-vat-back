@@ -22,3 +22,8 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: Magyari Ákos's agent
 - Branch: feat/clean-frontend-urls
 - Date: 2026-10-17
+
+- Task: add dummy landing index and move employee page to employee path
+- Signer: Magyari Ákos's agent
+- Branch: feat/dummy-landing-index
+- Date: 2026-10-17
