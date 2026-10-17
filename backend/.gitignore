@@ -5,6 +5,7 @@
 
 # Root
 !/.gitignore
+!/.gitattributes
 !/AGENTS.md
 !/CLAUDE.md
 !/README.md
@@ -18,6 +19,7 @@
 !backend/app/**/*.py
 !backend/seed/**/*.py
 !backend/seed/**/*.json
+!backend/seed/documents/*.pdf
 !backend/tests/**/*.py
 !backend/schemas/**
 !backend/config/**

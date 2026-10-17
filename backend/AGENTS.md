@@ -11,7 +11,7 @@ Claude-specific operating notes live here: @CLAUDE.md
 - **Data Access:** SQLModel (SQLite by default, PostgreSQL optional)
 - **Validation:** Pydantic v2 and Pydantic Settings
 - **External HTTP:** httpx
-- **AI Integration:** Anthropic (helper in `integrations/ai.py`)
+- **AI Integration:** Local Ollama vision model reads invoice PDFs and photos (`integrations/ollama_reader.py`). Tests use a fake Ollama.
 - **Test Runner:** Pytest
 - **Linting:** Ruff
 - **Type Checking:** mypy

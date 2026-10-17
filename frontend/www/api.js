@@ -5,11 +5,17 @@
 
   const API_PORT = 8000;
   const REQUEST_TIMEOUT_MS = 10000;
+  // The local AI needs time to read a PDF or a photo.
+  const UPLOAD_TIMEOUT_MS = 300000;
   const API_BASE = `${window.location.protocol}//${window.location.hostname || "localhost"}:${API_PORT}`;
 
-  const request = async (path, options = {}) => {
+  const request = async (
+    path,
+    options = {},
+    timeoutMs = REQUEST_TIMEOUT_MS,
+  ) => {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const response = await fetch(`${API_BASE}${path}`, {
         ...options,
@@ -82,7 +88,11 @@
       if (imageDataUrl) {
         form.append("image_data_url", imageDataUrl);
       }
-      return request("/invoices/upload", { method: "POST", body: form });
+      return request(
+        "/invoices/upload",
+        { method: "POST", body: form },
+        UPLOAD_TIMEOUT_MS,
+      );
     },
     formatMoney,
     formatTotals,
