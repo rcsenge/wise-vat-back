@@ -58,6 +58,7 @@ A JSON file in the invoice schema skips the AI step. This keeps the demo usable 
 ```
 sigint-monorepo/
 ├── AGENTS.md, CLAUDE.md        Rules for every contributor and AI agent
+├── SKILLS.md                   Shared agent skills (for example wise-design)
 ├── PLAN.md, DONE.md            Signed plan and record entries of every agent
 ├── init                        One-step launcher: Ollama, model, Docker Compose
 ├── docker-compose.yml          Backend and frontend containers
@@ -265,16 +266,18 @@ uv run --with reportlab python -m seed.make_documents
 | --- | --- |
 | `at_hotel_vienna.json` | Approved, €26.00 |
 | `de_hotel_munich.json` | Approved, €10.50 |
-| `pl_restaurant_warsaw.json` | Approved, 38.40 PLN |
 | `de_taxi_receipt_no_vat_id.json` | Rejected: no supplier VAT number |
+| `pl_restaurant_warsaw.json` | Rejected: Poland refunds no VAT on meals |
 
 ### Multi-country samples
 
-`backend/backend/seed/sample_invoices/` holds 24 invoices from 9 countries. They fill the employer view with realistic data. Most are approved. Three show a rejection on purpose:
+`backend/backend/seed/sample_invoices/` holds 24 invoices from 9 countries. They fill the employer view with realistic data. 19 are approved. Some approvals refund only part of the VAT, for example `fr_hotel_paris.json` (€3.60, France refunds no VAT on the hotel room) and `pl_fuel_orlen_poznan.json` (36.80 PLN, Poland refunds 50% on fuel). Five show a rejection:
 
 | File | Rejection reason |
 | --- | --- |
-| `dk_concert_tivoli.json` | No invoice line is eligible (entertainment) |
+| `at_fuel_omv_linz.json` | No line is eligible: Austria refunds no VAT on car fuel |
+| `dk_concert_tivoli.json` | No line is eligible: entertainment |
+| `pl_hotel_krakow.json` | No line is eligible: Poland refunds no VAT on hotels |
 | `fr_taxi_lyon_no_vat_number.json` | No supplier VAT number |
 | `it_parking_roma_no_transaction.json` | No matching unclaimed card transaction |
 
@@ -290,8 +293,22 @@ The rules live in `backend/backend/app/domain/vat_rules.py`. They are pure funct
 
 - **Supported countries:** Austria, Germany, France, Italy, the Netherlands, Poland, Czechia, Denmark, Sweden. The country of the card transaction decides the rules.
 - **Categories:** the ten expense codes of Directive 2008/9/EC (fuel, vehicle hire, vehicle expenses, road toll, travel, accommodation, food and drink, fair admission, entertainment, other).
-- **Default rule:** every business category is refundable, except entertainment.
-- **Decision per line:** each invoice line gets *eligible* or *not eligible* with a reason. An invoice is approved when at least one line is eligible.
+- **Refundable share:** Directive 2008/9/EC, Art. 5 refunds VAT only as far as the country of refund allows deduction. Each country rule gives a share between 0% and 100% per category, with the national source in the code. A category without a national restriction is fully refundable.
+- **Decision per line:** each invoice line gets its refundable VAT and a reason. An invoice is approved when at least one line has a refundable share above zero.
+
+National restrictions in the current rule set (every other category refunds 100%):
+
+| Country | Restricted categories |
+| --- | --- |
+| Austria | Fuel, vehicle hire, vehicle expenses: 0%. Entertainment: 0% |
+| Germany | Entertainment: 0% |
+| France | Fuel: 80%. Vehicle hire, vehicle expenses, travel, accommodation, entertainment: 0% |
+| Italy | Fuel, vehicle hire, vehicle expenses, road toll: 40%. Travel, entertainment: 0% |
+| Netherlands | Food and drink, entertainment: 0% |
+| Poland | Fuel, vehicle hire, vehicle expenses, road toll: 50%. Accommodation, food and drink, entertainment: 0% |
+| Czechia | Entertainment: 0% |
+| Denmark | Food and drink: 25%. Fuel, vehicle hire, vehicle expenses, entertainment: 0% |
+| Sweden | Vehicle hire: 50%. Entertainment: 0% |
 - **VIES check:** mocked. Every VAT number passes, except `XX12345678`, which shows the "invalid company" path.
 - **Matching:** the invoice gross total and currency must match an unclaimed card transaction.
 - **Money:** always `Decimal`, rounded to cents.
@@ -349,7 +366,7 @@ cd backend
 make test
 ```
 
-Or, from `backend/backend`: `uv run pytest`. The suite has 80 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
+Or, from `backend/backend`: `uv run pytest`. The suite has 118 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
 
 Frontend formatting:
 
@@ -388,6 +405,7 @@ Read `AGENTS.md` before you change anything. Each project folder (`backend/`, `f
 - **Whitelist:** `.gitignore` ignores everything by default. Add a `!path` rule before you add a new kind of file.
 - **Agent coordination:** an AI agent writes a signed entry in `PLAN.md` before work and in `DONE.md` after work.
 - **Docs style:** Simplified Technical English (ASD-STE100): short sentences, active voice, no semicolons.
+- **Skills:** `SKILLS.md` stores shared agent skills. For example, `/wise-design` styles a page to the Wise visual language.
 
 Enable the git hooks once after cloning:
 
@@ -403,7 +421,7 @@ This is a hackathon demo.
 
 - **Wise:** the Wise client runs in mock mode. Card transactions come from the seed. The refund is not paid out to a Wise balance yet.
 - **VIES:** VAT number validation is mocked.
-- **Rules:** one simplified rule set for all nine countries. Real national rules differ per category and VAT rate.
+- **Rules:** the per-country shares cover the main national restrictions. They do not cover every special case, threshold or VAT rate.
 - **AI accuracy:** a local 8B model is good but not perfect. Every answer is validated, and the reasons show why an invoice fails.
 - **No authentication.** No submission to tax authorities. One demo company.
 
