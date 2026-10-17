@@ -75,9 +75,11 @@ Multiple agents run in this repository. Branch isolation in Section 3 prevents c
 
 ### 5.1 Plan File (PLAN.md)
 Write your intended work in `PLAN.md` before you start. Append one entry at the end. Never edit the entries of another agent. Keep the task description under 25 words.
+Place a horizontal line `---` after every entry. Place the line on its own line.
 
 ### 5.2 Record File (DONE.md)
 Write your completed work in `DONE.md` after you finish. Append one entry at the end. Never edit the entries of another agent. Keep the task description under 25 words.
+Place a horizontal line `---` after every entry. Place the line on its own line.
 
 ### 5.3 Signing (Sign)
 Sign every entry in both files. Build the signer from the git user name. Add the suffix "'s agent" to the user name. For example, `Magyari Ákos` becomes `Magyari Ákos's agent`. Use the value of `git config user.name`.
