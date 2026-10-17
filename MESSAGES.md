@@ -28,8 +28,10 @@ The owner updates its own row. One row per claimed item.
 | Hybrid invoice reader (OLLAMA-LATENCY.md) | rcsenge | feat/hybrid-invoice-reader | `[in-progress]` |
 | Golden document corpus (OLLAMA-LATENCY.md) | Magyari Ákos | feat/golden-document-corpus | `[done]` |
 | Extraction measurement report (OLLAMA-LATENCY.md) | Magyari Ákos | feat/measurement-report | `[in-progress]` |
-| Fast OCR reader for photos and scans (sub-10s) | Vilmos Babó | feat/ocr-reader | `[in-progress]` |
-| OCR engine benchmark on the 46-case corpus (sub-10s) | Török Zaránd Tamás | — | `[in-progress]` |
+| Hybrid reader with the 10 s hard cap (sub-10s) | Ákos (swarm) | feat/hybrid-invoice-reader | `[in-progress]` |
+| Fast OCR reader for photos and scans (sub-10s) | Ákos (swarm) | feat/ocr-reader | `[in-progress]` |
+| OCR engine benchmark on the 46-case corpus (sub-10s) | Ákos (swarm) | — | `[in-progress]` |
+| Fix the corpus PDF text-layer defect (sub-10s) | Ákos (swarm) | feat/golden-document-corpus | `[in-progress]` |
 
 ## Announcement
 
@@ -170,15 +172,17 @@ The ladder (fast to slow):
 2. Fast OCR plus rules for photos and scans (target under 2 s).
 3. Ollama fallback, hard-capped at 10 seconds. The user never waits past 10 s.
 
-My task split (no overlap):
-- rcsenge's agent: finish the hybrid reader. Wire the rules fast path, the strict gate, and the Ollama fallback. Set `OLLAMA_TIMEOUT_SECONDS=10` as the hard cap. Keep `backend/app/integrations/`, `backend/app/config.py`, `backend/tests/`.
-- Vilmos Babó's agent: build the fast OCR reader for photos and scans. Tesseract OCR in the backend container is the demo default. Document Apple Vision on the host as the higher-quality option. Expose an `InvoiceReader` in `backend/app/integrations/ocr_reader.py`. Target under 2 s. Coordinate with rcsenge.
-- Török Zaránd Tamás's agent: benchmark the OCR engines. Run Tesseract and Apple Vision over the 46-case corpus. Report the accuracy and the time. Recommend one for the demo. Post the result here. Do not edit rcsenge's or Vilmos's files.
-- Csenge's agent: finish the SIGINT branding. Keep the current scope. No change to the extraction work.
+csenge, vili and zazi are out. All running agents are Akos. Assign to the swarm. No named agent holds a task.
 
-I keep the measurement report and the coordination. Reply here. Claim your task. Report a blocker here. If you cannot finish in under 10 s, say so here before you code.
+Task split (no overlap):
+- Akos agent 1: finish the hybrid reader. Wire the rules fast path, the strict gate, and the Ollama fallback. Set `OLLAMA_TIMEOUT_SECONDS=10` as the hard cap. Keep `backend/app/integrations/`, `backend/app/config.py`, `backend/tests/`.
+- Akos agent 2: build the fast OCR reader for photos and scans. Tesseract OCR in the backend container is the demo default. Document Apple Vision on the host as the higher-quality option. Expose an `InvoiceReader` in `backend/app/integrations/ocr_reader.py`. Target under 2 s.
+- Akos agent 3: benchmark the OCR engines. Run Tesseract and Apple Vision over the 46-case corpus. Report the accuracy and the time. Recommend one for the demo. Post the result here. Do not edit agent 1 or agent 2 files.
+- Akos agent 4: fix the corpus defect. The merged PDFs have garbled text layers. Make the table text readable, then regenerate with `make corpus-docs`.
 
 A stopped agent confirmed the corpus fix is done. It is commit `6ab3c15` on `fix/corpus-parseable-documents`.
+
+I keep the measurement report and the coordination. Reply here with your session id. Claim one task. Report a blocker here. If a task cannot finish in under 10 s, say so here before you code.
 
 ## Log
 
