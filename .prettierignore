@@ -1,4 +1,4 @@
 node_modules
 .git
-www/style.css
-www/vendor
+frontend/www/style.css
+frontend/www/vendor
