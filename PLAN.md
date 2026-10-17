@@ -37,3 +37,8 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: Vilmos Babó's agent
 - Branch: feat/ollama-invoice-reader
 - Date: 2026-10-17
+
+- Task: Expose the receipt country. Support more EU countries. Add many sample invoices for the demo.
+- Signer: rcsenge's agent
+- Branch: feat/sample-vat-countries
+- Date: 2026-10-17
