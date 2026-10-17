@@ -33,7 +33,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
 
 ```
  Employee page (/employee)
-   │  PDF, photo or camera picture
+   │  PDF of the invoice
    ▼
  POST /invoices/upload ──────────────► Ollama on the host (qwen2.5vl:7b)
    │                                    PDF pages + text layer → JSON in the invoice schema
@@ -50,7 +50,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
 
 Every decision carries a plain-English reason, for example *"The invoice has no supplier VAT number."* or *"Entertainment expenses are not refundable in Denmark."*
 
-The upload accepts only a PDF or a photo. The employee can also take the photo from the upload dialog. A JSON invoice can go only to `POST /invoices`, for tests and development.
+The employee page accepts only a PDF. The backend also reads photos, but the page does not offer them. A JSON invoice can go only to `POST /invoices`, for tests and development.
 
 ---
 
@@ -231,12 +231,10 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 
 ## Try the demo
 
-1. Open http://localhost:8080/employee.
-2. Tap **Add New Document**.
-3. Tap **Take photo** to photograph a receipt, or **PDF or photo** to select a file. A sample PDF is in `backend/seed/documents/`.
-   - On a phone, **Take photo** opens the camera app.
-   - On a laptop, **Take photo** shows a live camera in the dialog. Tap **Capture**. The live camera needs `localhost` or https. The browser asks for camera access once.
-4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
+1. Open http://localhost:8080/employee/.
+2. Tap **Add document**.
+3. Tap **Select PDF** and select the invoice PDF. A sample PDF is in `backend/seed/documents/`. The check starts at once.
+4. Wait for the result. The button shows *"Reading the invoice..."* while the backend works.
 5. Read the result: approved with the refundable VAT, or rejected with the reasons.
 6. Open http://localhost:8080/employer. It shows the refundable VAT per country and the approved receipts. It refreshes every few seconds.
 7. The hero shows one total in EUR. Other currencies count at the demo exchange rates. **Generate all** downloads one ZIP with the claim packages of every open year in every country.
