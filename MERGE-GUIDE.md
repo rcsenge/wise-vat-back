@@ -109,6 +109,25 @@ Use the next free section number. State the problem and its fix. Use the shape o
 
 Put the commands in a code block. Add a checklist step when the fix changes an existing step.
 
+## 11. The inactive hooks
+
+A fresh clone does not read `.githooks/`. A commit on main then succeeds without a warning.
+
+Check the hook path at session start. Set it when the value is empty.
+
+```
+git config core.hooksPath
+git config core.hooksPath .githooks
+```
+
+A commit landed on local main. Move it to a branch before you push.
+
+```
+git checkout -b feat/<name> origin/main
+git cherry-pick <commit>
+git branch -f main origin/main
+```
+
 ## Finish checklist
 
 1. Fetch. Read the new commits.
