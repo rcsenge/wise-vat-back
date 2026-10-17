@@ -45,7 +45,7 @@ def fake_reader(handler) -> tuple[OllamaInvoiceReader, list[dict]]:
         return handler(request)
 
     client = httpx.Client(transport=httpx.MockTransport(record))
-    return OllamaInvoiceReader(client, OLLAMA_URL, "qwen3-vl:8b"), requests
+    return OllamaInvoiceReader(client, OLLAMA_URL, "qwen2.5vl:7b"), requests
 
 
 def answer(content: str) -> httpx.Response:
@@ -74,7 +74,7 @@ def test_pdf_request_sends_page_images_text_and_schema():
     invoice = reader(PASSING_PDF.read_bytes(), "application/pdf")
     assert invoice.supplier.name == "Hotel Spreeufer Berlin GmbH"
     body = requests[0]
-    assert body["model"] == "qwen3-vl:8b"
+    assert body["model"] == "qwen2.5vl:7b"
     assert body["stream"] is False
     assert body["format"]["type"] == "object"
     user_message = body["messages"][1]
@@ -106,7 +106,7 @@ def test_missing_model_tells_how_to_pull_it():
     reader, _ = fake_reader(lambda request: httpx.Response(404, json={"error": "model not found"}))
     with pytest.raises(ReaderError) as caught:
         reader(photo_bytes(), "image/png")
-    assert caught.value.reasons == ["The model qwen3-vl:8b is missing. Run: ollama pull qwen3-vl:8b"]
+    assert caught.value.reasons == ["The model qwen2.5vl:7b is missing. Run: ollama pull qwen2.5vl:7b"]
 
 
 def test_text_that_is_not_json_is_rejected():

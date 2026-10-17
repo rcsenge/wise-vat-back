@@ -34,7 +34,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
  Employee page (/employee)
    │  PDF, photo or camera picture
    ▼
- POST /invoices/upload ──────────────► Ollama on the host (qwen3-vl:8b)
+ POST /invoices/upload ──────────────► Ollama on the host (qwen2.5vl:7b)
    │                                    PDF pages + text layer → JSON in the invoice schema
    ▼
  1. Validate     required fields present, schema valid
@@ -132,7 +132,7 @@ The backend container waits up to 120 seconds for Ollama. It then seeds the demo
 
 ## Local AI setup (Ollama)
 
-[Ollama](https://ollama.com) is open source. It runs AI models on your machine and serves them on `http://localhost:11434`. The project uses **Qwen3-VL 8B**, a vision model that reads documents. It is free and has no usage limit.
+[Ollama](https://ollama.com) is open source. It runs AI models on your machine and serves them on `http://localhost:11434`. The project uses **Qwen2.5-VL 7B**, a vision model that reads documents. It is free and has no usage limit.
 
 Do this once on the machine that runs the backend.
 
@@ -141,16 +141,16 @@ Do this once on the machine that runs the backend.
 ```bash
 brew install ollama
 brew services start ollama
-ollama pull qwen3-vl:8b
+ollama pull qwen2.5vl:7b
 ```
 
 **Windows and Linux:** install Ollama from https://ollama.com/download, then run:
 
 ```bash
-ollama pull qwen3-vl:8b
+ollama pull qwen2.5vl:7b
 ```
 
-**Check that it works.** The answer must list `qwen3-vl:8b`.
+**Check that it works.** The answer must list `qwen2.5vl:7b`.
 
 ```bash
 curl http://localhost:11434/api/tags
@@ -158,9 +158,9 @@ curl http://localhost:11434/api/tags
 
 **Hardware notes**
 
-- The 8B model is a 6.1 GB download and uses about 8 GB of memory. A MacBook Air M3 with 16 GB runs it well.
-- On a smaller machine, use `qwen3-vl:4b` (3.3 GB). Set `OLLAMA_MODEL=qwen3-vl:4b`.
-- The first upload after a start is slow, because Ollama loads the model. Later uploads take about 10–40 seconds per invoice on Apple silicon. This is an estimate, so measure it on your machine.
+- The 7B model is a 6.0 GB download and uses about 8 GB of memory. A MacBook Air M3 with 16 GB runs it well.
+- On a smaller machine, use `qwen2.5vl:3b` (3.2 GB). Set `OLLAMA_MODEL=qwen2.5vl:3b`.
+- The first upload after a start is slow, because Ollama loads the model. Later uploads take about 25–50 seconds per invoice on Apple silicon. This is an estimate, so measure it on your machine.
 
 **How the backend uses the model**
 
@@ -351,7 +351,7 @@ The backend reads settings from environment variables and from `backend/.env` (c
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `OLLAMA_URL` | `http://localhost:11434` (Docker: `http://host.docker.internal:11434`) | Where the backend finds Ollama |
-| `OLLAMA_MODEL` | `qwen3-vl:8b` | Vision model for PDFs and photos |
+| `OLLAMA_MODEL` | `qwen2.5vl:7b` | Vision model for PDFs and photos |
 | `OLLAMA_TIMEOUT_SECONDS` | `300` | Maximum wait for one extraction |
 | `OLLAMA_READY_TIMEOUT_SECONDS` | `120` | Docker only: startup wait for Ollama |
 | `SEED_ON_START` | `true` | Docker only: reset the demo data on start |
@@ -385,7 +385,7 @@ pnpm run lint
 | Symptom | Cause and fix |
 | --- | --- |
 | *"The local AI is not running at http://localhost:11434"* | Start Ollama: `brew services start ollama`, or open the Ollama app. |
-| *"The model qwen3-vl:8b is missing"* | Run `ollama pull qwen3-vl:8b`. |
+| *"The model qwen2.5vl:7b is missing"* | Run `ollama pull qwen2.5vl:7b`. |
 | *"The local AI did not answer in time"* | The first call loads the model. Try again, or raise `OLLAMA_TIMEOUT_SECONDS`. |
 | *"The backend at http://…:8000 is not reachable"* | Start the backend. Check that port 8000 is free. |
 | 404 on every page with the Python server | Start the server from the `sigint-monorepo` folder, or pass the full path to `--directory`. |

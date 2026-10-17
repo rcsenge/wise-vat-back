@@ -4,7 +4,7 @@
 set -eu
 
 OLLAMA_URL="${OLLAMA_URL:-http://host.docker.internal:11434}"
-OLLAMA_MODEL="${OLLAMA_MODEL:-qwen3-vl:8b}"
+OLLAMA_MODEL="${OLLAMA_MODEL:-qwen2.5vl:7b}"
 READY_TIMEOUT="${OLLAMA_READY_TIMEOUT_SECONDS:-120}"
 
 echo "[entrypoint] The backend waits for Ollama at ${OLLAMA_URL}."

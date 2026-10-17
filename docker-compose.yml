@@ -12,7 +12,7 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3-vl:8b}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5vl:7b}
       OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-300}
       OLLAMA_READY_TIMEOUT_SECONDS: ${OLLAMA_READY_TIMEOUT_SECONDS:-120}
       DATABASE_URL: ${DATABASE_URL:-sqlite:///./data/vatback.db}

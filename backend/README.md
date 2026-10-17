@@ -21,7 +21,7 @@ Other targets: `make seed`, `make test`, `make demo-reset`. Run `make` to list t
 
 The compose stack runs the Python backend and the Caddy frontend in Docker. Ollama runs on the host machine. The backend container reaches it through `host.docker.internal:11434`.
 
-1. Start Ollama on the host. Pull the model once. Run `ollama pull qwen3-vl:8b`.
+1. Start Ollama on the host. Pull the model once. Run `ollama pull qwen2.5vl:7b`.
 2. Stop any local dev server on ports 8000 and 8080.
 3. Run `docker compose up` at the repo root. Rebuild after code changes. Run `docker compose up --build`.
 4. Open the frontend at `http://localhost:8080`. The API docs live at `http://localhost:8000/docs`.
@@ -38,12 +38,12 @@ The SQLite database persists in the `backend-data` Docker volume.
 Set up the machine that runs the backend once:
 
 1. Install Ollama from https://ollama.com, or run `brew install ollama` on macOS.
-2. Download the model (6.1 GB): `ollama pull qwen3-vl:8b`.
+2. Download the model (6.0 GB): `ollama pull qwen2.5vl:7b`.
 3. Keep the Ollama app open. Check it with `curl http://localhost:11434/api/tags`.
 
 The backend renders up to 3 PDF pages as images. It also sends the PDF text layer. Ollama returns JSON in the shape of `schemas/extracted_invoice.schema.json`. The backend validates the JSON and runs the VAT back rules.
 
-Settings in `.env`: `OLLAMA_URL`, `OLLAMA_MODEL`, `OLLAMA_TIMEOUT_SECONDS`. A smaller machine can use `qwen3-vl:4b`.
+Settings in `.env`: `OLLAMA_URL`, `OLLAMA_MODEL`, `OLLAMA_TIMEOUT_SECONDS`. A smaller machine can use `qwen2.5vl:3b`.
 
 Sample PDFs live in `seed/documents/`:
 

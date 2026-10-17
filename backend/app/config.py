@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     # The local Ollama server reads invoice PDFs and photos. It needs no API key.
     ollama_url: str = "http://localhost:11434"
-    ollama_model: str = "qwen3-vl:8b"
+    ollama_model: str = "qwen2.5vl:7b"
     ollama_timeout_seconds: float = 300.0
 
     database_url: str = "sqlite:///./vatback.db"
