@@ -127,7 +127,6 @@
 
         const REFRESH_INTERVAL_MS = 5000;
         const COUNTRY_CODE_PATTERN = /^[A-Z]{2}$/;
-        const FIRST_CURRENCY = "EUR";
 
         const api = window.vatbackApi;
         const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -141,6 +140,7 @@
         let expiredTotals = [];
         let periods = [];
         let referenceDate = null;
+        let ratesTable = null;
         let approvedReceipts = [];
         let selectedCountry = null;
         let renderedState = "";
@@ -382,18 +382,18 @@
           return item;
         };
 
-        const CLAIM_ALL_LABEL = "Claim all";
+        const GENERATE_ALL_LABEL = "Generate all";
         // The browser starts each download after a short pause. It then keeps every file.
-        const CLAIM_DOWNLOAD_PAUSE_MS = 800;
-        let isClaimingAll = false;
+        const PACKAGE_DOWNLOAD_PAUSE_MS = 800;
+        let isGeneratingAll = false;
 
-        const claimAllButton = element(
+        const generateAllButton = element(
           "button",
           "bg-brand-bright-green text-brand-forest-green hover:bg-brand-bright-green-pressed mt-4 inline-flex h-12 cursor-pointer items-center rounded-full px-6 text-base font-semibold transition disabled:cursor-not-allowed disabled:opacity-50",
-          CLAIM_ALL_LABEL,
+          GENERATE_ALL_LABEL,
         );
-        claimAllButton.type = "button";
-        claimAllButton.setAttribute(
+        generateAllButton.type = "button";
+        generateAllButton.setAttribute(
           "aria-label",
           "Generate the claim package of every open period in every country",
         );
@@ -406,75 +406,81 @@
         };
 
         // The loop runs once per open period. The period list bounds it.
-        const claimAll = async () => {
+        const generateAll = async () => {
           const openPeriods = [...periods].sort(
             (first, second) =>
               first.country.localeCompare(second.country) ||
               first.year - second.year,
           );
-          isClaimingAll = true;
-          claimAllButton.disabled = true;
+          isGeneratingAll = true;
+          generateAllButton.disabled = true;
           for (const [index, period] of openPeriods.entries()) {
-            claimAllButton.textContent = `Claiming ${index + 1} of ${openPeriods.length}…`;
+            generateAllButton.textContent = `Generating ${index + 1} of ${openPeriods.length}…`;
             downloadPackage(period);
             await new Promise((resolve) =>
-              setTimeout(resolve, CLAIM_DOWNLOAD_PAUSE_MS),
+              setTimeout(resolve, PACKAGE_DOWNLOAD_PAUSE_MS),
             );
           }
-          isClaimingAll = false;
-          claimAllButton.textContent = CLAIM_ALL_LABEL;
-          claimAllButton.disabled = periods.length === 0;
+          isGeneratingAll = false;
+          generateAllButton.textContent = GENERATE_ALL_LABEL;
+          generateAllButton.disabled = periods.length === 0;
         };
 
-        claimAllButton.addEventListener("click", claimAll);
+        generateAllButton.addEventListener("click", generateAll);
+
+        // The hero shows one total in EUR. The demo rate table converts every other currency.
+        const HERO_CURRENCY = "EUR";
+
+        const toHeroCurrency = (totals) => {
+          let amount = 0;
+          let converted = false;
+          let missingRate = false;
+          totals.forEach((total) => {
+            const value = Number(total.refundable_vat_total);
+            if (total.currency === HERO_CURRENCY) {
+              amount += value;
+              return;
+            }
+            const rate = Number(ratesTable?.rates?.[total.currency]);
+            if (!Number.isFinite(rate) || rate <= 0) {
+              missingRate = true;
+              return;
+            }
+            amount += value / rate;
+            converted = true;
+          });
+          return { amount, converted, missingRate };
+        };
 
         const renderHero = () => {
-          const totals = api.sumByCurrency(
-            countryTotals,
-            (total) => total.refundable_vat_total,
-          );
-          const ordered = Array.from(totals).sort(([first], [second]) => {
-            if (first === FIRST_CURRENCY) {
-              return -1;
-            }
-            if (second === FIRST_CURRENCY) {
-              return 1;
-            }
-            return first.localeCompare(second);
-          });
-          const [main, ...others] = ordered.length
-            ? ordered
-            : [[FIRST_CURRENCY, 0]];
-          const otherRow = element("p", "mt-3 flex flex-wrap gap-x-6 gap-y-2");
-          otherRow.append(
-            ...others.map(([currency, amount]) =>
-              element(
-                "span",
-                "font-display text-brand-bright-green text-[28px] leading-none uppercase tabular-nums sm:text-[32px]",
-                api.formatMoney(amount, currency),
-              ),
-            ),
-          );
-          claimAllButton.disabled = isClaimingAll || periods.length === 0;
-          heroTotals.replaceChildren(
+          const open = toHeroCurrency(countryTotals);
+          generateAllButton.disabled = isGeneratingAll || periods.length === 0;
+          const children = [
             element(
               "p",
               "font-display text-display-large text-brand-bright-green tabular-nums sm:text-[64px]",
-              api.formatMoney(main[1], main[0]),
+              `${open.converted ? "≈ " : ""}${api.formatMoney(open.amount, HERO_CURRENCY)}`,
             ),
-            claimAllButton,
-            otherRow,
-          );
+          ];
+          if (open.converted || open.missingRate) {
+            children.push(
+              element(
+                "p",
+                "text-brand-light-green mt-1 text-xs",
+                open.missingRate
+                  ? "Some exchange rates are missing. The total leaves out those currencies."
+                  : `Other currencies converted at the ${ratesTable.source} rates of ${window.vatbackReceipts.formatDay(ratesTable.as_of)}.`,
+              ),
+            );
+          }
+          children.push(generateAllButton);
+          heroTotals.replaceChildren(...children);
           const countryCount = new Set(
             countryTotals.map((total) => total.country),
           ).size;
+          const expired = toHeroCurrency(expiredTotals);
           const expiredText = expiredTotals.length
-            ? ` · ${api.formatTotals(
-                api.sumByCurrency(
-                  expiredTotals,
-                  (total) => total.refundable_vat_total,
-                ),
-              )} lost after the deadline`
+            ? ` · ${expired.converted ? "≈ " : ""}${api.formatMoney(expired.amount, HERO_CURRENCY)} lost after the deadline`
             : "";
           heroMeta.textContent = `${claimableCount(approvedReceipts)} approved receipts · ${countryCount} countries${expiredText}`;
         };
@@ -494,6 +500,7 @@
             expiredTotals,
             periods,
             referenceDate,
+            ratesTable,
             approvedReceipts.map((receipt) => receipt.id),
             selectedCountry,
           ]);
@@ -533,6 +540,8 @@
             expiredTotals = claims.expired_per_country ?? [];
             periods = claims.periods ?? [];
             referenceDate = claims.reference_date ?? null;
+            ratesTable =
+              ratesTable ?? (await api.getRatesTable().catch(() => null));
             render();
           } catch (error) {
             countryTotals = [];

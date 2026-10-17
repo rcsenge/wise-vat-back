@@ -82,6 +82,7 @@
     baseUrl: API_BASE,
     listReceipts: () => request("/receipts"),
     getClaims: () => request("/claims"),
+    getRatesTable: () => request("/rates/table"),
     // The browser downloads the ZIP file. The server sends it as an attachment.
     packageUrl: (country, year) =>
       `${API_BASE}/claims/package?country=${encodeURIComponent(country)}&year=${encodeURIComponent(year)}`,
