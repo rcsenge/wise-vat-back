@@ -31,12 +31,3 @@ node_modules/
 !.prettierrc
 !.prettierignore
 
-# Re-ignore the unused neptune font packs after the whitelist rules.
-www/vendor/neptune/fonts/inter/
-www/vendor/neptune/fonts/noto-sans-kr/
-www/vendor/neptune/fonts/noto-sans-sc/
-www/vendor/neptune/fonts/rubik/
-www/vendor/neptune/fonts/vazirmatn/
-www/vendor/neptune/fonts/zen-kaku-gothic-antique/
-www/vendor/neptune/fonts/noto-sans-hebrew-normal.woff2
-www/vendor/neptune/fonts/noto-sans-thai-normal.woff2
