@@ -216,6 +216,13 @@ def load_package_invoices(session: Session, country: str, year: int) -> list[Pac
     return invoices
 
 
+def _rows_phrase(rows: list[int], singular: str, plural: str) -> str:
+    """Return "Row 3 has" or "Rows 1, 4 have" for the warning texts."""
+    if len(rows) == 1:
+        return f"Row {rows[0]} {singular}"
+    return f"Rows {', '.join(map(str, rows))} {plural}"
+
+
 def _warnings(invoices: list[PackageInvoice], currency: str, total: Decimal, deadline: date, today: date) -> list[str]:
     warnings: list[str] = []
     days_left = (deadline - today).days
@@ -231,10 +238,10 @@ def _warnings(invoices: list[PackageInvoice], currency: str, total: Decimal, dea
         )
     missing = [invoice.row for invoice in invoices if invoice.copy_note != "Original upload"]
     if missing:
-        warnings.append(f"Rows {', '.join(map(str, missing))} have no original copy in the package. Attach the invoices.")
+        warnings.append(f"{_rows_phrase(missing, 'has', 'have')} no original copy in the package. Attach the original invoice.")
     required = [invoice.row for invoice in invoices if invoice.copy_requirement == "yes"]
     if required:
-        warnings.append(f"Rows {', '.join(map(str, required))} reach the copy limit. Upload their copies with the application (Art. 10).")
+        warnings.append(f"{_rows_phrase(required, 'reaches', 'reach')} the copy limit. Upload the copy with the application (Art. 10).")
     partial = sum(1 for invoice in invoices for line in invoice.lines if 0 < line.deductible_vat < line.vat_amount)
     if partial:
         warnings.append(f"{partial} lines are only partly refundable. The lines file shows the deductible VAT and the share.")
@@ -440,7 +447,7 @@ def _summary_pdf(invoices: list[PackageInvoice], country: str, year: int, curren
     heading("Invoices")
     pdf.set_font("Roboto", size=7.5)
     with pdf.table(
-        col_widths=(7, 18, 30, 52, 26, 12, 22, 22, 22),
+        col_widths=(7, 22, 30, 46, 26, 12, 22, 22, 22),
         text_align=("RIGHT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT"),
         line_height=4.2,
         headings_style=FontFace(emphasis="BOLD", fill_color=(226, 246, 213)),

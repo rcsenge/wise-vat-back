@@ -104,7 +104,7 @@ def test_invoice_without_upload_gets_a_copy_warning(client):
     archive = download(client, "AT", 2026)
     assert not [name for name in archive.namelist() if name.startswith("02_invoice_copies/")]
     text = pdf_text(archive.read("00_summary.pdf"))
-    assert "Rows 1 have no original copy in the package." in text
+    assert "Row 1 has no original copy in the package." in text
 
 
 def test_expired_period_package_warns_about_the_deadline(client, monkeypatch):
