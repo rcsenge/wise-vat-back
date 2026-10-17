@@ -77,11 +77,12 @@ def test_receipts_list_frontend_shape(client):
     assert response.status_code == 200
     assert len(receipts) == 1
     receipt = receipts[0]
-    assert set(receipt) == {"id", "merchant", "amount", "taxAmount", "currency", "scannedAt", "imageDataUrl", "status", "reasons"}
+    assert set(receipt) == {"id", "merchant", "amount", "taxAmount", "currency", "country", "scannedAt", "imageDataUrl", "status", "reasons"}
     assert isinstance(receipt["id"], str)
     assert isinstance(receipt["scannedAt"], int)
     assert receipt["imageDataUrl"] == "data:image/jpeg;base64,AAAA"
     assert receipt["status"] == "approved"
+    assert receipt["country"] == "AT"
     assert Decimal(receipt["amount"]) == Decimal("261.00")
     assert Decimal(receipt["taxAmount"]) == Decimal("26.00")
 

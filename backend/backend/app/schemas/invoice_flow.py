@@ -67,6 +67,7 @@ class ReceiptView(BaseModel):
     amount: Decimal
     tax_amount: Decimal
     currency: str
+    country: str | None  # Country of the matched transaction
     scanned_at: int  # Milliseconds since the Unix epoch
     image_data_url: str | None
     status: InvoiceStatus

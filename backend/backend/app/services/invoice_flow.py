@@ -208,6 +208,7 @@ def _receipt_view(record: InvoiceRecord) -> ReceiptView:
         amount=record.gross_amount.quantize(_CENT),
         tax_amount=record.refundable_vat.quantize(_CENT),
         currency=record.currency,
+        country=record.country,
         scanned_at=int(created_at.timestamp() * 1000),
         image_data_url=record.image_data_url,
         status=result.status,
