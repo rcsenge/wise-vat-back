@@ -75,3 +75,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Add the init launcher. It starts Ollama and runs Docker Compose.
+- Signer: Magyari Ákos's agent
+- Branch: feat/init-script
+- Date: 2026-10-17
+
+---
