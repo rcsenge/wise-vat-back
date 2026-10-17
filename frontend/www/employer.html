@@ -372,8 +372,8 @@
         };
 
         const GENERATE_ALL_LABEL = "Generate all";
-        // The browser starts each download after a short pause. It then keeps every file.
-        const PACKAGE_DOWNLOAD_PAUSE_MS = 800;
+        // The button stays disabled for this time. A second click does not start a second download.
+        const GENERATE_ALL_PAUSE_MS = 2000;
         let isGeneratingAll = false;
 
         const generateAllButton = element(
@@ -384,32 +384,21 @@
         generateAllButton.type = "button";
         generateAllButton.setAttribute(
           "aria-label",
-          "Generate the claim package of every open period in every country",
+          "Generate one package with every open claim in every country",
         );
 
-        const downloadPackage = (period) => {
-          const link = document.createElement("a");
-          link.href = api.packageUrl(period.country, period.year);
-          link.setAttribute("download", "");
-          link.click();
-        };
-
-        // The loop runs once per open period. The period list bounds it.
+        // The server builds one ZIP: an overview PDF and one folder per country and year.
         const generateAll = async () => {
-          const openPeriods = [...periods].sort(
-            (first, second) =>
-              first.country.localeCompare(second.country) ||
-              first.year - second.year,
-          );
           isGeneratingAll = true;
           generateAllButton.disabled = true;
-          for (const [index, period] of openPeriods.entries()) {
-            generateAllButton.textContent = `Generating ${index + 1} of ${openPeriods.length}…`;
-            downloadPackage(period);
-            await new Promise((resolve) =>
-              setTimeout(resolve, PACKAGE_DOWNLOAD_PAUSE_MS),
-            );
-          }
+          generateAllButton.textContent = "Generating…";
+          const link = document.createElement("a");
+          link.href = api.allPackagesUrl();
+          link.setAttribute("download", "");
+          link.click();
+          await new Promise((resolve) =>
+            setTimeout(resolve, GENERATE_ALL_PAUSE_MS),
+          );
           isGeneratingAll = false;
           generateAllButton.textContent = GENERATE_ALL_LABEL;
           generateAllButton.disabled = periods.length === 0;

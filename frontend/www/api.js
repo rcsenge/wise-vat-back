@@ -86,6 +86,8 @@
     // The browser downloads the ZIP file. The server sends it as an attachment.
     packageUrl: (country, year) =>
       `${API_BASE}/claims/package?country=${encodeURIComponent(country)}&year=${encodeURIComponent(year)}`,
+    // One ZIP with an overview and one folder per open refund period.
+    allPackagesUrl: () => `${API_BASE}/claims/package/all`,
     uploadInvoice: (documentFile, imageDataUrl) => {
       const form = new FormData();
       form.append("document", documentFile);
