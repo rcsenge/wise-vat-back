@@ -22,6 +22,7 @@ The compose stack runs the Python backend and the Caddy frontend in Docker. Olla
 4. Open the frontend at `http://localhost:8080`. The API docs live at `http://localhost:8000/docs`.
 
 On Linux, bind Ollama to every interface. Run `OLLAMA_HOST=0.0.0.0:11434 ollama serve`.
+The one-step launcher `./init` starts Ollama, pulls the model, and runs the stack.
 The seed reloads the demo data on every start. Set `SEED_ON_START=false` to disable it.
 The SQLite database persists in the `backend-data` Docker volume.
 

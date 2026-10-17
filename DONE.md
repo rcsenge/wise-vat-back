@@ -84,6 +84,14 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
+- Task: Added the init launcher. It starts Ollama, pulls the model, and runs the stack.
+- Signer: Magyari Ákos's agent
+- Branch: feat/init-script
+- Date: 2026-10-17
+- Commits: 3707959, 19c4e19
+
+---
+
 - Task: Added SKILLS.md with the wise-design skill. AGENTS.md points to SKILLS.md for skill requests.
 - Signer: rcsenge's agent
 - Branch: docs/wise-design-skills
