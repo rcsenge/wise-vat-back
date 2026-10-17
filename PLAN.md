@@ -368,3 +368,10 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+
+- Task: Add an unclaimed Fiera Milano transaction for the printed demo invoice. Add a make target that resets it.
+- Signer: rcsenge's agent
+- Branch: feat/printed-invoice-reset
+- Date: 2026-10-17
+
+---
