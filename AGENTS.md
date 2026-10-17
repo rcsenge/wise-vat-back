@@ -26,6 +26,7 @@ Use ONLY the root `AGENTS.md` and the `AGENTS.md` of the current project. Do not
 
 ## 3. Git & Version Control Workflow
 Apply Trunk-Based Development with strict commit hygiene. Use this workflow for every change, including documentation edits. Git hooks in `.githooks/` enforce the workflow. Never bypass the hooks. A bypass is a critical defect.
+Read `MERGE-GUIDE.md` before you rebase, merge, or push. It records the conflict and push problems and their fixes.
 
 ### 3.1. Session Start
 - **Pull First:** Pull the latest `main` at the start of every work session.
