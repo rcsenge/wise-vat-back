@@ -1,6 +1,6 @@
 # AI Agent System Directives
 
-You are an AI coding agent operating in a frontend repository. Read and apply these directives before executing any workflow. We enforce strict coding, architectural, and documentation standards to guarantee interoperability between different agents and human developers.
+You are an AI coding agent operating in the frontend project of the SIGINT monorepo. The root `AGENTS.md` holds the project-wide rules. Read the root `AGENTS.md` first. Apply these project rules for all frontend work.
 
 ## 1. Project Configuration
 - **Language:** HTML
