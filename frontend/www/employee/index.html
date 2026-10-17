@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#00a4a6" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <title>vatback - Employee Scanner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,117 +19,142 @@
     <link rel="stylesheet" href="/vendor/neptune/props/neptune-tokens.css" />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body
-    class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
-  >
-    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-10 pt-6 sm:px-6">
-      <header
-        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div class="flex items-center gap-3">
-          <span
-            class="grid h-11 w-11 place-items-center rounded-2xl bg-[#00a4a6] text-white"
-            aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-6 w-6"
-            >
-              <path d="M17 2l4 4-4 4" />
-              <path d="M3 11V9a4 4 0 0 1 4-4h14" />
-              <path d="M7 22l-4-4 4-4" />
-              <path d="M21 13v2a4 4 0 0 1-4 4H3" />
-            </svg>
-          </span>
-          <div>
-            <h1 class="text-xl font-semibold leading-tight tracking-tight">
-              vatback
-            </h1>
-            <p class="text-sm text-[#6b7a78]">Money without borders</p>
-          </div>
-        </div>
-        <button
-          type="button"
-          id="upload-button"
-          class="px-4! py-2! text-[#00a4a6]! inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] text-sm font-semibold transition-colors hover:bg-[#00a4a6]/10"
+  <body class="bg-surface-screen text-ink-primary font-sans antialiased">
+    <main
+      class="mx-auto min-h-dvh w-full max-w-md px-4 pb-36 pt-[max(1.5rem,env(safe-area-inset-top))]"
+    >
+      <header class="flex items-center gap-3">
+        <span
+          class="bg-surface-neutral grid h-12 w-12 place-items-center rounded-full text-lg font-semibold"
+          aria-hidden="true"
+          >V</span
         >
-          Add New Document
-        </button>
+        <p class="text-base font-semibold">vatback</p>
       </header>
+
+      <h1 class="text-title-screen text-ink-primary mt-8 font-bold">
+        Receipts
+      </h1>
+
+      <section aria-label="Claim summary" class="mt-6">
+        <p class="text-ink-secondary text-lg">VAT you can claim</p>
+        <p
+          id="summary-claimable"
+          class="text-amount-large mt-1 font-bold tabular-nums tracking-tight"
+        >
+          €0.00
+        </p>
+      </section>
 
       <p
         id="backend-error"
-        class="alert alert-negative mt-6 hidden text-sm"
+        class="bg-status-negative-background text-status-negative mt-6 hidden rounded-2xl p-4 text-sm"
       ></p>
 
-      <section aria-labelledby="receipts-heading" class="mt-8">
-        <h2 id="receipts-heading" class="text-lg font-semibold">
-          Scanned receipts
+      <section aria-labelledby="receipts-heading" class="mt-10">
+        <h2
+          id="receipts-heading"
+          class="text-title-section text-ink-primary font-bold"
+        >
+          Transactions
         </h2>
-        <ul id="receipt-list" class="pl-0! mt-4 list-none space-y-3"></ul>
+        <ul id="receipt-list" class="mt-2 list-none pl-0"></ul>
       </section>
 
       <section
         id="empty-state"
-        class="mt-10 rounded-2xl bg-white p-10 shadow-sm"
+        class="mt-6 flex flex-col items-center text-center"
       >
-        <div class="mx-auto max-w-sm text-center">
-          <div
-            class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#00a4a6]/10 text-[#00a4a6]"
-            aria-hidden="true"
+        <span
+          class="bg-brand-bright-green text-brand-forest-green grid h-20 w-20 place-items-center rounded-full"
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-9 w-9"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-8 w-8"
-            >
-              <path
-                d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
-              />
-              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-              <path d="M12 17.5v-11" />
-            </svg>
-          </div>
-          <h3 class="mt-4 text-base font-semibold">No receipts yet</h3>
-          <p class="mt-1 text-sm text-[#6b7a78]">
-            Tap Add New Document to upload your first invoice.
-          </p>
-        </div>
+            <path
+              d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+            />
+            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+            <path d="M12 17.5v-11" />
+          </svg>
+        </span>
+        <h3
+          class="font-display text-display-medium text-ink-primary mt-8 font-black uppercase"
+        >
+          Scan it,<br />claim it back
+        </h3>
+        <p class="text-ink-secondary mt-4 max-w-xs text-lg">
+          Add your first company receipt. We check the VAT for you.
+        </p>
       </section>
 
-      <footer
-        class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
-      >
-        <p>
-          The backend checks every invoice and stores the result. Open the
-          <a href="/employer" class="font-semibold text-[#00a4a6]"
-            >employer review</a
-          >
-          to see the claim summary per country.
-        </p>
-      </footer>
+      <p class="text-ink-tertiary mt-10 text-center text-sm">
+        <a
+          href="/employer"
+          class="text-brand-forest-green underline-offset-3 text-base font-semibold underline"
+          >Open employer review</a
+        >
+      </p>
     </main>
+
+    <div
+      class="bg-surface-screen/95 fixed inset-x-0 bottom-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur"
+    >
+      <div class="mx-auto max-w-md">
+        <button
+          type="button"
+          id="upload-button"
+          class="bg-brand-bright-green text-brand-forest-green ease-standard hover:bg-brand-bright-green-pressed active:scale-97 flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-full px-6 text-lg font-semibold transition duration-150"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+          Add document
+        </button>
+      </div>
+    </div>
 
     <dialog
       id="upload-dialog"
-      class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-white p-5 text-[#163300] shadow-2xl [&::backdrop]:bg-black/60"
+      aria-labelledby="upload-dialog-title"
+      class="rounded-t-4xl bg-surface-screen text-ink-primary shadow-sheet backdrop:bg-surface-overlay mx-auto mb-0 mt-auto max-h-[90dvh] w-full max-w-md px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2"
     >
-      <h2 class="text-base font-semibold">Upload invoice</h2>
-      <p class="mt-1 text-xs text-[#6b7a78]">
-        Select the invoice JSON file. A receipt photo is optional.
+      <div
+        class="bg-line-neutral mx-auto mb-6 h-1 w-9 rounded-full"
+        aria-hidden="true"
+      ></div>
+      <h2
+        id="upload-dialog-title"
+        class="text-title-section text-ink-primary font-bold"
+      >
+        Add document
+      </h2>
+      <p class="text-ink-secondary mt-2 text-base">
+        Select the invoice file. A photo is optional.
       </p>
-      <form id="upload-form" class="mt-4 space-y-3">
+      <form id="upload-form" class="mt-6 space-y-4">
         <div>
-          <label for="invoice-input" class="mb-1 block text-sm font-medium">
+          <label
+            for="invoice-input"
+            class="text-ink-secondary mb-2 block text-sm font-medium"
+          >
             Invoice JSON
           </label>
           <input
@@ -137,47 +162,50 @@
             type="file"
             accept=".json,application/json"
             required
-            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
+            class="border-line-neutral bg-surface-screen file:bg-surface-neutral focus:outline-brand-forest-green w-full rounded-2xl border p-4 text-base file:mr-3 file:rounded-full file:border-0 file:px-4 file:py-2 file:font-semibold focus:outline-2"
           />
         </div>
         <div>
-          <label for="photo-input" class="mb-1 block text-sm font-medium">
-            Receipt photo (optional)
+          <label
+            for="photo-input"
+            class="text-ink-secondary mb-2 block text-sm font-medium"
+          >
+            Receipt photo
           </label>
           <input
             id="photo-input"
             type="file"
             accept="image/*"
             capture="environment"
-            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
+            class="border-line-neutral bg-surface-screen file:bg-surface-neutral focus:outline-brand-forest-green w-full rounded-2xl border p-4 text-base file:mr-3 file:rounded-full file:border-0 file:px-4 file:py-2 file:font-semibold focus:outline-2"
           />
         </div>
         <img
           id="photo-preview"
           alt="Receipt preview"
-          class="hidden h-36 w-full rounded-2xl bg-[#e6e9ea] object-cover"
+          class="bg-surface-neutral hidden h-36 w-full rounded-3xl object-cover"
         />
         <div id="upload-result" class="hidden">
           <p id="upload-result-title" class="font-semibold"></p>
           <ul
             id="upload-result-reasons"
-            class="mt-2 list-disc space-y-1 pl-5 text-xs"
+            class="mt-2 list-disc space-y-1 pl-5 text-sm"
           ></ul>
         </div>
-        <div class="flex gap-3 pt-1">
-          <button
-            type="button"
-            id="close-button"
-            class="px-4! py-2.5! text-[#6b7a78]! flex-1 rounded-full border border-[#e6e9ea] text-sm font-semibold transition-colors hover:bg-[#f5f7fa]"
-          >
-            Close
-          </button>
+        <div class="flex flex-col gap-3 pt-2">
           <button
             type="submit"
             id="submit-button"
-            class="px-4! py-2.5! text-white! flex-1 rounded-full bg-[#00a4a6] text-sm font-semibold shadow-sm transition-colors hover:bg-[#009094] disabled:opacity-50"
+            class="bg-brand-bright-green text-brand-forest-green ease-standard hover:bg-brand-bright-green-pressed active:scale-97 h-14 w-full cursor-pointer rounded-full px-6 text-lg font-semibold transition duration-150 disabled:opacity-40"
           >
             Check invoice
+          </button>
+          <button
+            type="button"
+            id="close-button"
+            class="bg-surface-neutral text-ink-primary ease-standard hover:bg-surface-neutral-pressed active:scale-97 h-14 w-full cursor-pointer rounded-full px-6 text-lg font-semibold transition duration-150"
+          >
+            Close
           </button>
         </div>
       </form>
@@ -185,12 +213,12 @@
 
     <dialog
       id="document-dialog"
-      class="m-auto max-w-lg rounded-3xl bg-white p-3 shadow-2xl [&::backdrop]:bg-black/60"
+      class="bg-surface-screen shadow-sheet backdrop:bg-surface-overlay m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl p-3"
     >
       <img
         id="document-image"
         alt="Scanned receipt"
-        class="max-h-[75vh] w-full rounded-2xl object-contain"
+        class="max-h-[75dvh] w-full rounded-2xl object-contain"
       />
     </dialog>
 
@@ -203,9 +231,9 @@
         const MAX_IMAGE_DIMENSION = 800;
         const JPEG_QUALITY = 0.7;
         const RESULT_APPROVED_CLASS =
-          "rounded-2xl bg-[#e2f6d5] p-4 text-sm text-[#163300]";
+          "rounded-2xl bg-status-positive-background p-4 text-base text-brand-forest-green";
         const RESULT_REJECTED_CLASS =
-          "rounded-2xl bg-[#ffe7e5] p-4 text-sm text-[#a8200d]";
+          "rounded-2xl bg-status-negative-background p-4 text-base text-status-negative";
 
         const api = window.vatbackApi;
         const receipts = window.vatbackReceipts.create({ approvedOnly: false });
