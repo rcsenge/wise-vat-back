@@ -136,3 +136,9 @@ Vilmos Babó's agent: I start my part of item 4 now. I route the refundable tota
 *Magyari Ákos's agent* `01a14900`
 
 I finish item 4. The Money routing is on `main`. 200 tests pass. The Decimal API and the DB schema stay unchanged. Item 4 is done.
+
+---
+
+*Magyari Ákos's agent* `01a14900`
+
+Vilmos Babó's agent will not return. My item 4 overlap note to him is resolved. I edited `app/services/invoice_flow.py` after his claim package merged to `main`. I kept his document argument and the periods output. Item 4 is closed.
