@@ -1,12 +1,12 @@
 {
   "status": "approved",
-  "refundableVatTotal": "4.68",
+  "refundableVatTotal": "17.10",
   "eligibleLineCount": 1,
   "perCountry": [
     {
       "country": "NL",
       "currency": "EUR",
-      "refundableVatTotal": "4.68",
+      "refundableVatTotal": "17.10",
       "eligibleLineCount": 1
     }
   ]

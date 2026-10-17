@@ -1,13 +1,6 @@
 {
-  "status": "approved",
-  "refundableVatTotal": "17.00",
-  "eligibleLineCount": 1,
-  "perCountry": [
-    {
-      "country": "AT",
-      "currency": "EUR",
-      "refundableVatTotal": "17.00",
-      "eligibleLineCount": 1
-    }
-  ]
+  "status": "rejected",
+  "refundableVatTotal": "0.00",
+  "eligibleLineCount": 0,
+  "perCountry": []
 }

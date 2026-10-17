@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "documentType": "SIMPLIFIED_INVOICE",
+  "documentType": "FULL_INVOICE",
   "invoiceNumber": "CC-2026-1013",
   "issueDate": "2026-09-10",
   "currency": "DKK",
   "supplier": {
-    "name": "Circle K Danmark",
-    "vatNumber": "DK25621554",
+    "name": "Hotel Scandic Aarhus",
+    "vatNumber": "DK18801017",
     "address": {
       "street": "Beispielstrasse 1",
       "postalCode": "8000",
@@ -20,18 +20,18 @@
   },
   "lines": [
     {
-      "description": "Diesel",
-      "category": "FUEL",
-      "netAmount": "512.00",
+      "description": "Værelse og morgenmad",
+      "category": "ACCOMMODATION",
+      "netAmount": "1250.00",
       "vatRate": 25.0,
-      "vatAmount": "128.00",
-      "grossAmount": "640.00"
+      "vatAmount": "312.50",
+      "grossAmount": "1562.50"
     }
   ],
   "totals": {
-    "netAmount": "512.00",
-    "vatAmount": "128.00",
-    "grossAmount": "640.00"
+    "netAmount": "1250.00",
+    "vatAmount": "312.50",
+    "grossAmount": "1562.50"
   },
   "cardLast4": "4821"
 }

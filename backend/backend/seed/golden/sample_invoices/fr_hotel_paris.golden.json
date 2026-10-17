@@ -1,13 +1,13 @@
 {
   "status": "approved",
-  "refundableVatTotal": "51.60",
-  "eligibleLineCount": 2,
+  "refundableVatTotal": "3.60",
+  "eligibleLineCount": 1,
   "perCountry": [
     {
       "country": "FR",
       "currency": "EUR",
-      "refundableVatTotal": "51.60",
-      "eligibleLineCount": 2
+      "refundableVatTotal": "3.60",
+      "eligibleLineCount": 1
     }
   ]
 }

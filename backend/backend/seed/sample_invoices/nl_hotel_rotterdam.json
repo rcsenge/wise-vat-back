@@ -5,11 +5,11 @@
   "issueDate": "2026-09-10",
   "currency": "EUR",
   "supplier": {
-    "name": "Eetcafé de Haven",
-    "vatNumber": "NL823456789B01",
+    "name": "Hilton Rotterdam",
+    "vatNumber": "NL824567890B01",
     "address": {
       "street": "Beispielstrasse 1",
-      "postalCode": "3011",
+      "postalCode": "3013",
       "city": "Rotterdam",
       "countryCode": "NL"
     }
@@ -20,18 +20,18 @@
   },
   "lines": [
     {
-      "description": "Kost en drank",
-      "category": "FOOD_AND_DRINK",
-      "netAmount": "52.00",
+      "description": "Kamer en ontbijt",
+      "category": "ACCOMMODATION",
+      "netAmount": "190.00",
       "vatRate": 9.0,
-      "vatAmount": "4.68",
-      "grossAmount": "56.68"
+      "vatAmount": "17.10",
+      "grossAmount": "207.10"
     }
   ],
   "totals": {
-    "netAmount": "52.00",
-    "vatAmount": "4.68",
-    "grossAmount": "56.68"
+    "netAmount": "190.00",
+    "vatAmount": "17.10",
+    "grossAmount": "207.10"
   },
   "cardLast4": "4821"
 }
