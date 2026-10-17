@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     anthropic_model: str = "claude-sonnet-5-5"
 
+    # The local Ollama server reads invoice PDFs and photos. It needs no API key.
+    ollama_url: str = "http://localhost:11434"
+    ollama_model: str = "qwen3-vl:8b"
+    ollama_timeout_seconds: float = 300.0
+
     database_url: str = "sqlite:///./vatback.db"
     cors_origins: str = "http://localhost:5173,http://localhost:8080"
     # The regex allows any host on the frontend port. A phone opens the frontend by LAN IP.

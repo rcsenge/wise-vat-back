@@ -40,8 +40,8 @@ def test_second_upload_of_same_invoice_is_rejected(client):
     assert any("No matching" in reason for reason in body["reasons"])
 
 
-def test_image_upload_is_not_supported_yet(client):
-    response = upload(client, "not-json", filename="receipt.jpg", content_type="image/jpeg")
+def test_unknown_document_type_is_rejected(client):
+    response = upload(client, "plain text", filename="notes.txt", content_type="text/plain")
     assert response.status_code == 415
     assert response.json()["detail"]["reasons"]
 
