@@ -22,13 +22,14 @@ def test_de_taxi_rejected_missing_vat(client):
     assert any("VAT number" in reason for reason in body["reasons"])
 
 
-def test_pl_restaurant_approved_in_pln(client):
+def test_pl_restaurant_rejected_by_country_rule(client):
     response = client.post("/invoices", json=load_invoice("pl_restaurant_warsaw.json"))
     body = response.json()
-    assert body["status"] == "approved"
-    assert body["country_totals"][0]["country"] == "PL"
-    assert body["country_totals"][0]["currency"] == "PLN"
-    assert Decimal(body["country_totals"][0]["refundable_vat_total"]) == Decimal("38.40")
+    assert body["status"] == "rejected"
+    assert body["matched_transaction"]["country"] == "PL"
+    assert body["reasons"] == ["No invoice line is eligible for VAT back."]
+    assert all("restaurant services" in line["reason"] for line in body["line_outcomes"])
+    assert all(Decimal(line["refundable_vat"]) == Decimal("0") for line in body["line_outcomes"])
 
 
 def test_unsupported_country_is_rejected(client):
@@ -75,10 +76,10 @@ def test_claims_summary_per_country(client, stored_seed_invoices):
     body = response.json()
     assert response.status_code == 200
     countries = {total["country"] for total in body["per_country"]}
-    assert countries == {"AT", "DE", "PL"}
+    assert countries == {"AT", "DE"}
     assert len(body["results"]) == 4
     totals = {total["country"]: Decimal(total["refundable_vat_total"]) for total in body["per_country"]}
-    assert totals == {"AT": Decimal("26.00"), "DE": Decimal("10.50"), "PL": Decimal("38.40")}
+    assert totals == {"AT": Decimal("26.00"), "DE": Decimal("10.50")}
 
 
 def test_receipts_list_frontend_shape(client):

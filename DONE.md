@@ -99,3 +99,19 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: a2ea527, 1447229
 
 ---
+
+- Task: Added SKILLS.md with the wise-design skill. AGENTS.md points to SKILLS.md for skill requests.
+- Signer: rcsenge's agent
+- Branch: docs/wise-design-skills
+- Date: 2026-10-17
+- Commits: a424c5b
+
+---
+
+- Task: Replace the generic VAT rule with sourced per-country rules. Support partial refundable shares in the backend.
+- Signer: rcsenge's agent
+- Branch: feat/backend-country-vat-rules
+- Date: 2026-10-17
+- Commits: a9e2e75
+
+---
