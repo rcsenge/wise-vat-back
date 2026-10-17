@@ -9,7 +9,8 @@ from app.domain import vat_rules
 def test_supported_countries():
     assert vat_rules.is_supported("AT")
     assert vat_rules.is_supported("DE")
-    assert not vat_rules.is_supported("PL")
+    assert vat_rules.is_supported("PL")
+    assert not vat_rules.is_supported("GB")
 
 
 def test_entertainment_is_not_eligible_in_at_or_de():
@@ -33,4 +34,4 @@ def test_unknown_category_is_not_eligible():
 
 def test_unsupported_country_raises():
     with pytest.raises(ValueError):
-        vat_rules.evaluate_line("PL", "FOOD_AND_DRINK", 0, Decimal("1"))
+        vat_rules.evaluate_line("GB", "FOOD_AND_DRINK", 0, Decimal("1"))

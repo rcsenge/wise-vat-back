@@ -1,15 +1,16 @@
 """VAT back rules for the supported countries. Pure. No I/O.
 
 The rules map an expense category to an eligibility decision per country.
-The supported countries are Austria (AT) and Germany (DE).
+The supported countries are Austria (AT), Germany (DE), France (FR), Italy (IT),
+the Netherlands (NL), Poland (PL), Czechia (CZ), Denmark (DK) and Sweden (SE).
 A decision carries a human-readable reason for the UI and the pitch.
 """
 from dataclasses import dataclass
 from decimal import Decimal
 from typing import Literal
 
-Country = Literal["AT", "DE"]
-SUPPORTED_COUNTRIES: frozenset[str] = frozenset({"AT", "DE"})
+Country = Literal["AT", "DE", "FR", "IT", "NL", "PL", "CZ", "DK", "SE"]
+SUPPORTED_COUNTRIES: frozenset[str] = frozenset({"AT", "DE", "FR", "IT", "NL", "PL", "CZ", "DK", "SE"})
 
 # The ten expense categories of Directive 2008/9/EC, Art. 9.
 CATEGORIES: tuple[str, ...] = (
@@ -59,6 +60,13 @@ def _default_rules(country: str) -> dict[str, CategoryRule]:
 COUNTRY_RULES: dict[str, dict[str, CategoryRule]] = {
     "AT": _default_rules("Austria"),
     "DE": _default_rules("Germany"),
+    "FR": _default_rules("France"),
+    "IT": _default_rules("Italy"),
+    "NL": _default_rules("the Netherlands"),
+    "PL": _default_rules("Poland"),
+    "CZ": _default_rules("Czechia"),
+    "DK": _default_rules("Denmark"),
+    "SE": _default_rules("Sweden"),
 }
 
 
