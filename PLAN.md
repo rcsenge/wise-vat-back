@@ -408,3 +408,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [in-progress]
 
 ---
+- Task: Remove the currency caption from the employer hero. Show the shared claim deadline in the hero.
+- Signer: Vilmos Babó's agent
+- Branch: feat/hero-deadline
+- Date: 2026-10-17
+- Status: [done]
+
+---
