@@ -18,6 +18,7 @@ The AI runs on your own machine. It needs no API key, no account, and no interne
 - [Try the demo](#try-the-demo)
 - [Sample data](#sample-data)
 - [VAT back rules](#vat-back-rules)
+- [Claim package for the accountant](#claim-package-for-the-accountant)
 - [API reference](#api-reference)
 - [Configuration](#configuration)
 - [Tests and checks](#tests-and-checks)
@@ -236,6 +237,7 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
 5. Read the result: approved with the refundable VAT, or rejected with the reasons.
 6. Open http://localhost:8080/employer. It shows the refundable VAT per country and the approved receipts. It refreshes every few seconds.
+7. Every country card lists its open refund years. Each year has a deadline bar and a **Generate package** button. The button downloads the ZIP file for the accountant.
 
 **Reset the demo.** A card transaction can back only one invoice. A second upload of the same invoice is rejected on purpose. To start again, stop the backend and run `make seed` (or `docker compose restart backend`, which seeds on start).
 
@@ -319,6 +321,37 @@ National restrictions in the current rule set (every other category refunds 100%
 
 ---
 
+## Claim package for the accountant
+
+Most small companies leave the refund application to their accountant. The accountant enters every invoice into the portal of the Member State of establishment (in Hungary: NAV). The portal forwards the application to each refund country (Directive 2008/9/EC, Art. 7). SIGINT prepares everything the accountant needs for one country and one year.
+
+**Refund periods.** The employer page shows one row per country and invoice year. Each row has its own total, its own deadline (30 September of the next year) and a deadline bar:
+
+- green: more than 90 days are left
+- amber: 90 days or fewer are left
+- red: 30 days or fewer are left
+
+When the deadline passes, the year leaves the open total. Its money moves to the "lost after the deadline" line. The next year starts again from zero with its own bar.
+
+**The package.** `GET /claims/package?country=DE&year=2026` returns `SIGINT-VAT-refund-DE-2026.zip`:
+
+| File | Content |
+| --- | --- |
+| `00_summary.pdf` | Total deductible VAT, deadline, days left, applicant data, the submission steps, warnings and the invoice table |
+| `01_refund_application_lines.csv` | One row per invoice line with every field of the application form (Art. 8): supplier, VAT number, date, number, taxable amount, VAT, deductible VAT and share, and the goods and services code (Art. 9). Excel opens it. |
+| `02_invoice_copies/` | The original uploaded PDF or photo of each invoice, named by row number |
+| `03_card_transactions.csv` | The card payment that matches each invoice |
+| `04_decision_log.csv` | Why each invoice is claimable: required fields, VAT number check, card payment and country rule per line |
+| `05_application_data.json` | The same data for software import |
+
+The summary warns when the total is below the EUR 50 annual minimum (Art. 17), when an invoice reaches the copy limit (EUR 1,000, or EUR 250 for fuel, Art. 10), when an original copy is missing, and when the deadline is near or passed.
+
+The applicant data comes from the settings (`APPLICANT_NAME`, `APPLICANT_VAT_NUMBER`, `APPLICANT_ADDRESS`, `APPLICANT_EMAIL`, `APPLICANT_IBAN`, `APPLICANT_BIC`, `APPLICANT_ACTIVITY`). The defaults hold demo values. The code lives in `backend/app/services/claim_package.py`.
+
+The package does not submit the application. The accountant submits it in the national portal. The applicant stays responsible for the values.
+
+---
+
 ## API reference
 
 Interactive docs: http://localhost:8000/docs. The OpenAPI contract: http://localhost:8000/openapi.json.
@@ -328,7 +361,8 @@ Interactive docs: http://localhost:8000/docs. The OpenAPI contract: http://local
 | `POST` | `/invoices/upload` | **Frontend entry point.** Multipart form: `document` (PDF or photo), optional `image_data_url` thumbnail. |
 | `POST` | `/invoices` | The same flow with an `ExtractedInvoice` JSON body. |
 | `GET` | `/receipts` | Stored invoices in the frontend receipt shape, newest first. |
-| `GET` | `/claims` | Refundable VAT per country and currency, plus every stored result. |
+| `GET` | `/claims` | Refundable VAT per country, the open refund periods per year, the expired totals, the reference date and every stored result. |
+| `GET` | `/claims/package?country=DE&year=2026` | The claim package ZIP for one refund country and year. |
 | `GET` | `/health` | Liveness check. |
 | `GET` | `/accounts`, `/accounts/{id}/transactions`, `/rates`, `/events/stream` | Placeholders for the Wise integration. They return empty or fixed data. |
 | `POST` | `/simulate/card-swipe`, `/simulate/skip-time`, `/simulate/reset` | Placeholders for the demo simulator. |
@@ -360,6 +394,7 @@ The backend reads settings from environment variables and from `backend/.env` (c
 | `CORS_ORIGINS` | `http://localhost:5173,http://localhost:8080` | Allowed browser origins |
 | `CORS_ORIGIN_REGEX` | `^https?://[^/:]+:8080$` | Allows any host on port 8080 (phones on the LAN) |
 | `WISE_MODE` | `mock` | Wise client mode: `mock`, `sandbox`, `real` |
+| `APPLICANT_NAME`, `APPLICANT_VAT_NUMBER`, `APPLICANT_ADDRESS`, `APPLICANT_EMAIL`, `APPLICANT_IBAN`, `APPLICANT_BIC`, `APPLICANT_ACTIVITY` | demo company | The applicant data in the claim package |
 | `CLAIM_REFERENCE_DATE` | empty (today) | The date that the claim deadline check uses as today, for example `2027-10-01`. A demo can show expired invoices with a future date. |
 
 ---
@@ -371,7 +406,7 @@ cd backend
 make test
 ```
 
-Or, from `backend`: `uv run pytest`. The suite has 170 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
+Or, from `backend`: `uv run pytest`. The suite has 196 tests. It covers the VAT rules, the claim deadline, the invoice schema, the full invoice flow, the upload endpoint, the claim package, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
 
 Frontend formatting:
 
@@ -394,7 +429,7 @@ pnpm run lint
 | `/employer` gives 404 with the Python server | Python has no clean URLs. Open `/employer.html`, or use Caddy. |
 | An invoice that worked before is now rejected | Its card transaction is already claimed. Run `make seed` to reset. |
 | The Docker backend cannot reach Ollama on Linux | Run Ollama with `OLLAMA_HOST=0.0.0.0:11434 ollama serve`. |
-| `no such column: invoicerecord.issue_date` | The database comes from an older version. Run `make seed` (or `make dev-mock` for the mock database). Docker seeds on every start. |
+| `no such column: invoicerecord.issue_date` or `invoicerecord.invoice_json` | The database comes from an older version. Run `make seed` (or `make dev-mock` for the mock database). Docker seeds on every start. |
 | Port 8000 or 8080 is in use | Stop the other dev server, or the Docker stack. |
 | A page looks broken after an update (huge icons, stacked buttons) | The browser uses an old cached `style.css`. Press Ctrl+F5 (Cmd+Shift+R on macOS). Caddy prevents this, but the Python server does not. |
 
