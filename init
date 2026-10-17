@@ -1,0 +1,81 @@
+#!/bin/sh
+# Start the SIGINT demo stack.
+# Ollama runs on the host machine. The script keeps it running, then starts Docker Compose.
+set -eu
+
+OLLAMA_URL_DEFAULT="http://localhost:11434"
+OLLAMA_URL="${OLLAMA_URL:-$OLLAMA_URL_DEFAULT}"
+OLLAMA_MODEL="${OLLAMA_MODEL:-qwen3-vl:8b}"
+OLLAMA_WAIT_SECONDS="${OLLAMA_WAIT_SECONDS:-30}"
+COMPOSE_FILE="docker-compose.yml"
+
+# Check Docker. The Compose v2 plugin ships with Docker Desktop.
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker is missing. Install it:"
+    echo "  brew install --cask docker"
+    exit 1
+fi
+if ! docker compose version >/dev/null 2>&1; then
+    echo "The Docker Compose plugin is missing."
+    echo "  brew install docker-compose"
+    exit 1
+fi
+
+# Wait until an HTTP endpoint answers.
+wait_until() {
+    _attempts="${OLLAMA_WAIT_SECONDS:-30}"
+    while [ "$_attempts" -gt 0 ]; do
+        if curl -fsS "$1" >/dev/null 2>&1; then
+            return 0
+        fi
+        _attempts=$((_attempts - 1))
+        sleep 1
+    done
+    return 1
+}
+
+# Ensure Ollama runs on the host.
+if command -v curl >/dev/null 2>&1 \
+    && wait_until "$OLLAMA_URL/api/tags"; then
+    :
+else
+    echo "Ollama is not running. Starting it now."
+    if command -v brew >/dev/null 2>&1 && brew list --formula ollama >/dev/null 2>&1; then
+        brew services start ollama
+    elif [ -d "/Applications/Ollama.app" ]; then
+        open -a Ollama
+    elif command -v ollama >/dev/null 2>&1; then
+        nohup ollama serve >/dev/null 2>&1 &
+    else
+        echo "Ollama is missing. Install it:"
+        echo "  brew install ollama"
+        echo "Then run: ollama pull $OLLAMA_MODEL"
+        exit 1
+    fi
+    if ! wait_until "$OLLAMA_URL/api/tags"; then
+        echo "Ollama did not start. Run 'ollama serve' in a terminal."
+        exit 1
+    fi
+fi
+
+# Ensure the model exists. Download it once.
+if command -v ollama >/dev/null 2>&1 \
+    && ! ollama list 2>/dev/null | grep -q "$OLLAMA_MODEL"; then
+    echo "Pulling the Ollama model $OLLAMA_MODEL. The first download is several GB."
+    ollama pull "$OLLAMA_MODEL"
+fi
+
+# Run the stack from the repository root.
+cd "$(CDPATH= cd "$(dirname "$0")" && pwd)"
+if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "The file $COMPOSE_FILE is missing in $PWD."
+    exit 1
+fi
+
+_build_flag=""
+if [ "${1:-}" = "--build" ]; then
+    _build_flag="--build"
+fi
+
+echo "Starting the SIGINT demo. Open http://localhost:8080"
+exec docker compose up $_build_flag
