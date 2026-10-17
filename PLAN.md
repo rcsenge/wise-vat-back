@@ -174,3 +174,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Add a mock database. It generates demo data for every supported country. Add a mock start mode.
+- Signer: rcsenge's agent
+- Branch: feat/mock-database
+- Date: 2026-10-17
+
+---
