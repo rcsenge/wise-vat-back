@@ -308,3 +308,9 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+- Task: Reconcile the Money type with the raw Decimal code in the backend service and domain layers.
+- Signer: Magyari Ákos's agent
+- Branch: docs/agent-messages-money
+- Date: 2026-10-17
+
+---
