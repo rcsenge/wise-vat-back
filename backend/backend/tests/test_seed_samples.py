@@ -1,4 +1,6 @@
 """Sample invoices: every sample loads, matches a transaction, and gets the expected decision."""
+from decimal import Decimal
+
 from sqlmodel import Session
 
 from app.services.invoice_flow import compute_claims, iter_seed_invoices, submit_invoice
@@ -16,7 +18,12 @@ def test_samples_cover_many_countries_and_currencies(engine):
         claims = compute_claims(session)
 
     statuses = [result.status for result in results]
-    assert statuses.count("rejected") == 3
-    assert statuses.count("approved") == len(samples) - 3
+    assert statuses.count("rejected") == 5
+    assert statuses.count("approved") == len(samples) - 5
+    refunds = {result.invoice_number: result.country_totals[0].refundable_vat_total for result in results if result.country_totals}
+    rejected = {result.invoice_number for result in results if result.status == "rejected"}
+    assert {"AT-2026-1000", "PL-2026-1555"} <= rejected
+    assert refunds["PL-2026-1592"] == Decimal("36.80")
+    assert refunds["FR-2026-1259"] == Decimal("3.60")
     assert {total.country for total in claims.per_country} == {"AT", "DE", "FR", "IT", "NL", "PL", "CZ", "DK", "SE"}
     assert {total.currency for total in claims.per_country} == {"EUR", "PLN", "CZK", "DKK", "SEK"}

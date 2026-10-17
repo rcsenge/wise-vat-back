@@ -99,3 +99,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: a424c5b
 
 ---
+
+- Task: Replace the generic VAT rule with sourced per-country rules. Support partial refundable shares in the backend.
+- Signer: rcsenge's agent
+- Branch: feat/backend-country-vat-rules
+- Date: 2026-10-17
+- Commits: a9e2e75
+
+---
