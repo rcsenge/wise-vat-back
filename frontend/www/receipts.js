@@ -1,21 +1,20 @@
 // Shared receipt list and summary. Both pages load this file after api.js.
 // The page must contain the receipt-list, empty-state and dialog elements.
-// The summary elements are optional. Only the employer page shows them.
+// Each summary element is optional. A page shows only the elements it contains.
 (() => {
   "use strict";
 
   const MAX_REASONS_SHOWN = 3;
   const STATUS_BADGE_CLASS = {
     approved:
-      "rounded-full bg-[#e2f6d5] px-2 py-0.5 text-xs font-semibold text-[#163300]",
+      "inline-flex h-6 items-center rounded-full bg-brand-light-green px-2 text-xs font-semibold text-brand-forest-green",
     rejected:
-      "rounded-full bg-[#ffe7e5] px-2 py-0.5 text-xs font-semibold text-[#a8200d]",
+      "inline-flex h-6 items-center rounded-full bg-status-negative-background px-2 text-xs font-semibold text-status-negative",
   };
 
   const api = window.vatbackApi;
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
-    timeStyle: "short",
   });
 
   const element = (tag, className, text) => {
@@ -27,14 +26,24 @@
     return node;
   };
 
-  const createAmount = (label, text, isClaim) => {
-    const wrapper = element("div", "text-right");
+  const receiptIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg>`;
+
+  const createAmounts = (receipt) => {
+    const wrapper = element("div", "shrink-0 text-right tabular-nums");
+    const claim = api.formatMoney(receipt.taxAmount, receipt.currency);
+    const isApproved = receipt.status === "approved";
     wrapper.append(
-      element("p", "text-xs text-[#6b7a78]", label),
       element(
         "p",
-        isClaim ? "font-semibold text-[#00a4a6]" : "font-medium",
-        text,
+        isApproved
+          ? "text-base font-semibold text-status-positive"
+          : "text-base font-semibold text-ink-tertiary line-through",
+        `+ ${claim}`,
+      ),
+      element(
+        "p",
+        "text-sm text-ink-tertiary",
+        api.formatMoney(receipt.amount, receipt.currency),
       ),
     );
     return wrapper;
@@ -42,20 +51,21 @@
 
   const createThumbnail = (receipt, openDocument) => {
     if (!receipt.imageDataUrl) {
-      return element(
+      const circle = element(
         "div",
-        "grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-[#00a4a6]/10 text-xs font-semibold text-[#00a4a6]",
-        "JSON",
+        "grid h-12 w-12 shrink-0 place-items-center rounded-full border border-line-neutral text-ink-primary",
       );
+      circle.innerHTML = receiptIcon;
+      return circle;
     }
     const button = element(
       "button",
-      "shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00a4a6]",
+      "shrink-0 cursor-pointer rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-forest-green",
     );
     button.type = "button";
     button.setAttribute("aria-label", "View receipt document");
     button.addEventListener("click", () => openDocument(receipt.imageDataUrl));
-    const image = element("img", "h-16 w-16 rounded-xl object-cover");
+    const image = element("img", "h-12 w-12 rounded-full object-cover");
     image.src = receipt.imageDataUrl;
     image.alt = "Scanned receipt preview";
     button.appendChild(image);
@@ -63,52 +73,46 @@
   };
 
   const createReceiptItem = (receipt, openDocument) => {
-    const item = element(
-      "li",
-      "flex items-center gap-4 rounded-2xl border border-[#e6e9ea] bg-white p-4 shadow-sm",
-    );
+    const item = element("li", "flex min-h-18 items-start gap-4 py-3");
 
     const details = element("div", "min-w-0 flex-1");
-    const titleRow = element("div", "flex items-center gap-2");
-    titleRow.append(
-      element(
-        "p",
-        "truncate text-sm font-medium",
-        receipt.merchant || "Untitled receipt",
-      ),
+    const metaRow = element(
+      "div",
+      "mt-1 flex items-center gap-2 text-sm text-ink-secondary",
+    );
+    metaRow.append(
       element(
         "span",
         STATUS_BADGE_CLASS[receipt.status] ?? STATUS_BADGE_CLASS.rejected,
         receipt.status === "approved" ? "Approved" : "Rejected",
       ),
-    );
-    details.append(
-      titleRow,
       element(
-        "p",
-        "text-xs text-[#6b7a78]",
+        "span",
+        "truncate",
         dateFormatter.format(new Date(receipt.scannedAt || 0)),
       ),
     );
+    details.append(
+      element(
+        "p",
+        "truncate text-title-item font-semibold text-ink-primary",
+        receipt.merchant || "Untitled receipt",
+      ),
+      metaRow,
+    );
     if (receipt.status !== "approved") {
       receipt.reasons.slice(0, MAX_REASONS_SHOWN).forEach((reason) => {
-        details.appendChild(element("p", "text-xs text-[#a8200d]", reason));
+        details.appendChild(
+          element("p", "mt-1 text-sm text-status-negative", reason),
+        );
       });
     }
 
-    const spend = createAmount(
-      "Amount",
-      api.formatMoney(receipt.amount, receipt.currency),
-      false,
+    item.append(
+      createThumbnail(receipt, openDocument),
+      details,
+      createAmounts(receipt),
     );
-    spend.classList.add("hidden", "sm:block");
-    const claim = createAmount(
-      "Claimable VAT",
-      api.formatMoney(receipt.taxAmount, receipt.currency),
-      true,
-    );
-
-    item.append(createThumbnail(receipt, openDocument), details, spend, claim);
     return item;
   };
 
@@ -139,13 +143,17 @@
       );
       const shown = approvedOnly ? approved : allReceipts;
 
-      if (summaryCount) {
+      if (summaryClaimable) {
         summaryClaimable.textContent = api.formatTotals(
           api.sumByCurrency(approved, (receipt) => receipt.taxAmount),
         );
+      }
+      if (summarySpend) {
         summarySpend.textContent = api.formatTotals(
           api.sumByCurrency(shown, (receipt) => receipt.amount),
         );
+      }
+      if (summaryCount) {
         summaryCount.textContent = String(approved.length);
       }
 
