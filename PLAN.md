@@ -111,3 +111,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Match card transactions by country and date. Sum the claims over all approved invoices without the 500 record limit.
+- Signer: rcsenge's agent
+- Branch: fix/transaction-matching-claims
+- Date: 2026-10-17
+
+---

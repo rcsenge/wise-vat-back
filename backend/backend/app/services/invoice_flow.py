@@ -1,5 +1,5 @@
 """Invoice processing flow. Orchestrates validation, VIES, matching, and rules."""
-from datetime import timezone
+from datetime import datetime, time, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
@@ -24,7 +24,11 @@ BACKEND = Path(__file__).resolve().parents[2]
 INVOICES_DIR = BACKEND / "seed" / "invoices"
 
 _CENT = Decimal("0.01")
-MAX_CLAIM_RECORDS = 500
+MAX_CLAIM_RESULTS = 500
+CLAIM_BATCH_SIZE = 500
+# A card payment and its invoice date differ by a few days, for example at a hotel checkout.
+MATCH_WINDOW_DAYS = 14
+MAX_MATCH_CANDIDATES = 100
 DEFAULT_RECEIPT_LIMIT = 50
 
 
@@ -45,17 +49,34 @@ def validate_invoice(invoice: ExtractedInvoice) -> list[str]:
 
 
 def find_transaction(session: Session, invoice: ExtractedInvoice) -> Transaction | None:
-    """Return the unclaimed card transaction that matches the invoice gross total."""
+    """Return the unclaimed card transaction that matches the invoice.
+
+    The transaction has the same gross total, currency and country. Its date is in the match window.
+    The transaction with the date closest to the issue date wins.
+    """
     gross = invoice.totals.gross_amount.quantize(_CENT)
+    issued_at = datetime.combine(invoice.issue_date, time(hour=12), tzinfo=timezone.utc)
+    window = timedelta(days=MATCH_WINDOW_DAYS)
     claimed = select(InvoiceRecord.transaction_id).where(InvoiceRecord.status == "approved")
-    candidates = select(Transaction).where(
-        Transaction.currency == invoice.currency,
-        col(Transaction.id).not_in(claimed),
+    candidates = (
+        select(Transaction)
+        .where(
+            Transaction.currency == invoice.currency,
+            Transaction.country == invoice.supplier.address.country_code,
+            Transaction.amount >= gross - _CENT,
+            Transaction.amount <= gross + _CENT,
+            Transaction.created_at >= issued_at - window,
+            Transaction.created_at <= issued_at + window,
+            col(Transaction.id).not_in(claimed),
+        )
+        .limit(MAX_MATCH_CANDIDATES)
     )
-    for transaction in session.exec(candidates).all():
-        if Decimal(str(transaction.amount)).quantize(_CENT) == gross:
-            return transaction
-    return None
+    matches = [
+        transaction
+        for transaction in session.exec(candidates).all()
+        if Decimal(str(transaction.amount)).quantize(_CENT) == gross
+    ]
+    return min(matches, key=lambda transaction: abs(transaction.created_at - issued_at), default=None)
 
 
 def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResult:
@@ -76,7 +97,7 @@ def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResul
         return InvoiceResult(
             status="rejected",
             invoice_number=invoice.invoice_number,
-            reasons=["No matching unclaimed card transaction found for the invoice total."],
+            reasons=["No matching unclaimed card transaction found for the invoice total, country and date."],
         )
 
     if not vat_rules.is_supported(transaction.country):
@@ -177,12 +198,16 @@ def list_receipts(session: Session, limit: int = DEFAULT_RECEIPT_LIMIT) -> list[
 
 
 def compute_claims(session: Session) -> ClaimsSummary:
-    """Sum the stored approved invoices per country and currency."""
-    query = select(InvoiceRecord).order_by(col(InvoiceRecord.id)).limit(MAX_CLAIM_RECORDS)
-    results = [InvoiceResult.model_validate_json(record.result_json) for record in session.exec(query).all()]
+    """Sum every stored approved invoice per country and currency. Add the newest results."""
+    approved = (
+        select(InvoiceRecord.result_json)
+        .where(InvoiceRecord.status == "approved")
+        .order_by(col(InvoiceRecord.id))
+        .execution_options(yield_per=CLAIM_BATCH_SIZE)
+    )
     totals: dict[tuple[str, str], CountryTotal] = {}
-    for result in results:
-        for country_total in result.country_totals:
+    for result_json in session.exec(approved):
+        for country_total in InvoiceResult.model_validate_json(result_json).country_totals:
             key = (country_total.country, country_total.currency)
             current = totals.get(key)
             if current is None:
@@ -195,6 +220,8 @@ def compute_claims(session: Session) -> ClaimsSummary:
                     eligible_line_count=current.eligible_line_count + country_total.eligible_line_count,
                     transaction_ids=current.transaction_ids + country_total.transaction_ids,
                 )
+    newest = select(InvoiceRecord.result_json).order_by(col(InvoiceRecord.id).desc()).limit(MAX_CLAIM_RESULTS)
+    results = [InvoiceResult.model_validate_json(result_json) for result_json in reversed(session.exec(newest).all())]
     return ClaimsSummary(per_country=list(totals.values()), results=results)
 
 
