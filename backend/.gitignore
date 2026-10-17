@@ -1,0 +1,29 @@
+# Whitelist: ignore everything, then allow only what belongs in the repo.
+# New file outside these paths? Add a "!path" line below.
+*
+!*/
+
+# Root
+!/.gitignore
+!/AGENTS.md
+!/CLAUDE.md
+!/README.md
+!/DESIGN.md
+!/Makefile
+!/.env.example
+
+# Backend
+!backend/pyproject.toml
+!backend/uv.lock
+!backend/app/**/*.py
+!backend/seed/**/*.py
+!backend/seed/**/*.json
+!backend/tests/**/*.py
+!backend/schemas/**
+!backend/config/**
+
+# Never, even inside whitelisted paths
+node_modules/
+.venv/
+__pycache__/
+.DS_Store

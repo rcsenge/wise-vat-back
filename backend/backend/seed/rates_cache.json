@@ -1,0 +1,10 @@
+{
+  "_comment": "Fallback rates if the Wise API is unreachable. Refresh before the demo.",
+  "base": "EUR",
+  "fetched_at": null,
+  "rates": {
+    "HUF": null,
+    "GBP": null,
+    "USD": null
+  }
+}

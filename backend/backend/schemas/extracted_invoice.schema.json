@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "extracted_invoice.schema.json",
+  "title": "ExtractedInvoice",
+  "description": "Output of the invoice image processing, input of the VAT Back backend. Every field must be present; null means the value is not on the document. Amounts are decimal strings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "documentType", "invoiceNumber", "issueDate", "currency", "supplier", "customer", "lines", "totals", "cardLast4"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "documentType": {
+      "enum": ["FULL_INVOICE", "SIMPLIFIED_INVOICE"],
+      "description": "FULL_INVOICE: names the buyer. SIMPLIFIED_INVOICE: till receipt without buyer details."
+    },
+    "invoiceNumber": { "type": ["string", "null"] },
+    "issueDate": { "type": "string", "format": "date" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$", "description": "ISO 4217, as printed on the document" },
+    "supplier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "vatNumber", "address"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "vatNumber": { "type": ["string", "null"], "pattern": "^[A-Z]{2}[0-9A-Z]{2,13}$", "description": "EU VAT number with country prefix, no spaces, e.g. ATU12345678" },
+        "address": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["street", "postalCode", "city", "countryCode"],
+          "properties": {
+            "street": { "type": ["string", "null"] },
+            "postalCode": { "type": ["string", "null"] },
+            "city": { "type": ["string", "null"] },
+            "countryCode": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2" }
+          }
+        }
+      }
+    },
+    "customer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "vatNumber"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "vatNumber": { "type": ["string", "null"], "pattern": "^[A-Z]{2}[0-9A-Z]{2,13}$" }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description", "category", "netAmount", "vatRate", "vatAmount", "grossAmount"],
+        "properties": {
+          "description": { "type": "string", "minLength": 1 },
+          "category": {
+            "enum": ["FUEL", "VEHICLE_HIRE", "VEHICLE_EXPENSES", "ROAD_TOLL", "TRAVEL", "ACCOMMODATION", "FOOD_AND_DRINK", "FAIR_ADMISSION", "ENTERTAINMENT", "OTHER"],
+            "description": "Directive 2008/9/EC refund codes 1-10, in this order"
+          },
+          "netAmount": { "$ref": "#/$defs/amount" },
+          "vatRate": { "type": "number", "minimum": 0, "maximum": 100, "description": "Percent, e.g. 10 or 4.9" },
+          "vatAmount": { "$ref": "#/$defs/amount" },
+          "grossAmount": { "$ref": "#/$defs/amount" }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["netAmount", "vatAmount", "grossAmount"],
+      "properties": {
+        "netAmount": { "$ref": "#/$defs/amount" },
+        "vatAmount": { "$ref": "#/$defs/amount" },
+        "grossAmount": { "$ref": "#/$defs/amount" }
+      }
+    },
+    "cardLast4": { "type": ["string", "null"], "pattern": "^\\d{4}$" }
+  },
+  "$defs": {
+    "amount": { "type": "string", "pattern": "^-?\\d+(\\.\\d{1,2})?$", "description": "Decimal string in the document currency, e.g. \"188.80\"" }
+  }
+}
