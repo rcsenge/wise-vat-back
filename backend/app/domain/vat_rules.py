@@ -8,8 +8,10 @@ Each country rule cites the national source of its restriction.
 A decision carries a human-readable reason for the UI and the pitch.
 """
 from dataclasses import dataclass
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal
 from typing import Literal
+
+from app.domain.money import Money
 
 Country = Literal["AT", "DE", "FR", "IT", "NL", "PL", "CZ", "DK", "SE"]
 SUPPORTED_COUNTRIES: frozenset[str] = frozenset({"AT", "DE", "FR", "IT", "NL", "PL", "CZ", "DK", "SE"})
@@ -30,7 +32,6 @@ CATEGORIES: tuple[str, ...] = (
 
 FULL_SHARE = Decimal("1")
 NO_SHARE = Decimal("0")
-_CENT = Decimal("0.01")
 
 DIRECTIVE_SOURCE = "Directive 2006/112/EC, Art. 168. Directive 2008/9/EC, Art. 5."
 
@@ -58,7 +59,7 @@ class LineDecision:
     category: str
     eligible: bool
     refundable_share: Decimal
-    refundable_vat: Decimal
+    refundable_vat: Money
     reason: str
 
 
@@ -272,14 +273,14 @@ def is_supported(country: str) -> bool:
     return country in SUPPORTED_COUNTRIES
 
 
-def evaluate_line(country: str, category: str, line_index: int, vat_amount: Decimal) -> LineDecision:
+def evaluate_line(country: str, category: str, line_index: int, vat_amount: Decimal, currency: str) -> LineDecision:
     """Return the decision for one invoice line."""
     if country not in COUNTRY_RULES:
         raise ValueError(f"Unsupported country: {country}")
     rule = COUNTRY_RULES[country].get(category)
     if rule is None:
         rule = CategoryRule(NO_SHARE, f"No rule for category {category} in {country}.", DIRECTIVE_SOURCE)
-    refundable = (vat_amount * rule.refundable_share).quantize(_CENT, rounding=ROUND_HALF_UP)
+    refundable = Money(vat_amount * rule.refundable_share, currency).rounded()
     return LineDecision(
         line_index=line_index,
         category=category,

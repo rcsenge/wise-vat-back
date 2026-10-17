@@ -127,14 +127,14 @@ def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResul
 
     outcomes = []
     for index, line in enumerate(invoice.lines):
-        decision = vat_rules.evaluate_line(transaction.country, line.category, index, line.vat_amount)
+        decision = vat_rules.evaluate_line(transaction.country, line.category, index, line.vat_amount, invoice.currency)
         outcomes.append(
             LineOutcome(
                 line_index=decision.line_index,
                 description=line.description,
                 category=decision.category,
                 eligible=decision.eligible,
-                refundable_vat=decision.refundable_vat,
+                refundable_vat=decision.refundable_vat.amount,
                 reason=decision.reason,
             )
         )
