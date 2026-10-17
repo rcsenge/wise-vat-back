@@ -181,3 +181,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Rename the header name from vatback to SIGINT on the employee and employer pages. Change the avatar letter to S.
+- Signer: Vilmos Babó's agent
+- Branch: feat/sigint-header-name
+- Date: 2026-10-17
+
+---
