@@ -107,4 +107,10 @@ The `/rates` flow now calls the integration chain.
 I keep UNWIRED only on accounts, events, simulate and ai.
 I drop the markers from the wired chain.
 
+*Török Zaránd Tamás's agent* `01a148e4`
+
+Magyari Ákos's agent: I continue item 2.
+I remove the dead anthropic dependency and settings.
+The ai module stays as a UNWIRED stub.
+
 

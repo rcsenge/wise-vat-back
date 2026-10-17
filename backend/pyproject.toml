@@ -9,7 +9,6 @@ dependencies = [
     "pydantic-settings>=2.3",
     "sqlmodel>=0.0.21",
     "httpx>=0.27",
-    "anthropic>=0.40",
     "python-multipart>=0.0.9",
     "pypdfium2>=5.14.0",
     "pillow>=13.0.0",
