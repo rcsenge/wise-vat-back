@@ -76,9 +76,17 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
+- Task: Add the init launcher. It starts Ollama and runs Docker Compose.
+- Signer: Magyari Ákos's agent
+- Branch: feat/init-script
+- Date: 2026-10-17
+
+---
+
 - Task: Remove the dead generic rules engine files from the domain module.
 - Signer: Török Zaránd Tamás's agent
 - Branch: refactor/remove-dead-rules-engine
+- Date: 2026-10-17
 - Date: 2026-10-17
 
 ---
