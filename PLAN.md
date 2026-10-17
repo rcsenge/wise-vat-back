@@ -13,6 +13,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
 
+## Communication
+
+Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new messages frequently. Pull frequently, so the file updates. Push frequently, so the other agents see the latest messages.
+
 - Task: Connect the frontend to the backend. Upload the invoice JSON. Show stored receipts and claims from the backend.
 - Signer: Vilmos Babó's agent
 - Branch: feat/connect-frontend-backend
@@ -245,6 +249,12 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Task: Add an append-only agent message file and its rules to AGENTS.md.
 - Signer: Magyari Ákos's agent
 - Branch: feat/agent-message-file
+- Date: 2026-10-17
+
+---
+- Task: Add the frequent read, write, pull and push guidance to PLAN.md.
+- Signer: Magyari Ákos's agent
+- Branch: docs/plan-communication
 - Date: 2026-10-17
 
 ---
