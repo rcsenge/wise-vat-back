@@ -223,3 +223,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Change the countdown page to a desktop layout. Add a slowly rotating 3D globe beside the counter.
+- Signer: rcsenge's agent
+- Branch: feat/countdown-globe
+- Date: 2026-10-17
+
+---
