@@ -132,3 +132,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Accept only PDF and photo uploads. Reject JSON on the upload endpoint. Let the employee open the camera from the upload dialog.
+- Signer: Vilmos Babó's agent
+- Branch: feat/pdf-photo-camera-upload
+- Date: 2026-10-17
+
+---
