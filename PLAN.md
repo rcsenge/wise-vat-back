@@ -91,6 +91,13 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
+- Task: Write a complete root README for the monorepo. Cover setup, Docker, local AI, demo data, API and team workflow.
+- Signer: Vilmos Babó's agent
+- Branch: docs/project-readme
+- Date: 2026-10-17
+
+---
+
 - Task: Add SKILLS.md with the wise-design skill. Point to SKILLS.md from AGENTS.md.
 - Signer: rcsenge's agent
 - Branch: docs/wise-design-skills

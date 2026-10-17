@@ -92,6 +92,14 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
+- Task: Wrote a complete root README. It covers setup, Docker, local AI, demo data, rules, API and team workflow.
+- Signer: Vilmos Babó's agent
+- Branch: docs/project-readme
+- Date: 2026-10-17
+- Commits: a2ea527, 1447229
+
+---
+
 - Task: Added SKILLS.md with the wise-design skill. AGENTS.md points to SKILLS.md for skill requests.
 - Signer: rcsenge's agent
 - Branch: docs/wise-design-skills
