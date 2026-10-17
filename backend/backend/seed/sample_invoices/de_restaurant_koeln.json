@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DE-2026-1185",
+  "issueDate": "2026-10-01",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Brauhaus Am Dom GmbH",
+    "vatNumber": "DE215648390",
+    "address": {
+      "street": "Domkloster 1",
+      "postalCode": "50667",
+      "city": "Köln",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Geschäftsessen, 3 Personen",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "76.00",
+      "vatRate": 19,
+      "vatAmount": "14.44",
+      "grossAmount": "90.44"
+    }
+  ],
+  "totals": {
+    "netAmount": "76.00",
+    "vatAmount": "14.44",
+    "grossAmount": "90.44"
+  },
+  "cardLast4": "4821"
+}

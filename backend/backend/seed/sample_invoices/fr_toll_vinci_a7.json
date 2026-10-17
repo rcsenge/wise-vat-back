@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "FR-2026-1296",
+  "issueDate": "2026-09-12",
+  "currency": "EUR",
+  "supplier": {
+    "name": "VINCI Autoroutes",
+    "vatNumber": "FR91378389524",
+    "address": {
+      "street": "12 Rue Louis Blériot",
+      "postalCode": "92500",
+      "city": "Rueil-Malmaison",
+      "countryCode": "FR"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Péage A7 Lyon – Marseille",
+      "category": "ROAD_TOLL",
+      "netAmount": "42.50",
+      "vatRate": 20,
+      "vatAmount": "8.50",
+      "grossAmount": "51.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "42.50",
+    "vatAmount": "8.50",
+    "grossAmount": "51.00"
+  },
+  "cardLast4": "4821"
+}

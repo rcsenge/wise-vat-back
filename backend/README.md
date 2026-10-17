@@ -46,7 +46,7 @@ backend/app/
   schemas/       API contracts (Pydantic), e.g. ExtractedInvoice from image processing
   simulator/     fake events behind /simulate/* (also stands in for webhooks)
 backend/schemas/ ExtractedInvoice JSON Schema for the image-processing side
-backend/seed/    seed script, cached fallback rates, example invoices, sample invoice PDFs
+backend/seed/    seed script, cached fallback rates, example invoices, sample invoices, sample invoice PDFs
 ```
 
 ## Conventions

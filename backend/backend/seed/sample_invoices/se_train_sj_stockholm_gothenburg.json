@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "SE-2026-1814",
+  "issueDate": "2026-10-15",
+  "currency": "SEK",
+  "supplier": {
+    "name": "SJ AB",
+    "vatNumber": "SE556196156701",
+    "address": {
+      "street": "Vasagatan 10",
+      "postalCode": "105 50",
+      "city": "Stockholm",
+      "countryCode": "SE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Tåg Stockholm C – Göteborg C",
+      "category": "TRAVEL",
+      "netAmount": "890.00",
+      "vatRate": 6,
+      "vatAmount": "53.40",
+      "grossAmount": "943.40"
+    }
+  ],
+  "totals": {
+    "netAmount": "890.00",
+    "vatAmount": "53.40",
+    "grossAmount": "943.40"
+  },
+  "cardLast4": "4821"
+}

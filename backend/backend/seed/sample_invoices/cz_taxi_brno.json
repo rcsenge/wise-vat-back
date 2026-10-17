@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CZ-2026-1666",
+  "issueDate": "2026-10-10",
+  "currency": "CZK",
+  "supplier": {
+    "name": "City Taxi Brno s.r.o.",
+    "vatNumber": "CZ28312361",
+    "address": {
+      "street": "Křenová 65",
+      "postalCode": "602 00",
+      "city": "Brno",
+      "countryCode": "CZ"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Jízda taxi",
+      "category": "TRAVEL",
+      "netAmount": "540.00",
+      "vatRate": 12,
+      "vatAmount": "64.80",
+      "grossAmount": "604.80"
+    }
+  ],
+  "totals": {
+    "netAmount": "540.00",
+    "vatAmount": "64.80",
+    "grossAmount": "604.80"
+  },
+  "cardLast4": "4821"
+}

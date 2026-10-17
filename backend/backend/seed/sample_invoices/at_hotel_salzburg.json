@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "AT-2026-1037",
+  "issueDate": "2026-09-09",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Hotel Mirabell Salzburg GmbH",
+    "vatNumber": "ATU58123947",
+    "address": {
+      "street": "Mirabellplatz 4",
+      "postalCode": "5020",
+      "city": "Salzburg",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Übernachtung, 2 Nächte",
+      "category": "ACCOMMODATION",
+      "netAmount": "320.00",
+      "vatRate": 10,
+      "vatAmount": "32.00",
+      "grossAmount": "352.00"
+    },
+    {
+      "description": "Frühstück",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "40.00",
+      "vatRate": 10,
+      "vatAmount": "4.00",
+      "grossAmount": "44.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "360.00",
+    "vatAmount": "36.00",
+    "grossAmount": "396.00"
+  },
+  "cardLast4": "4821"
+}

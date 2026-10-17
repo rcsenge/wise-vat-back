@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DE-2026-1148",
+  "issueDate": "2026-09-22",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Sixt GmbH Hamburg",
+    "vatNumber": "DE129401285",
+    "address": {
+      "street": "Holstenstraße 7",
+      "postalCode": "22767",
+      "city": "Hamburg",
+      "countryCode": "DE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Mietwagen, 3 Tage",
+      "category": "VEHICLE_HIRE",
+      "netAmount": "210.00",
+      "vatRate": 19,
+      "vatAmount": "39.90",
+      "grossAmount": "249.90"
+    },
+    {
+      "description": "Tankfüllung",
+      "category": "FUEL",
+      "netAmount": "45.00",
+      "vatRate": 19,
+      "vatAmount": "8.55",
+      "grossAmount": "53.55"
+    }
+  ],
+  "totals": {
+    "netAmount": "255.00",
+    "vatAmount": "48.45",
+    "grossAmount": "303.45"
+  },
+  "cardLast4": "4821"
+}

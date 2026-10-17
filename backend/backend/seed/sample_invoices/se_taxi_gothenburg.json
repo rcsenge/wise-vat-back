@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "SE-2026-1851",
+  "issueDate": "2026-10-15",
+  "currency": "SEK",
+  "supplier": {
+    "name": "Taxi Göteborg AB",
+    "vatNumber": "SE556071237101",
+    "address": {
+      "street": "Gullbergs Strandgata 1",
+      "postalCode": "411 04",
+      "city": "Göteborg",
+      "countryCode": "SE"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Taxiresa",
+      "category": "TRAVEL",
+      "netAmount": "310.00",
+      "vatRate": 6,
+      "vatAmount": "18.60",
+      "grossAmount": "328.60"
+    }
+  ],
+  "totals": {
+    "netAmount": "310.00",
+    "vatAmount": "18.60",
+    "grossAmount": "328.60"
+  },
+  "cardLast4": "4821"
+}

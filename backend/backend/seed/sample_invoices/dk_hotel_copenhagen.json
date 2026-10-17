@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "DK-2026-1703",
+  "issueDate": "2026-10-12",
+  "currency": "DKK",
+  "supplier": {
+    "name": "Hotel Nyhavn ApS",
+    "vatNumber": "DK29403473",
+    "address": {
+      "street": "Nyhavn 71",
+      "postalCode": "1051",
+      "city": "København",
+      "countryCode": "DK"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Overnatning, 2 nætter",
+      "category": "ACCOMMODATION",
+      "netAmount": "1850.00",
+      "vatRate": 25,
+      "vatAmount": "462.50",
+      "grossAmount": "2312.50"
+    }
+  ],
+  "totals": {
+    "netAmount": "1850.00",
+    "vatAmount": "462.50",
+    "grossAmount": "2312.50"
+  },
+  "cardLast4": "4821"
+}

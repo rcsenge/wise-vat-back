@@ -140,10 +140,10 @@ def _match(transaction: Transaction) -> MatchedTransaction:
     )
 
 
-def iter_seed_invoices() -> list[InvoiceSubmission]:
+def iter_seed_invoices(directory: Path = INVOICES_DIR) -> list[InvoiceSubmission]:
     """Load the hardcoded seed invoices from disk."""
     invoices: list[InvoiceSubmission] = []
-    for path in sorted(INVOICES_DIR.glob("*.json")):
+    for path in sorted(directory.glob("*.json")):
         invoices.append(InvoiceSubmission.model_validate_json(path.read_text(encoding="utf-8")))
     return invoices
 

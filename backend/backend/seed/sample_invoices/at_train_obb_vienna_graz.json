@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "AT-2026-1074",
+  "issueDate": "2026-10-06",
+  "currency": "EUR",
+  "supplier": {
+    "name": "ÖBB-Personenverkehr AG",
+    "vatNumber": "ATU16274502",
+    "address": {
+      "street": "Am Hauptbahnhof 2",
+      "postalCode": "1100",
+      "city": "Wien",
+      "countryCode": "AT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Zugticket Wien Hbf – Graz Hbf",
+      "category": "TRAVEL",
+      "netAmount": "59.00",
+      "vatRate": 10,
+      "vatAmount": "5.90",
+      "grossAmount": "64.90"
+    }
+  ],
+  "totals": {
+    "netAmount": "59.00",
+    "vatAmount": "5.90",
+    "grossAmount": "64.90"
+  },
+  "cardLast4": "4821"
+}

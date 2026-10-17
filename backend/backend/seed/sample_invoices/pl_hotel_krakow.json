@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "PL-2026-1555",
+  "issueDate": "2026-09-29",
+  "currency": "PLN",
+  "supplier": {
+    "name": "Hotel Stare Miasto Sp. z o.o.",
+    "vatNumber": "PL6762468123",
+    "address": {
+      "street": "ul. Floriańska 15",
+      "postalCode": "31-019",
+      "city": "Kraków",
+      "countryCode": "PL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Nocleg, 2 noce",
+      "category": "ACCOMMODATION",
+      "netAmount": "980.00",
+      "vatRate": 8,
+      "vatAmount": "78.40",
+      "grossAmount": "1058.40"
+    }
+  ],
+  "totals": {
+    "netAmount": "980.00",
+    "vatAmount": "78.40",
+    "grossAmount": "1058.40"
+  },
+  "cardLast4": "4821"
+}
