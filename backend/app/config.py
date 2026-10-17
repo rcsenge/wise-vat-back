@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     wise_real_url: str = "https://api.transferwise.com"
 
     anthropic_api_key: str = ""
-    anthropic_model: str = "claude-sonnet-5-5"
+    anthropic_model: str = "claude-3-5-sonnet-20241022"
 
     # The local Ollama server reads invoice PDFs and photos. It needs no API key.
     ollama_url: str = "http://localhost:11434"
