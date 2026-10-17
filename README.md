@@ -313,7 +313,8 @@ National restrictions in the current rule set (every other category refunds 100%
 | Denmark | Food and drink: 25%. Fuel, vehicle hire, vehicle expenses, entertainment: 0% |
 | Sweden | Vehicle hire: 50%. Entertainment: 0% |
 - **VIES check:** mocked. Every VAT number passes, except `XX12345678`, which shows the "invalid company" path.
-- **Matching:** the invoice gross total and currency must match an unclaimed card transaction.
+- **Matching:** the invoice gross total, currency and country must match an unclaimed card transaction within 14 days of the issue date.
+- **Claim deadline:** the VAT of an invoice can be claimed until 30 September of the year after the invoice year (Directive 2008/9/EC, Art. 15). The deadline is preclusive (CJEU C-294/11, Elsacom). The upload rejects an invoice after its deadline. A stored invoice turns *Expired* when its deadline passes. It stays in the list, but it no longer counts as refundable. The employer page shows the next deadline per country and the money lost after the deadline. The rule lives in `backend/app/domain/claim_deadline.py`.
 - **Money:** always `Decimal`, rounded to cents.
 
 ---
@@ -359,6 +360,7 @@ The backend reads settings from environment variables and from `backend/.env` (c
 | `CORS_ORIGINS` | `http://localhost:5173,http://localhost:8080` | Allowed browser origins |
 | `CORS_ORIGIN_REGEX` | `^https?://[^/:]+:8080$` | Allows any host on port 8080 (phones on the LAN) |
 | `WISE_MODE` | `mock` | Wise client mode: `mock`, `sandbox`, `real` |
+| `CLAIM_REFERENCE_DATE` | empty (today) | The date that the claim deadline check uses as today, for example `2027-10-01`. A demo can show expired invoices with a future date. |
 
 ---
 
@@ -392,6 +394,7 @@ pnpm run lint
 | `/employer` gives 404 with the Python server | Python has no clean URLs. Open `/employer.html`, or use Caddy. |
 | An invoice that worked before is now rejected | Its card transaction is already claimed. Run `make seed` to reset. |
 | The Docker backend cannot reach Ollama on Linux | Run Ollama with `OLLAMA_HOST=0.0.0.0:11434 ollama serve`. |
+| `no such column: invoicerecord.issue_date` | The database comes from an older version. Run `make seed` (or `make dev-mock` for the mock database). Docker seeds on every start. |
 | Port 8000 or 8080 is in use | Stop the other dev server, or the Docker stack. |
 | A page looks broken after an update (huge icons, stacked buttons) | The browser uses an old cached `style.css`. Press Ctrl+F5 (Cmd+Shift+R on macOS). Caddy prevents this, but the Python server does not. |
 
