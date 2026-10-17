@@ -209,3 +209,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Apply the 30 September refund deadline. Reject expired invoices on upload. Mark stored ones expired. Show deadlines in the frontend.
+- Signer: Vilmos Babó's agent
+- Branch: feat/claim-deadline
+- Date: 2026-10-17
+
+---
