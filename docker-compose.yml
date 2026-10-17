@@ -11,6 +11,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
+      INVOICE_READER: ${INVOICE_READER:-demo}
       OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
       OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5vl:7b}
       OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-300}

@@ -1,12 +1,16 @@
 #!/usr/bin/env sh
 # Container entrypoint for the SIGINT backend.
 # It waits for Ollama on the host, seeds the demo database, then starts Uvicorn.
+# The demo invoice reader needs no Ollama. The script then skips the wait.
 set -eu
 
 OLLAMA_URL="${OLLAMA_URL:-http://host.docker.internal:11434}"
 OLLAMA_MODEL="${OLLAMA_MODEL:-qwen2.5vl:7b}"
 READY_TIMEOUT="${OLLAMA_READY_TIMEOUT_SECONDS:-120}"
 
+if [ "${INVOICE_READER:-demo}" = "demo" ]; then
+    echo "[entrypoint] The demo invoice reader is active. The backend does not wait for Ollama."
+else
 echo "[entrypoint] The backend waits for Ollama at ${OLLAMA_URL}."
 
 OLLAMA_URL="$OLLAMA_URL" OLLAMA_MODEL="$OLLAMA_MODEL" READY_TIMEOUT="$READY_TIMEOUT" python3 - <<'PY'
@@ -37,6 +41,7 @@ print(f"[entrypoint] Ollama is not ready within the timeout. Last status: {last_
 print("[entrypoint] The API starts anyway. Uploads return a clear 503 error until Ollama is ready.")
 raise SystemExit(0)
 PY
+fi
 
 if [ "${MOCK_DB:-false}" = "true" ]; then
     echo "[entrypoint] The mock database replaces the demo database."
