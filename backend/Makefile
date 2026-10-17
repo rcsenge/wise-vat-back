@@ -1,13 +1,14 @@
 # The mock mode uses its own database file. The demo database stays untouched.
 MOCK_DATABASE_URL := sqlite:///./mock.db
 
-.PHONY: help install dev-backend dev-mock mock-db seed test eval-ai golden demo-reset demo-process
+.PHONY: help install dev-backend dev-mock mock-db printed-reset seed test eval-ai golden demo-reset demo-process
 
 help:
 	@echo "make install      Create the backend venv. Install the dependencies with uv."
 	@echo "make dev-backend  Start Uvicorn with reload on port 8000 on every interface."
 	@echo "make dev-mock     Build the mock database. Start Uvicorn on it in mock mode."
 	@echo "make mock-db      Build the mock database with data for every country."
+	@echo "make printed-reset Delete the uploads of the printed demo invoice in the mock database."
 	@echo "make seed         Create the database tables and load demo data."
 	@echo "make test         Run the pytest suite. Includes the golden corpus."
 	@echo "make eval-ai      Measure the AI extraction accuracy over the sample PDFs."
@@ -26,6 +27,9 @@ dev-mock: mock-db
 
 mock-db:
 	DATABASE_URL=$(MOCK_DATABASE_URL) uv run python -m seed.mock_db
+
+printed-reset:
+	DATABASE_URL=$(MOCK_DATABASE_URL) uv run python -m seed.mock_db reset-printed
 
 seed:
 	uv run python -m seed.seed

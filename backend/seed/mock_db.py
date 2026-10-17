@@ -4,9 +4,12 @@ Each country gets five hardcoded merchants. The generator picks the amounts and 
 A fixed random seed keeps the output identical on every run.
 Every invoice runs through the real invoice flow. The receipts and the claims stay realistic.
 Some merchants carry a defect on purpose. The frontend then shows a rejected receipt.
+The printed demo invoice gets an unclaimed card transaction. The demo uploads the paper copy.
 
 Run: DATABASE_URL=sqlite:///./mock.db python -m seed.mock_db
+Reset the printed invoice only: DATABASE_URL=sqlite:///./mock.db python -m seed.mock_db reset-printed
 """
+import sys
 import random
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta, timezone
@@ -14,11 +17,12 @@ from decimal import ROUND_HALF_UP, Decimal
 from typing import Literal
 
 from sqlalchemy.engine import Engine
-from sqlmodel import Session, SQLModel, col, select
+from sqlmodel import Session, SQLModel, col, delete, select
 
 from app.db import engine as default_engine
 from app.domain import vat_rules
 from app.models.account import Account
+from app.models.invoice_document import InvoiceDocument
 from app.models.invoice_record import InvoiceRecord
 from app.models.transaction import Transaction
 from app.models.user import User
@@ -33,6 +37,14 @@ CUSTOMER_VAT_NUMBER = "HU12345678"
 CARD_LAST4 = "4821"
 ACCOUNT_BALANCE = Decimal("50000.00")
 _CENT = Decimal("0.01")
+
+# The paper invoice printed for the demo. These values match the PDF exactly.
+PRINTED_INVOICE_NUMBER = "IT-MOCK-0019"
+PRINTED_MERCHANT = "Fiera Milano S.p.A."
+PRINTED_COUNTRY = "IT"
+PRINTED_CURRENCY = "EUR"
+PRINTED_GROSS_AMOUNT = Decimal("439.85")
+PRINTED_PAID_ON = date(2026, 10, 7)
 
 # A defect makes the invoice fail. "no_vat_number" fails validation. "no_transaction" fails the match.
 Defect = Literal["no_vat_number", "no_transaction"]
@@ -183,15 +195,41 @@ def build_invoice(country: MockCountry, merchant: MockMerchant, index: int, issu
 
 
 def generate_receipts(today: date) -> list[MockReceipt]:
-    """Return the mock receipts of every country, oldest first."""
+    """Return the mock receipts of every country, oldest first. The printed invoice is not a receipt."""
     generator = random.Random(MOCK_RANDOM_SEED)
     receipts: list[MockReceipt] = []
+    index = 0
     for country in MOCK_COUNTRIES:
         for merchant in country.merchants:
+            index += 1
             issue_date = today - timedelta(days=generator.randint(1, MOCK_HISTORY_DAYS))
-            invoice = build_invoice(country, merchant, len(receipts) + 1, issue_date, generator)
+            invoice = build_invoice(country, merchant, index, issue_date, generator)
+            if invoice.invoice_number == PRINTED_INVOICE_NUMBER:
+                continue
             receipts.append(MockReceipt(country, merchant, invoice))
     return sorted(receipts, key=lambda receipt: receipt.invoice.issue_date)
+
+
+def _printed_transaction(account_id: int) -> Transaction:
+    """Return the card payment of the printed invoice."""
+    return Transaction(
+        account_id=account_id,
+        amount=PRINTED_GROSS_AMOUNT,
+        currency=PRINTED_CURRENCY,
+        country=PRINTED_COUNTRY,
+        merchant=PRINTED_MERCHANT,
+        kind="card",
+        created_at=paid_on(PRINTED_PAID_ON),
+    )
+
+
+def reset_printed_invoice(target_engine: Engine) -> None:
+    """Delete every upload of the printed invoice. Its card transaction becomes unclaimed again."""
+    with Session(target_engine) as session:
+        printed_records = select(InvoiceRecord.id).where(InvoiceRecord.invoice_number == PRINTED_INVOICE_NUMBER)
+        session.exec(delete(InvoiceDocument).where(col(InvoiceDocument.record_id).in_(printed_records)))
+        session.exec(delete(InvoiceRecord).where(InvoiceRecord.invoice_number == PRINTED_INVOICE_NUMBER))
+        session.commit()
 
 
 def build_mock_database(target_engine: Engine, today: date) -> None:
@@ -210,6 +248,7 @@ def build_mock_database(target_engine: Engine, today: date) -> None:
             session.add(Account(user_id=user.id, currency=currency, balance=ACCOUNT_BALANCE))
         session.flush()
         account_ids = {account.currency: account.id for account in session.exec(select(Account)).all()}
+        session.add(_printed_transaction(account_ids[PRINTED_CURRENCY]))
 
         for receipt in receipts:
             if receipt.merchant.defect == "no_transaction":
@@ -237,6 +276,10 @@ def build_mock_database(target_engine: Engine, today: date) -> None:
 
 
 def run() -> None:
+    if sys.argv[1:] == ["reset-printed"]:
+        reset_printed_invoice(default_engine)
+        print(f"The printed invoice {PRINTED_INVOICE_NUMBER} is ready for upload again.")
+        return
     build_mock_database(default_engine, date.today())
     print(f"Mock database built for {len(vat_rules.SUPPORTED_COUNTRIES)} countries.")
 
