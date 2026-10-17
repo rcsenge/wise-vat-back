@@ -349,10 +349,15 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
-
 - Task: Rename Claim all to Generate all. Show one EUR total in the employer hero. Serve demo exchange rates from /rates.
 - Signer: Vilmos Babó's agent
 - Branch: feat/generate-all-eur-total
+
+---
+
+- Task: Make the countdown timer smooth and precise with requestAnimationFrame. Add exact numeric font features.
+- Signer: Magyari Ákos's agent
+- Branch: feat/smooth-countdown
 - Date: 2026-10-17
 
 ---
