@@ -188,3 +188,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Switch the default Ollama model to the faster non-thinking qwen2.5vl:7b.
+- Signer: Magyari Ákos's agent
+- Branch: feat/faster-vision-model
+- Date: 2026-10-17
+
+---
