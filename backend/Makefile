@@ -11,25 +11,25 @@ help:
 	@echo "make demo-reset   Reset the simulator state. The backend must run."
 
 install:
-	cd backend && uv sync --extra dev
+	uv sync --extra dev
 
 dev-backend:
-	cd backend && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+	uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 seed:
-	cd backend && uv run python -m seed.seed
+	uv run python -m seed.seed
 
 test:
-	cd backend && uv run pytest
+	uv run pytest
 
 eval-ai:
-	cd backend && uv run python -m evaluation.evaluate_extraction
+	uv run python -m evaluation.evaluate_extraction
 
 golden:
-	cd backend && uv run python -m seed.generate_golden
+	uv run python -m seed.generate_golden
 
 demo-process:
-	cd backend && uv run python -m seed.process_demo
+	uv run python -m seed.process_demo
 
 demo-reset:
 	curl -X POST http://localhost:8000/simulate/reset

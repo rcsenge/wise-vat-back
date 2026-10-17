@@ -13,20 +13,20 @@
 !/Makefile
 !/.env.example
 
-# Backend
-!backend/pyproject.toml
-!backend/uv.lock
-!backend/Dockerfile
-!backend/.dockerignore
-!backend/docker/**
-!backend/app/**/*.py
-!backend/seed/**/*.py
-!backend/seed/**/*.json
-!backend/seed/documents/*.pdf
-!backend/tests/**/*.py
-!backend/evaluation/**/*.py
-!backend/schemas/**
-!backend/config/**
+# Python project
+!/pyproject.toml
+!/uv.lock
+!/Dockerfile
+!/.dockerignore
+!/docker/**
+!/app/**/*.py
+!/seed/**/*.py
+!/seed/**/*.json
+!/seed/documents/*.pdf
+!/tests/**/*.py
+!/evaluation/**/*.py
+!/schemas/**
+!/config/**
 
 # Never, even inside whitelisted paths
 node_modules/
