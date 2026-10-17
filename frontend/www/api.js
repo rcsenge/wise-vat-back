@@ -78,7 +78,59 @@
     ).join(" · ");
   };
 
+  // Hardcoded mock invoice. The mock database (make dev-mock) has an unclaimed
+  // card transaction for this exact Berlin hotel invoice (gross 292.50, DE, 2026-10-14).
+  // Posting it to /invoices returns an approved result. This lets the frontend
+  // send a real invoice JSON without the AI reading a PDF or a photo.
+  const MOCK_INVOICE = {
+    schemaVersion: "1.0",
+    documentType: "FULL_INVOICE",
+    invoiceNumber: "2026-10-0441",
+    issueDate: "2026-10-14",
+    currency: "EUR",
+    supplier: {
+      name: "Hotel Spreeufer Berlin GmbH",
+      vatNumber: "DE298765432",
+      address: {
+        street: "Friedrichstraße 112",
+        postalCode: "10117",
+        city: "Berlin",
+        countryCode: "DE",
+      },
+    },
+    customer: { name: "Példa Tech Kft.", vatNumber: "HU12345678" },
+    lines: [
+      {
+        description: "Übernachtung Einzelzimmer (2 Nächte à 120,00)",
+        category: "ACCOMMODATION",
+        netAmount: "240.00",
+        vatRate: 7,
+        vatAmount: "16.80",
+        grossAmount: "256.80",
+      },
+      {
+        description: "Frühstück (2 × 15,00)",
+        category: "FOOD_AND_DRINK",
+        netAmount: "30.00",
+        vatRate: 19,
+        vatAmount: "5.70",
+        grossAmount: "35.70",
+      },
+    ],
+    totals: { netAmount: "270.00", vatAmount: "22.50", grossAmount: "292.50" },
+    cardLast4: "4821",
+  };
+
   window.vatbackApi = {
+    mockInvoice: MOCK_INVOICE,
+    // Send a complete invoice JSON to the backend. The backend inserts the
+    // invoice through the same flow that the file upload uses.
+    submitInvoiceJson: (payload = MOCK_INVOICE) =>
+      request("/invoices", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }),
     baseUrl: API_BASE,
     listReceipts: () => request("/receipts"),
     getClaims: () => request("/claims"),
