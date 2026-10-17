@@ -1,31 +1,35 @@
 #!/bin/sh
-# Start the SIGINT demo stack.
-# Ollama runs on the host machine. The script keeps it running, then starts Docker Compose.
+# Start the SIGINT demo stack locally for testing.
+# It builds the mock database, starts the backend in mock mode, and serves the
+# frontend with Caddy. The demo invoice reader replaces Ollama, so no AI model
+# and no Docker are required. This lets a human open the frontend and test the
+# hardcoded mock invoice JSON payload.
 set -eu
 
-OLLAMA_URL_DEFAULT="http://localhost:11434"
-OLLAMA_URL="${OLLAMA_URL:-$OLLAMA_URL_DEFAULT}"
-OLLAMA_MODEL="${OLLAMA_MODEL:-qwen2.5vl:7b}"
-OLLAMA_WAIT_SECONDS="${OLLAMA_WAIT_SECONDS:-30}"
-COMPOSE_FILE="docker-compose.yml"
+BACKEND_PORT="${BACKEND_PORT:-8000}"
+FRONTEND_PORT="${FRONTEND_PORT:-8080}"
+MOCK_DB_URL="sqlite:///./mock.db"
 
-# Check Docker. The Compose v2 plugin ships with Docker Desktop.
-if ! command -v docker >/dev/null 2>&1; then
-    echo "Docker is missing. Install it:"
-    echo "  brew install --cask docker"
-    exit 1
-fi
-if ! docker compose version >/dev/null 2>&1; then
-    echo "The Docker Compose plugin is missing."
-    echo "  brew install docker-compose"
-    exit 1
-fi
+ROOT="$(CDPATH= cd "$(dirname "$0")" && pwd)"
+BACKEND_DIR="$ROOT/backend"
+FRONTEND_DIR="$ROOT/frontend"
 
-# Wait until an HTTP endpoint answers.
+# Stop every process that listens on one port.
+free_port() {
+    _port="$1"
+    _pids="$(lsof -tiTCP:"$_port" -sTCP:LISTEN 2>/dev/null || true)"
+    if [ -n "$_pids" ]; then
+        echo "[init] Stopping processes on port $_port: $_pids"
+        kill $_pids 2>/dev/null || true
+    fi
+}
+
+# Wait until an HTTP endpoint answers within a timeout.
 wait_until() {
-    _attempts="${OLLAMA_WAIT_SECONDS:-30}"
+    _url="$1"
+    _attempts="${2:-30}"
     while [ "$_attempts" -gt 0 ]; do
-        if curl -fsS "$1" >/dev/null 2>&1; then
+        if curl -fsS "$_url" >/dev/null 2>&1; then
             return 0
         fi
         _attempts=$((_attempts - 1))
@@ -34,48 +38,58 @@ wait_until() {
     return 1
 }
 
-# Ensure Ollama runs on the host.
-if command -v curl >/dev/null 2>&1 \
-    && wait_until "$OLLAMA_URL/api/tags"; then
-    :
-else
-    echo "Ollama is not running. Starting it now."
-    if command -v brew >/dev/null 2>&1 && brew list --formula ollama >/dev/null 2>&1; then
-        brew services start ollama
-    elif [ -d "/Applications/Ollama.app" ]; then
-        open -a Ollama
-    elif command -v ollama >/dev/null 2>&1; then
-        nohup ollama serve >/dev/null 2>&1 &
-    else
-        echo "Ollama is missing. Install it:"
-        echo "  brew install ollama"
-        echo "Then run: ollama pull $OLLAMA_MODEL"
-        exit 1
-    fi
-    if ! wait_until "$OLLAMA_URL/api/tags"; then
-        echo "Ollama did not start. Run 'ollama serve' in a terminal."
-        exit 1
-    fi
+# Check the local prerequisites.
+if ! command -v uv >/dev/null 2>&1; then
+    echo "uv is missing. Install it with: brew install uv"
+    exit 1
 fi
-
-# Ensure the model exists. Download it once.
-if command -v ollama >/dev/null 2>&1 \
-    && ! ollama list 2>/dev/null | grep -q "$OLLAMA_MODEL"; then
-    echo "Pulling the Ollama model $OLLAMA_MODEL. The first download is several GB."
-    ollama pull "$OLLAMA_MODEL"
-fi
-
-# Run the stack from the repository root.
-cd "$(CDPATH= cd "$(dirname "$0")" && pwd)"
-if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "The file $COMPOSE_FILE is missing in $PWD."
+if ! command -v caddy >/dev/null 2>&1; then
+    echo "Caddy is missing. Install it with: brew install caddy"
     exit 1
 fi
 
-_build_flag=""
-if [ "${1:-}" = "--build" ]; then
-    _build_flag="--build"
+# Free the ports first so a second run does not fail on "address in use".
+free_port "$BACKEND_PORT"
+free_port "$FRONTEND_PORT"
+
+# Build the mock database. It contains the unclaimed transaction for the
+# Berlin hotel invoice that the hardcoded mock JSON payload matches.
+echo "[init] Building the mock database."
+(
+    cd "$BACKEND_DIR"
+    DATABASE_URL="$MOCK_DB_URL" uv run python -m seed.mock_db
+)
+
+# Start the backend in mock mode. The demo reader returns the Berlin invoice,
+# so the frontend works without an AI model.
+echo "[init] Starting the backend on port $BACKEND_PORT."
+(
+    cd "$BACKEND_DIR"
+    DATABASE_URL="$MOCK_DB_URL" WISE_MODE=mock INVOICE_READER=demo \
+        nohup uv run uvicorn app.main:app --host 0.0.0.0 --port "$BACKEND_PORT" \
+        >"$ROOT/init-backend.log" 2>&1 &
+)
+
+# Start the frontend with Caddy. The Caddyfile resolves www from its own folder.
+echo "[init] Serving the frontend on port $FRONTEND_PORT."
+(
+    cd "$FRONTEND_DIR"
+    nohup caddy run --config Caddyfile --adapter caddyfile \
+        >"$ROOT/init-frontend.log" 2>&1 &
+)
+
+# Wait until the backend and the frontend answer.
+if ! wait_until "http://localhost:$BACKEND_PORT/health" 30; then
+    echo "[init] The backend did not start. Read init-backend.log."
+    exit 1
+fi
+if ! wait_until "http://localhost:$FRONTEND_PORT/" 30; then
+    echo "[init] The frontend did not start. Read init-frontend.log."
+    exit 1
 fi
 
-echo "Starting the SIGINT demo. Open http://localhost:8080"
-exec docker compose up $_build_flag
+echo "[init] The SIGINT demo is running."
+echo "[init] Frontend: http://localhost:$FRONTEND_PORT"
+echo "[init] Backend:  http://localhost:$BACKEND_PORT"
+echo "[init] Logs:     init-backend.log, init-frontend.log"
+echo "[init] Stop with: pkill -f 'uvicorn app.main:app'; pkill -f 'caddy run'"
