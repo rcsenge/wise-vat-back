@@ -139,7 +139,8 @@
 
         let countryTotals = [];
         let expiredTotals = [];
-        let deadlines = [];
+        let periods = [];
+        let referenceDate = null;
         let approvedReceipts = [];
         let selectedCountry = null;
         let renderedState = "";
@@ -162,13 +163,131 @@
         const claimableCount = (receipts) =>
           receipts.filter((receipt) => !receipt.expired).length;
 
-        // The deadlines list starts with the earliest deadline.
-        const nextDeadlineOf = (total) =>
-          deadlines.find(
-            (deadline) =>
-              deadline.country === total.country &&
-              deadline.currency === total.currency,
+        const DAY_MS = 86400000;
+        const WARNING_DAYS = 90;
+        const URGENT_DAYS = 30;
+        // Tailwind builds only the classes it finds in the source. The list names every bar width.
+        const BAR_WIDTHS = [
+          "w-0",
+          "w-[5%]",
+          "w-[10%]",
+          "w-[15%]",
+          "w-[20%]",
+          "w-[25%]",
+          "w-[30%]",
+          "w-[35%]",
+          "w-[40%]",
+          "w-[45%]",
+          "w-[50%]",
+          "w-[55%]",
+          "w-[60%]",
+          "w-[65%]",
+          "w-[70%]",
+          "w-[75%]",
+          "w-[80%]",
+          "w-[85%]",
+          "w-[90%]",
+          "w-[95%]",
+          "w-full",
+        ];
+
+        const dayNumber = (isoDate) =>
+          Date.parse(`${isoDate}T00:00:00Z`) / DAY_MS;
+
+        // The open refund periods of a country, oldest year first.
+        const periodsOf = (total) =>
+          periods
+            .filter(
+              (period) =>
+                period.country === total.country &&
+                period.currency === total.currency,
+            )
+            .sort((first, second) => first.year - second.year);
+
+        // The bar fills from 1 January of the year to the claim deadline.
+        const createDeadlineBar = (period) => {
+          const start = dayNumber(period.period_start);
+          const end = dayNumber(period.claim_deadline);
+          const today = dayNumber(referenceDate ?? period.period_start);
+          const daysLeft = Math.max(0, Math.round(end - today));
+          const share = Math.min(
+            1,
+            Math.max(0, (today - start) / (end - start)),
           );
+          const widthClass =
+            BAR_WIDTHS[Math.round(share * (BAR_WIDTHS.length - 1))];
+          const colorClass =
+            daysLeft <= URGENT_DAYS
+              ? "bg-status-negative"
+              : daysLeft <= WARNING_DAYS
+                ? "bg-amber-400"
+                : "bg-brand-bright-green";
+
+          const track = element(
+            "div",
+            "bg-line-neutral mt-3 h-2 w-full overflow-hidden rounded-full",
+          );
+          track.setAttribute("role", "progressbar");
+          track.setAttribute(
+            "aria-label",
+            `Time used until the ${period.year} claim deadline`,
+          );
+          track.setAttribute("aria-valuemin", "0");
+          track.setAttribute("aria-valuemax", "100");
+          track.setAttribute("aria-valuenow", String(Math.round(share * 100)));
+          track.append(
+            element("div", `h-full rounded-full ${widthClass} ${colorClass}`),
+          );
+          return { track, daysLeft };
+        };
+
+        const createPeriodRow = (period) => {
+          const row = element("div", "bg-surface-screen rounded-2xl p-4");
+          const { track, daysLeft } = createDeadlineBar(period);
+
+          const header = element(
+            "div",
+            "flex items-start justify-between gap-3",
+          );
+          const text = element("div", "min-w-0");
+          text.append(
+            element(
+              "p",
+              "text-ink-primary text-base font-semibold",
+              `${period.year} claim · ${period.invoice_count} invoice${period.invoice_count === 1 ? "" : "s"}`,
+            ),
+            element(
+              "p",
+              daysLeft <= URGENT_DAYS
+                ? "text-status-negative text-sm font-semibold"
+                : "text-ink-secondary text-sm",
+              `Claim by ${window.vatbackReceipts.formatDay(period.claim_deadline)} · ${daysLeft} days left`,
+            ),
+          );
+          header.append(
+            text,
+            element(
+              "p",
+              "text-ink-primary shrink-0 text-base font-bold tabular-nums",
+              api.formatMoney(period.refundable_vat_total, period.currency),
+            ),
+          );
+
+          const download = element(
+            "a",
+            "bg-brand-bright-green text-brand-forest-green hover:bg-brand-bright-green-pressed mt-4 inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition",
+            "Generate package",
+          );
+          download.href = api.packageUrl(period.country, period.year);
+          download.setAttribute(
+            "aria-label",
+            `Generate the ${period.year} claim package for the accountant`,
+          );
+          download.setAttribute("download", "");
+
+          row.append(header, track, download);
+          return row;
+        };
 
         const createFlag = (code) => {
           const flag = element(
@@ -187,10 +306,6 @@
         const createCountryCard = (total) => {
           const isSelected = total.country === selectedCountry;
           const receiptCount = claimableCount(receiptsOf(total.country));
-          const nextDeadline = nextDeadlineOf(total);
-          const deadlineText = nextDeadline
-            ? ` · Claim by ${window.vatbackReceipts.formatDay(nextDeadline.claim_deadline)}`
-            : "";
           const listId = `country-receipts-${total.country}`;
 
           const item = element(
@@ -218,7 +333,7 @@
             element(
               "span",
               "text-ink-secondary block whitespace-nowrap text-sm",
-              `${receiptCount} receipt${receiptCount === 1 ? "" : "s"}${deadlineText}`,
+              `${receiptCount} receipt${receiptCount === 1 ? "" : "s"}`,
             ),
           );
 
@@ -257,7 +372,13 @@
             ...receiptsOf(total.country).map(window.vatbackReceipts.createItem),
           );
 
-          item.append(button, receiptList);
+          const periodList = element(
+            "div",
+            "space-y-3 px-4 pb-4 sm:px-5 sm:pb-5",
+          );
+          periodList.append(...periodsOf(total).map(createPeriodRow));
+
+          item.append(button, periodList, receiptList);
           return item;
         };
 
@@ -323,7 +444,8 @@
           const state = JSON.stringify([
             countryTotals,
             expiredTotals,
-            deadlines,
+            periods,
+            referenceDate,
             approvedReceipts.map((receipt) => receipt.id),
             selectedCountry,
           ]);
@@ -361,12 +483,14 @@
             const claims = await api.getClaims();
             countryTotals = claims.per_country;
             expiredTotals = claims.expired_per_country ?? [];
-            deadlines = claims.deadlines ?? [];
+            periods = claims.periods ?? [];
+            referenceDate = claims.reference_date ?? null;
             render();
           } catch (error) {
             countryTotals = [];
             expiredTotals = [];
-            deadlines = [];
+            periods = [];
+            referenceDate = null;
             render();
           }
         };

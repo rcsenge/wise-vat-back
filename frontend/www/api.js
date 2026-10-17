@@ -82,6 +82,9 @@
     baseUrl: API_BASE,
     listReceipts: () => request("/receipts"),
     getClaims: () => request("/claims"),
+    // The browser downloads the ZIP file. The server sends it as an attachment.
+    packageUrl: (country, year) =>
+      `${API_BASE}/claims/package?country=${encodeURIComponent(country)}&year=${encodeURIComponent(year)}`,
     uploadInvoice: (documentFile, imageDataUrl) => {
       const form = new FormData();
       form.append("document", documentFile);
