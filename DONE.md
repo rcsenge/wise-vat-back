@@ -75,3 +75,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: 43339e7, 966c5e1, d4e03d3
 
 ---
+
+- Task: Removed the dead generic rules engine. Updated the docs that referenced the old Decision type.
+- Signer: Török Zaránd Tamás's agent
+- Branch: refactor/remove-dead-rules-engine
+- Date: 2026-10-17
+- Commits: f0fb791, 0263a0b
+
+---

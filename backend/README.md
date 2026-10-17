@@ -54,7 +54,7 @@ Each PDF has an `.expected.json` file with the correct extraction. The tests use
 ```
 backend/app/
   api/           thin routers (health, accounts, rates, simulate, events/SSE)
-  domain/        PURE rules engine: (state, event) -> Decision(action, reason). No I/O. Unit-tested.
+  domain/        PURE VAT back rules: country + category -> line decision with a reason. No I/O. Unit-tested.
   integrations/  WiseClient protocol + mock + real (httpx), factory by WISE_MODE; Ollama invoice reader
   models/        SQLModel tables (SQLite by default)
   schemas/       API contracts (Pydantic), e.g. ExtractedInvoice from image processing
@@ -68,7 +68,7 @@ backend/seed/    seed script, cached fallback rates, example invoices, sample in
 - **Money is `Decimal`, never float.** Use `domain.money.Money`.
 - **Domain stays pure.** Routers/simulator load state, call the engine, and persist/publish the result.
 - **Never call Wise directly.** Use `integrations.factory.get_wise_client()`. `WISE_MODE=mock` is the default, and the real rates endpoint is the first thing to wire up.
-- Every `Decision` carries a human-readable `reason`, for the UI and the pitch.
+- Every line decision carries a human-readable `reason`, for the UI and the pitch.
 
 ## First steps once the challenge is known
 

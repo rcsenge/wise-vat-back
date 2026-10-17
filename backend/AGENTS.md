@@ -34,13 +34,13 @@ We optimize for safety, predictability, and simplicity. Apply these rules to all
 
 ### 2.3. Naming and Structure
 - **Casing:** Use `snake_case` for functions and variables. Use `PascalCase` for classes and type aliases. Use `UPPER_SNAKE_CASE` for constants.
-- **Type Hints:** Annotate every function signature with full types. Use `app.domain.rules.Decision` and friends rather than bare `dict[str, Any]` where a type exists.
+- **Type Hints:** Annotate every function signature with full types. Use `app.domain.vat_rules.LineDecision` and friends rather than bare `dict[str, Any]` where a type exists.
 - **No Abbreviations:** Do not abbreviate names. Use the exact number of characters needed for absolute clarity.
 
 ### 2.4. Money and Domain Purity
 - **Money Is Decimal:** Money is always `Decimal`, never `float`. Use `app.domain.money.Money` for all amounts.
 - **Pure Domain:** The `domain/` module stays pure. It performs no I/O, no persistence, and no external calls.
-- **Readable Decisions:** Every `Decision` carries a human-readable `reason`. The UI and the pitch display this reason.
+- **Readable Decisions:** Every `LineDecision` carries a human-readable `reason`. The UI and the pitch display this reason.
 
 ### 2.5. Integrations and Configuration
 - **Factory Only:** Never call Wise or other services directly. Use `app.integrations.factory.get_wise_client()`.
