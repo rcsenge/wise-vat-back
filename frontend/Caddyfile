@@ -1,0 +1,7 @@
+# Caddy serves the SIGINT frontend on every interface.
+:8080 {
+	root * www
+	encode gzip
+	try_files {path} {path}.html
+	file_server
+}

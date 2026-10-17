@@ -13,9 +13,12 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
 
-## Entries
-
 - Task: Connect the frontend to the backend. Upload the invoice JSON. Show stored receipts and claims from the backend.
 - Signer: Vilmos Babó's agent
 - Branch: feat/connect-frontend-backend
+- Date: 2026-10-17
+
+- Task: serve frontend pages with cleaner URLs without the html extension
+- Signer: Magyari Ákos's agent
+- Branch: feat/clean-frontend-urls
 - Date: 2026-10-17
