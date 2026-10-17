@@ -7,6 +7,8 @@ constrains the model output to that schema. Pydantic validates the result again.
 import base64
 import io
 import json
+import re
+from decimal import Decimal, InvalidOperation
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Protocol
@@ -41,7 +43,7 @@ Field rules:
 - issueDate uses the format YYYY-MM-DD.
 - currency is the ISO 4217 code. countryCode is the ISO 3166-1 alpha-2 code of the supplier address.
 - VAT numbers have the country prefix and no spaces, for example ATU12345678 or DE123456789.
-- Amounts are decimal strings with a dot and two decimals, for example "188.80". vatRate is a percent number, for example 10.
+- Amounts are decimal strings with a dot as the decimal separator. For example "188.80" or "240.00". Convert comma decimals to dot decimals. vatRate is a percent number, for example 10.
 - Give one line per invoice item. If the document shows only totals, give one line with the totals.
 - category is the expense code: FUEL, VEHICLE_HIRE, VEHICLE_EXPENSES, ROAD_TOLL,
   TRAVEL (taxi, train, flight), ACCOMMODATION (hotel room), FOOD_AND_DRINK (meals, breakfast, drinks),
@@ -157,12 +159,60 @@ def _error_text(response: httpx.Response) -> str:
         return response.text[:200]
 
 
+_AMOUNT_FIELDS = ("netAmount", "vatAmount", "grossAmount")
+_CENT = Decimal("0.01")
+
+
+def _normalize_amount(value: Any) -> Any:
+    """Return the amount with a dot as the decimal separator."""
+    if isinstance(value, str):
+        if re.fullmatch(r"-?\d{1,3}(\.\d{3})+,\d{1,2}", value):
+            return value.replace(".", "").replace(",", ".")
+        if re.fullmatch(r"-?\d+,\d{1,2}", value):
+            return value.replace(",", ".")
+    return value
+
+
+def _normalize_amounts(data: dict[str, Any]) -> None:
+    """Convert European comma decimals in the amount fields, in place."""
+    nodes: list[Any] = []
+    if isinstance(data.get("lines"), list):
+        nodes.extend(data["lines"])
+    if isinstance(data.get("totals"), dict):
+        nodes.append(data["totals"])
+    for node in nodes:
+        if not isinstance(node, dict):
+            continue
+        for field in _AMOUNT_FIELDS:
+            if field in node:
+                node[field] = _normalize_amount(node[field])
+
+
+def _recompute_totals(data: dict[str, Any]) -> None:
+    """Overwrite the totals with the exact sum of the line amounts, in place."""
+    lines = data.get("lines")
+    totals = data.get("totals")
+    if not isinstance(lines, list) or not lines or not isinstance(totals, dict):
+        return
+    try:
+        sums = {
+            field: sum((Decimal(line[field]) for line in lines), Decimal("0")).quantize(_CENT)
+            for field in _AMOUNT_FIELDS
+        }
+    except (KeyError, TypeError, ValueError, InvalidOperation):
+        return
+    for field, total in sums.items():
+        totals[field] = str(total)
+
+
 def _parse_answer(answer: dict[str, Any]) -> ExtractedInvoice:
     content = answer.get("message", {}).get("content", "")
     try:
         data = json.loads(content)
     except json.JSONDecodeError as error:
         raise ReaderError(422, ["The local AI returned text that is not JSON."]) from error
+    _normalize_amounts(data)
+    _recompute_totals(data)
     try:
         return ExtractedInvoice.model_validate(data)
     except ValidationError as error:

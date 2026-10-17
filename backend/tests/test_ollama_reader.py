@@ -118,11 +118,38 @@ def test_text_that_is_not_json_is_rejected():
 
 def test_invalid_ai_output_is_reported():
     data = load_invoice("at_hotel_vienna.json")
-    data["totals"]["grossAmount"] = "261,00"
+    data["lines"][0]["grossAmount"] = "not-a-number"
     reader, _ = fake_reader(lambda request: answer(json.dumps(data)))
     with pytest.raises(ReaderError) as caught:
         reader(photo_bytes(), "image/png")
     assert any("grossAmount" in reason for reason in caught.value.reasons)
+
+
+def test_comma_decimals_are_normalized():
+    data = load_invoice("at_hotel_vienna.json")
+    data["totals"] = {"netAmount": "235,00", "vatAmount": "26,00", "grossAmount": "261,00"}
+    reader, _ = fake_reader(lambda request: answer(json.dumps(data)))
+    invoice = reader(photo_bytes(), "image/png")
+    assert invoice.totals.net_amount == Decimal("235.00")
+    assert invoice.totals.gross_amount == Decimal("261.00")
+
+
+def test_german_thousands_separator_is_normalized():
+    data = load_invoice("at_hotel_vienna.json")
+    data["lines"][0]["netAmount"] = "1.234,56"
+    reader, _ = fake_reader(lambda request: answer(json.dumps(data)))
+    invoice = reader(photo_bytes(), "image/png")
+    assert invoice.lines[0].net_amount == Decimal("1234.56")
+
+
+def test_totals_are_recomputed_from_lines():
+    data = load_invoice("at_hotel_vienna.json")
+    data["totals"] = {"netAmount": "99,00", "vatAmount": "99,00", "grossAmount": "99,00"}
+    reader, _ = fake_reader(lambda request: answer(json.dumps(data)))
+    invoice = reader(photo_bytes(), "image/png")
+    assert invoice.totals.net_amount == Decimal("235.00")
+    assert invoice.totals.vat_amount == Decimal("26.00")
+    assert invoice.totals.gross_amount == Decimal("261.00")
 
 
 def test_broken_pdf_is_rejected():
