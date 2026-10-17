@@ -1,7 +1,4 @@
-"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
-
-In-memory Wise mock for features unavailable in HU / offline demos.
-"""
+"""In-memory Wise mock for features unavailable in HU / offline demos."""
 from decimal import Decimal
 from typing import Any
 

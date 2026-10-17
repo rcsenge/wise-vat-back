@@ -1,7 +1,4 @@
-"""UNWIRED. The live flow never calls this module. See REPO-FINDINGS.md item 2.
-
-Real/sandbox Wise API client over httpx.
-"""
+"""Real/sandbox Wise API client over httpx."""
 from decimal import Decimal
 from typing import Any
 
