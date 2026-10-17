@@ -122,3 +122,44 @@ def test_no_invoices_gives_404(client):
 
 def test_bad_country_code_is_rejected(client):
     assert client.get("/claims/package", params={"country": "france", "year": 2026}).status_code == 422
+
+
+def download_all(client) -> zipfile.ZipFile:
+    response = client.get("/claims/package/all")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/zip"
+    assert 'filename="SIGINT-VAT-refund-all-2026-10-17.zip"' in response.headers["content-disposition"]
+    return zipfile.ZipFile(io.BytesIO(response.content))
+
+
+def test_all_package_holds_one_folder_per_country(client):
+    upload_berlin_pdf(client)
+    for name in ("at_hotel_vienna.json", "de_hotel_munich.json"):
+        assert client.post("/invoices", json=load_invoice(name)).json()["status"] == "approved"
+    archive = download_all(client)
+    names = archive.namelist()
+    assert names[0] == "00_overview.pdf"
+    assert {name.split("/")[0] for name in names[1:]} == {"AT_2026", "DE_2026"}
+    assert "DE_2026/02_invoice_copies/002_2026-10-0441.pdf" in names
+    assert len(read_csv(archive, "DE_2026/03_card_transactions.csv")) == 2
+    assert len(json.loads(archive.read("DE_2026/05_application_data.json"))["invoices"]) == 2
+
+
+def test_overview_counts_every_invoice_and_country(client):
+    upload_berlin_pdf(client)
+    for name in ("at_hotel_vienna.json", "de_hotel_munich.json"):
+        client.post("/invoices", json=load_invoice(name))
+    claims = client.get("/claims").json()
+    text = pdf_text(download_all(client).read("00_overview.pdf"))
+    assert "VAT refund packages: every country" in text
+    assert str(sum(period["invoice_count"] for period in claims["periods"])) in text
+    for folder in ("AT_2026/", "DE_2026/"):
+        assert folder in text
+    total = sum(Decimal(period["refundable_vat_total"]) for period in claims["periods"])
+    assert f"{total:,.2f} EUR" in text
+
+
+def test_all_package_without_open_periods_gives_404(client):
+    response = client.get("/claims/package/all")
+    assert response.status_code == 404
+    assert response.json()["detail"]["reasons"] == ["There are no approved invoices with an open claim deadline."]

@@ -77,6 +77,24 @@ def download_claim_package(
         package = claim_package.build_claim_package(session, country, year)
     except claim_package.PackageError as error:
         raise HTTPException(status_code=error.status_code, detail={"reasons": error.reasons}) from error
+    return _zip_response(package)
+
+
+@router.get(
+    "/claims/package/all",
+    response_class=Response,
+    responses={200: {"content": {"application/zip": {}}, "description": "Every open claim package in one ZIP file."}},
+)
+def download_all_claim_packages(session: Session = Depends(get_session)) -> Response:
+    """Return one ZIP with an overview and one folder per open refund period."""
+    try:
+        package = claim_package.build_all_claims_package(session)
+    except claim_package.PackageError as error:
+        raise HTTPException(status_code=error.status_code, detail={"reasons": error.reasons}) from error
+    return _zip_response(package)
+
+
+def _zip_response(package: claim_package.ClaimPackage) -> Response:
     return Response(
         content=package.content,
         media_type="application/zip",
