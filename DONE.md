@@ -83,3 +83,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Commits: f0fb791, 0263a0b
 
 ---
+
+- Task: Added the init launcher. It starts Ollama, pulls the model, and runs the stack.
+- Signer: Magyari Ákos's agent
+- Branch: feat/init-script
+- Date: 2026-10-17
+- Commits: 3707959, 19c4e19
+
+---
