@@ -19,6 +19,7 @@ from PIL import Image
 from pydantic import ValidationError
 
 from app.config import settings
+from app.integrations.demo_reader import DemoInvoiceReader
 from app.schemas.invoice import ExtractedInvoice
 
 SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schemas" / "extracted_invoice.schema.json"
@@ -222,5 +223,8 @@ def _parse_answer(answer: dict[str, Any]) -> ExtractedInvoice:
 
 @lru_cache
 def get_invoice_reader() -> InvoiceReader:
+    """Return the reader that the settings select. The demo reader needs no AI."""
+    if settings.invoice_reader == "demo":
+        return DemoInvoiceReader(settings.demo_reader_delay_seconds)
     client = httpx.Client(timeout=settings.ollama_timeout_seconds)
     return OllamaInvoiceReader(client, settings.ollama_url, settings.ollama_model)

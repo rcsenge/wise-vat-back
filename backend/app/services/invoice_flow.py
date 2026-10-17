@@ -4,7 +4,7 @@ from datetime import date, datetime, time, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
-from sqlmodel import Session, col, select
+from sqlmodel import Session, col, delete, select
 
 from app.config import settings
 from app.domain import vat_rules
@@ -197,6 +197,14 @@ class OriginalDocument:
     filename: str
     media_type: str
     content: bytes
+
+
+def forget_invoice(session: Session, invoice_number: str) -> None:
+    """Delete every earlier upload of the invoice. Its card transaction becomes unclaimed again."""
+    records = select(InvoiceRecord.id).where(InvoiceRecord.invoice_number == invoice_number)
+    session.exec(delete(InvoiceDocument).where(col(InvoiceDocument.record_id).in_(records)))
+    session.exec(delete(InvoiceRecord).where(InvoiceRecord.invoice_number == invoice_number))
+    session.commit()
 
 
 def submit_invoice(

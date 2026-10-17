@@ -5,6 +5,7 @@ A fixed random seed keeps the output identical on every run.
 Every invoice runs through the real invoice flow. The receipts and the claims stay realistic.
 Some merchants carry a defect on purpose. The frontend then shows a rejected receipt.
 The printed demo invoice gets an unclaimed card transaction. The demo uploads the paper copy.
+The Berlin hotel invoice of the demo reader also gets its card transaction.
 
 Run: DATABASE_URL=sqlite:///./mock.db python -m seed.mock_db
 Reset the printed invoice only: DATABASE_URL=sqlite:///./mock.db python -m seed.mock_db reset-printed
@@ -21,6 +22,7 @@ from sqlmodel import Session, SQLModel, col, delete, select
 
 from app.db import engine as default_engine
 from app.domain import vat_rules
+from app.integrations.demo_reader import load_demo_invoice
 from app.models.account import Account
 from app.models.invoice_document import InvoiceDocument
 from app.models.invoice_record import InvoiceRecord
@@ -223,6 +225,20 @@ def _printed_transaction(account_id: int) -> Transaction:
     )
 
 
+def _demo_reader_transaction(account_id: int) -> Transaction:
+    """Return the card payment of the Berlin hotel invoice that the demo reader returns."""
+    invoice = load_demo_invoice()
+    return Transaction(
+        account_id=account_id,
+        amount=invoice.totals.gross_amount,
+        currency=invoice.currency,
+        country=invoice.supplier.address.country_code,
+        merchant=invoice.supplier.name,
+        kind="card",
+        created_at=paid_on(invoice.issue_date),
+    )
+
+
 def reset_printed_invoice(target_engine: Engine) -> None:
     """Delete every upload of the printed invoice. Its card transaction becomes unclaimed again."""
     with Session(target_engine) as session:
@@ -249,6 +265,7 @@ def build_mock_database(target_engine: Engine, today: date) -> None:
         session.flush()
         account_ids = {account.currency: account.id for account in session.exec(select(Account)).all()}
         session.add(_printed_transaction(account_ids[PRINTED_CURRENCY]))
+        session.add(_demo_reader_transaction(account_ids[load_demo_invoice().currency]))
 
         for receipt in receipts:
             if receipt.merchant.defect == "no_transaction":

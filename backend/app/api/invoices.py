@@ -4,6 +4,7 @@ from pydantic import ValidationError
 from sqlmodel import Session
 
 from app.db import get_session
+from app.integrations.demo_reader import DemoInvoiceReader
 from app.integrations.extraction import MAX_DOCUMENT_BYTES, DocumentError, detect_media_type, extract_invoice
 from app.integrations.ollama_reader import InvoiceReader, get_invoice_reader
 from app.schemas.invoice_flow import (
@@ -41,6 +42,9 @@ def upload_invoice(
         raise HTTPException(status_code=error.status_code, detail={"reasons": error.reasons}) from error
     except ValidationError as error:
         raise HTTPException(status_code=422, detail={"reasons": [item["msg"] for item in error.errors()]}) from error
+    if isinstance(read_with_ai, DemoInvoiceReader) and invoice.invoice_number:
+        # The demo repeats the same upload. Every upload must pass again.
+        invoice_flow.forget_invoice(session, invoice.invoice_number)
     original = invoice_flow.OriginalDocument(
         filename=document.filename or "invoice",
         media_type=detect_media_type(content) or "application/octet-stream",

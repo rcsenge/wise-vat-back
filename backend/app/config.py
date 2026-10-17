@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     wise_sandbox_url: str = "https://api.sandbox.transferwise.tech"
     wise_real_url: str = "https://api.transferwise.com"
 
+    # "demo" returns the Berlin hotel invoice for every upload after the delay. "ollama" reads the document with the AI.
+    invoice_reader: Literal["demo", "ollama"] = "demo"
+    demo_reader_delay_seconds: float = 3.0
+
     # The local Ollama server reads invoice PDFs and photos. It needs no API key.
     ollama_url: str = "http://localhost:11434"
     ollama_model: str = "qwen2.5vl:7b"
