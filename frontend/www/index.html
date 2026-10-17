@@ -23,7 +23,7 @@
   <body
     class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
   >
-    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pt-6 pb-10 sm:px-6">
+    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-10 pt-6 sm:px-6">
       <header
         class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
@@ -48,32 +48,31 @@
             </svg>
           </span>
           <div>
-            <h1 class="text-xl leading-tight font-semibold tracking-tight">
+            <h1 class="text-xl font-semibold leading-tight tracking-tight">
               vatback
             </h1>
             <p class="text-sm text-[#6b7a78]">Money without borders</p>
           </div>
         </div>
-        <label
-          for="document-input"
-          class="inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] px-4 py-2 text-sm font-semibold text-[#00a4a6] transition-colors hover:bg-[#00a4a6]/10"
+        <button
+          type="button"
+          id="upload-button"
+          class="px-4! py-2! text-[#00a4a6]! inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] text-sm font-semibold transition-colors hover:bg-[#00a4a6]/10"
         >
           Add New Document
-        </label>
-        <input
-          id="document-input"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          class="sr-only"
-        />
+        </button>
       </header>
+
+      <p
+        id="backend-error"
+        class="alert alert-negative mt-6 hidden text-sm"
+      ></p>
 
       <section aria-labelledby="receipts-heading" class="mt-8">
         <h2 id="receipts-heading" class="text-lg font-semibold">
           Scanned receipts
         </h2>
-        <ul id="receipt-list" class="mt-4 space-y-3"></ul>
+        <ul id="receipt-list" class="pl-0! mt-4 list-none space-y-3"></ul>
       </section>
 
       <section
@@ -103,7 +102,7 @@
           </div>
           <h3 class="mt-4 text-base font-semibold">No receipts yet</h3>
           <p class="mt-1 text-sm text-[#6b7a78]">
-            Tap Add New Document to scan your first receipt.
+            Tap Add New Document to upload your first invoice.
           </p>
         </div>
       </section>
@@ -112,86 +111,74 @@
         class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
       >
         <p>
-          The employee scanner stores receipts on this device. Open the employer
-          review to see the full claim summary.
+          The backend checks every invoice and stores the result. Open the
+          <a href="employer.html" class="font-semibold text-[#00a4a6]"
+            >employer review</a
+          >
+          to see the claim summary per country.
         </p>
       </footer>
     </main>
 
     <dialog
-      id="receipt-dialog"
+      id="upload-dialog"
       class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-white p-5 text-[#163300] shadow-2xl [&::backdrop]:bg-black/60"
     >
-      <h2 class="text-base font-semibold">Receipt details</h2>
+      <h2 class="text-base font-semibold">Upload invoice</h2>
       <p class="mt-1 text-xs text-[#6b7a78]">
-        Enter the values written on the receipt to make it claimable.
+        Select the invoice JSON file. A receipt photo is optional.
       </p>
-      <img
-        id="dialog-preview"
-        alt="Receipt preview"
-        class="mt-4 h-36 w-full rounded-2xl bg-[#e6e9ea] object-cover"
-      />
-      <form id="receipt-form" class="mt-4 space-y-3">
+      <form id="upload-form" class="mt-4 space-y-3">
         <div>
-          <label for="merchant-input" class="mb-1 block text-sm font-medium">
-            Merchant
+          <label for="invoice-input" class="mb-1 block text-sm font-medium">
+            Invoice JSON
           </label>
           <input
-            id="merchant-input"
-            type="text"
-            inputmode="text"
-            autocomplete="organization"
-            placeholder="Store or supplier name"
+            id="invoice-input"
+            type="file"
+            accept=".json,application/json"
             required
-            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm focus:border-[#00a4a6] focus:ring-2 focus:ring-[#00a4a6]/30 focus:outline-none"
+            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
           />
         </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label for="amount-input" class="mb-1 block text-sm font-medium">
-              Amount
-            </label>
-            <input
-              id="amount-input"
-              type="number"
-              inputmode="decimal"
-              min="0.01"
-              step="0.01"
-              placeholder="0.00"
-              required
-              class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm focus:border-[#00a4a6] focus:ring-2 focus:ring-[#00a4a6]/30 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label for="tax-input" class="mb-1 block text-sm font-medium">
-              VAT (claim)
-            </label>
-            <input
-              id="tax-input"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-              required
-              class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm focus:border-[#00a4a6] focus:ring-2 focus:ring-[#00a4a6]/30 focus:outline-none"
-            />
-          </div>
+        <div>
+          <label for="photo-input" class="mb-1 block text-sm font-medium">
+            Receipt photo (optional)
+          </label>
+          <input
+            id="photo-input"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
+          />
         </div>
-        <p id="form-error" class="alert alert-negative hidden text-xs"></p>
+        <img
+          id="photo-preview"
+          alt="Receipt preview"
+          class="hidden h-36 w-full rounded-2xl bg-[#e6e9ea] object-cover"
+        />
+        <div id="upload-result" class="hidden">
+          <p id="upload-result-title" class="font-semibold"></p>
+          <ul
+            id="upload-result-reasons"
+            class="mt-2 list-disc space-y-1 pl-5 text-xs"
+          ></ul>
+        </div>
         <div class="flex gap-3 pt-1">
           <button
             type="button"
-            id="cancel-button"
-            class="flex-1 rounded-full border border-[#e6e9ea] px-4 py-2.5 text-sm font-semibold text-[#6b7a78] transition-colors hover:bg-[#f5f7fa]"
+            id="close-button"
+            class="px-4! py-2.5! text-[#6b7a78]! flex-1 rounded-full border border-[#e6e9ea] text-sm font-semibold transition-colors hover:bg-[#f5f7fa]"
           >
-            Cancel
+            Close
           </button>
           <button
             type="submit"
-            class="flex-1 rounded-full bg-[#00a4a6] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#009094]"
+            id="submit-button"
+            class="px-4! py-2.5! text-white! flex-1 rounded-full bg-[#00a4a6] text-sm font-semibold shadow-sm transition-colors hover:bg-[#009094] disabled:opacity-50"
           >
-            Save receipt
+            Check invoice
           </button>
         </div>
       </form>
@@ -208,150 +195,39 @@
       />
     </dialog>
 
+    <script src="api.js"></script>
+    <script src="receipts.js"></script>
     <script>
       (() => {
         "use strict";
 
-        const STORAGE_KEY = "vatback-receipts";
-        const MAX_RECEIPTS = 50;
         const MAX_IMAGE_DIMENSION = 800;
         const JPEG_QUALITY = 0.7;
+        const RESULT_APPROVED_CLASS =
+          "rounded-2xl bg-[#e2f6d5] p-4 text-sm text-[#163300]";
+        const RESULT_REJECTED_CLASS =
+          "rounded-2xl bg-[#ffe7e5] p-4 text-sm text-[#a8200d]";
 
-        const currencyFormatter = new Intl.NumberFormat(undefined, {
-          style: "currency",
-          currency: "EUR",
-        });
+        const api = window.vatbackApi;
+        const receipts = window.vatbackReceipts.create({ approvedOnly: false });
 
-        const dateFormatter = new Intl.DateTimeFormat(undefined, {
-          dateStyle: "medium",
-          timeStyle: "short",
-        });
+        const uploadButton = document.getElementById("upload-button");
+        const uploadDialog = document.getElementById("upload-dialog");
+        const uploadForm = document.getElementById("upload-form");
+        const invoiceInput = document.getElementById("invoice-input");
+        const photoInput = document.getElementById("photo-input");
+        const photoPreview = document.getElementById("photo-preview");
+        const uploadResult = document.getElementById("upload-result");
+        const uploadResultTitle = document.getElementById(
+          "upload-result-title",
+        );
+        const uploadResultReasons = document.getElementById(
+          "upload-result-reasons",
+        );
+        const submitButton = document.getElementById("submit-button");
+        const closeButton = document.getElementById("close-button");
 
-        const receiptList = document.getElementById("receipt-list");
-        const documentInput = document.getElementById("document-input");
-        const emptyState = document.getElementById("empty-state");
-
-        const receiptDialog = document.getElementById("receipt-dialog");
-        const receiptForm = document.getElementById("receipt-form");
-        const dialogPreview = document.getElementById("dialog-preview");
-        const merchantInput = document.getElementById("merchant-input");
-        const amountInput = document.getElementById("amount-input");
-        const taxInput = document.getElementById("tax-input");
-        const formError = document.getElementById("form-error");
-        const cancelButton = document.getElementById("cancel-button");
-
-        const documentDialog = document.getElementById("document-dialog");
-        const documentImage = document.getElementById("document-image");
-
-        let pendingImageDataUrl = null;
-
-        const readReceipts = () => {
-          try {
-            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            return Array.isArray(stored) ? stored : [];
-          } catch (error) {
-            return [];
-          }
-        };
-
-        const saveReceipts = (receipts) => {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(receipts));
-        };
-
-        const formatMoney = (value) => {
-          return currencyFormatter.format(Number.isFinite(value) ? value : 0);
-        };
-
-        const showFormError = (message) => {
-          formError.textContent = message;
-          formError.classList.remove("hidden");
-        };
-
-        const hideFormError = () => {
-          formError.classList.add("hidden");
-        };
-
-        const createLabel = (text) => {
-          const label = document.createElement("p");
-          label.className = "text-xs text-[#6b7a78]";
-          label.textContent = text;
-          return label;
-        };
-
-        const createValue = (text, isClaim) => {
-          const value = document.createElement("p");
-          value.className = isClaim
-            ? "font-semibold text-[#00a4a6]"
-            : "font-medium";
-          value.textContent = text;
-          return value;
-        };
-
-        const createReceiptItem = (receipt) => {
-          const item = document.createElement("li");
-          item.className =
-            "flex items-center gap-4 rounded-2xl border border-[#e6e9ea] bg-white p-4 shadow-sm";
-
-          const thumbButton = document.createElement("button");
-          thumbButton.type = "button";
-          thumbButton.className =
-            "shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00a4a6]";
-          thumbButton.setAttribute("aria-label", "View receipt document");
-          thumbButton.addEventListener("click", () => {
-            documentImage.src = receipt.imageDataUrl;
-            documentDialog.showModal();
-          });
-
-          const image = document.createElement("img");
-          image.src = receipt.imageDataUrl;
-          image.alt = "Scanned receipt preview";
-          image.className = "h-16 w-16 rounded-xl object-cover";
-          thumbButton.appendChild(image);
-
-          const details = document.createElement("div");
-          details.className = "min-w-0 flex-1";
-
-          const merchant = document.createElement("p");
-          merchant.className = "truncate text-sm font-medium";
-          merchant.textContent = receipt.merchant || "Untitled receipt";
-
-          const time = document.createElement("p");
-          time.className = "text-xs text-[#6b7a78]";
-          time.textContent = dateFormatter.format(
-            new Date(receipt.scannedAt || 0),
-          );
-
-          details.append(merchant, time);
-
-          const spend = document.createElement("div");
-          spend.className = "hidden text-right sm:block";
-          spend.append(
-            createLabel("Amount"),
-            createValue(formatMoney(receipt.amount)),
-          );
-
-          const claim = document.createElement("div");
-          claim.className = "text-right";
-          claim.append(
-            createLabel("Claimable VAT"),
-            createValue(formatMoney(receipt.taxAmount), true),
-          );
-
-          item.append(thumbButton, details, spend, claim);
-          return item;
-        };
-
-        const render = () => {
-          const stored = readReceipts();
-          const shown = stored.slice(0, MAX_RECEIPTS);
-          receiptList.replaceChildren();
-          shown.forEach((receipt) => {
-            receiptList.appendChild(createReceiptItem(receipt));
-          });
-
-          const hasReceipts = stored.length > 0;
-          emptyState.classList.toggle("hidden", hasReceipts);
-        };
+        let photoDataUrl = null;
 
         const downscaleImage = (file) => {
           return new Promise((resolve, reject) => {
@@ -379,83 +255,82 @@
           });
         };
 
-        const openReceiptDialog = (imageDataUrl) => {
-          pendingImageDataUrl = imageDataUrl;
-          dialogPreview.src = imageDataUrl;
-          receiptForm.reset();
-          hideFormError();
-          receiptDialog.showModal();
-          merchantInput.focus();
+        const showResult = (approved, title, reasons) => {
+          uploadResult.className = approved
+            ? RESULT_APPROVED_CLASS
+            : RESULT_REJECTED_CLASS;
+          uploadResultTitle.textContent = title;
+          uploadResultReasons.replaceChildren(
+            ...reasons.map((reason) => {
+              const item = document.createElement("li");
+              item.textContent = reason;
+              return item;
+            }),
+          );
         };
 
-        documentInput.addEventListener("change", async () => {
-          const file = documentInput.files[0];
-          documentInput.value = "";
+        const describeResult = (result) => {
+          if (result.status !== "approved") {
+            return "Rejected.";
+          }
+          const totals = api.sumByCurrency(
+            result.country_totals,
+            (total) => total.refundable_vat_total,
+          );
+          return `Approved. Refundable VAT: ${api.formatTotals(totals)}`;
+        };
+
+        uploadButton.addEventListener("click", () => {
+          uploadForm.reset();
+          photoDataUrl = null;
+          photoPreview.classList.add("hidden");
+          uploadResult.className = "hidden";
+          submitButton.disabled = false;
+          uploadDialog.showModal();
+        });
+
+        photoInput.addEventListener("change", async () => {
+          const file = photoInput.files[0];
+          photoDataUrl = null;
+          photoPreview.classList.add("hidden");
           if (!file || !file.type.startsWith("image/")) {
             return;
           }
-          if (readReceipts().length >= MAX_RECEIPTS) {
-            return;
-          }
-          const imageDataUrl = await downscaleImage(file);
-          openReceiptDialog(imageDataUrl);
+          photoDataUrl = await downscaleImage(file);
+          photoPreview.src = photoDataUrl;
+          photoPreview.classList.remove("hidden");
         });
 
-        receiptForm.addEventListener("submit", (event) => {
+        uploadForm.addEventListener("submit", async (event) => {
           event.preventDefault();
-          const merchant = merchantInput.value.trim();
-          const amount = Number(amountInput.value);
-          const taxAmount = Number(taxInput.value);
-
-          if (!merchant) {
-            showFormError("Enter the merchant name.");
+          const invoiceFile = invoiceInput.files[0];
+          if (!invoiceFile) {
+            showResult(false, "Select a file.", [
+              "The invoice JSON is required.",
+            ]);
             return;
           }
-          if (!Number.isFinite(amount) || amount <= 0) {
-            showFormError("Enter an amount greater than zero.");
-            return;
-          }
-          if (
-            !Number.isFinite(taxAmount) ||
-            taxAmount < 0 ||
-            taxAmount > amount
-          ) {
-            showFormError("VAT must be between zero and the amount.");
-            return;
-          }
-
-          const receipts = readReceipts();
-          if (receipts.length >= MAX_RECEIPTS) {
-            showFormError("The receipt limit is reached.");
-            return;
-          }
-
-          receipts.unshift({
-            id: Date.now().toString(),
-            merchant,
-            amount,
-            taxAmount,
-            scannedAt: Date.now(),
-            imageDataUrl: pendingImageDataUrl,
-          });
-          saveReceipts(receipts);
-          pendingImageDataUrl = null;
-          receiptDialog.close();
-          render();
-        });
-
-        cancelButton.addEventListener("click", () => {
-          pendingImageDataUrl = null;
-          receiptDialog.close();
-        });
-
-        documentDialog.addEventListener("click", (event) => {
-          if (event.target === documentDialog) {
-            documentDialog.close();
+          submitButton.disabled = true;
+          try {
+            const result = await api.uploadInvoice(invoiceFile, photoDataUrl);
+            showResult(
+              result.status === "approved",
+              describeResult(result),
+              result.reasons,
+            );
+            await receipts.refresh();
+          } catch (error) {
+            showResult(false, "Upload failed.", error.reasons);
+          } finally {
+            submitButton.disabled = false;
           }
         });
 
-        render();
+        closeButton.addEventListener("click", () => {
+          uploadDialog.close();
+        });
+
+        receipts.refresh();
       })();
     </script>
   </body>
