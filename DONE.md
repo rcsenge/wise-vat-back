@@ -67,3 +67,11 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Branch: feat/wise-vat-by-country
 - Date: 2026-10-17
 - Commits: 712cf0c, c5b0e58
+
+- Task: Containerized the backend and the Caddy frontend with Docker Compose. Ollama stays on the host.
+- Signer: Magyari Ákos's agent
+- Branch: feat/dockerize-backend
+- Date: 2026-10-17
+- Commits: 43339e7, 966c5e1, d4e03d3
+
+---
