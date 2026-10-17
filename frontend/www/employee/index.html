@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#00a4a6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <title>vatback - Employee Scanner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/vendor/neptune/props/custom-media.css" />
+    <link rel="stylesheet" href="/vendor/neptune/props/neptune-tokens.css" />
+    <link rel="stylesheet" href="/vendor/neptune/css/neptune.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body
+    class="bg-[#f5f7fa] font-[Inter,ui-sans-serif,system-ui,sans-serif] text-[#163300] antialiased"
+  >
+    <main class="mx-auto min-h-dvh w-full max-w-5xl px-4 pt-6 pb-10 sm:px-6">
+      <header
+        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <span
+            class="grid h-11 w-11 place-items-center rounded-2xl bg-[#00a4a6] text-white"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6"
+            >
+              <path d="M17 2l4 4-4 4" />
+              <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+              <path d="M7 22l-4-4 4-4" />
+              <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+            </svg>
+          </span>
+          <div>
+            <h1 class="text-xl leading-tight font-semibold tracking-tight">
+              vatback
+            </h1>
+            <p class="text-sm text-[#6b7a78]">Money without borders</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          id="upload-button"
+          class="inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-full border border-[#00a4a6] px-4! py-2! text-sm font-semibold text-[#00a4a6]! transition-colors hover:bg-[#00a4a6]/10"
+        >
+          Add New Document
+        </button>
+      </header>
+
+      <p
+        id="backend-error"
+        class="alert alert-negative mt-6 hidden text-sm"
+      ></p>
+
+      <section aria-labelledby="receipts-heading" class="mt-8">
+        <h2 id="receipts-heading" class="text-lg font-semibold">
+          Scanned receipts
+        </h2>
+        <ul id="receipt-list" class="mt-4 list-none space-y-3 pl-0!"></ul>
+      </section>
+
+      <section
+        id="empty-state"
+        class="mt-10 rounded-2xl bg-white p-10 shadow-sm"
+      >
+        <div class="mx-auto max-w-sm text-center">
+          <div
+            class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#00a4a6]/10 text-[#00a4a6]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-8 w-8"
+            >
+              <path
+                d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+              />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+              <path d="M12 17.5v-11" />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-base font-semibold">No receipts yet</h3>
+          <p class="mt-1 text-sm text-[#6b7a78]">
+            Tap Add New Document to upload your first invoice.
+          </p>
+        </div>
+      </section>
+
+      <footer
+        class="mt-10 border-t border-[#e6e9ea] pt-4 text-xs text-[#6b7a78]"
+      >
+        <p>
+          The backend checks every invoice and stores the result. Open the
+          <a href="/employer" class="font-semibold text-[#00a4a6]"
+            >employer review</a
+          >
+          to see the claim summary per country.
+        </p>
+      </footer>
+    </main>
+
+    <dialog
+      id="upload-dialog"
+      class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-white p-5 text-[#163300] shadow-2xl [&::backdrop]:bg-black/60"
+    >
+      <h2 class="text-base font-semibold">Upload invoice</h2>
+      <p class="mt-1 text-xs text-[#6b7a78]">
+        Select the invoice JSON file. A receipt photo is optional.
+      </p>
+      <form id="upload-form" class="mt-4 space-y-3">
+        <div>
+          <label for="invoice-input" class="mb-1 block text-sm font-medium">
+            Invoice JSON
+          </label>
+          <input
+            id="invoice-input"
+            type="file"
+            accept=".json,application/json"
+            required
+            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
+          />
+        </div>
+        <div>
+          <label for="photo-input" class="mb-1 block text-sm font-medium">
+            Receipt photo (optional)
+          </label>
+          <input
+            id="photo-input"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            class="w-full rounded-xl border border-[#e6e9ea] bg-white px-3 py-2.5 text-sm"
+          />
+        </div>
+        <img
+          id="photo-preview"
+          alt="Receipt preview"
+          class="hidden h-36 w-full rounded-2xl bg-[#e6e9ea] object-cover"
+        />
+        <div id="upload-result" class="hidden">
+          <p id="upload-result-title" class="font-semibold"></p>
+          <ul
+            id="upload-result-reasons"
+            class="mt-2 list-disc space-y-1 pl-5 text-xs"
+          ></ul>
+        </div>
+        <div class="flex gap-3 pt-1">
+          <button
+            type="button"
+            id="close-button"
+            class="flex-1 rounded-full border border-[#e6e9ea] px-4! py-2.5! text-sm font-semibold text-[#6b7a78]! transition-colors hover:bg-[#f5f7fa]"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            id="submit-button"
+            class="flex-1 rounded-full bg-[#00a4a6] px-4! py-2.5! text-sm font-semibold text-white! shadow-sm transition-colors hover:bg-[#009094] disabled:opacity-50"
+          >
+            Check invoice
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog
+      id="document-dialog"
+      class="m-auto max-w-lg rounded-3xl bg-white p-3 shadow-2xl [&::backdrop]:bg-black/60"
+    >
+      <img
+        id="document-image"
+        alt="Scanned receipt"
+        class="max-h-[75vh] w-full rounded-2xl object-contain"
+      />
+    </dialog>
+
+    <script src="/api.js"></script>
+    <script src="/receipts.js"></script>
+    <script>
+      (() => {
+        "use strict";
+
+        const MAX_IMAGE_DIMENSION = 800;
+        const JPEG_QUALITY = 0.7;
+        const RESULT_APPROVED_CLASS =
+          "rounded-2xl bg-[#e2f6d5] p-4 text-sm text-[#163300]";
+        const RESULT_REJECTED_CLASS =
+          "rounded-2xl bg-[#ffe7e5] p-4 text-sm text-[#a8200d]";
+
+        const api = window.vatbackApi;
+        const receipts = window.vatbackReceipts.create({ approvedOnly: false });
+
+        const uploadButton = document.getElementById("upload-button");
+        const uploadDialog = document.getElementById("upload-dialog");
+        const uploadForm = document.getElementById("upload-form");
+        const invoiceInput = document.getElementById("invoice-input");
+        const photoInput = document.getElementById("photo-input");
+        const photoPreview = document.getElementById("photo-preview");
+        const uploadResult = document.getElementById("upload-result");
+        const uploadResultTitle = document.getElementById(
+          "upload-result-title",
+        );
+        const uploadResultReasons = document.getElementById(
+          "upload-result-reasons",
+        );
+        const submitButton = document.getElementById("submit-button");
+        const closeButton = document.getElementById("close-button");
+
+        let photoDataUrl = null;
+
+        const downscaleImage = (file) => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const image = new Image();
+              image.onload = () => {
+                const scale = Math.min(
+                  1,
+                  MAX_IMAGE_DIMENSION / Math.max(image.width, image.height),
+                );
+                const width = Math.max(1, Math.round(image.width * scale));
+                const height = Math.max(1, Math.round(image.height * scale));
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(image, 0, 0, width, height);
+                resolve(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
+              };
+              image.onerror = reject;
+              image.src = reader.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        };
+
+        const showResult = (approved, title, reasons) => {
+          uploadResult.className = approved
+            ? RESULT_APPROVED_CLASS
+            : RESULT_REJECTED_CLASS;
+          uploadResultTitle.textContent = title;
+          uploadResultReasons.replaceChildren(
+            ...reasons.map((reason) => {
+              const item = document.createElement("li");
+              item.textContent = reason;
+              return item;
+            }),
+          );
+        };
+
+        const describeResult = (result) => {
+          if (result.status !== "approved") {
+            return "Rejected.";
+          }
+          const totals = api.sumByCurrency(
+            result.country_totals,
+            (total) => total.refundable_vat_total,
+          );
+          return `Approved. Refundable VAT: ${api.formatTotals(totals)}`;
+        };
+
+        uploadButton.addEventListener("click", () => {
+          uploadForm.reset();
+          photoDataUrl = null;
+          photoPreview.classList.add("hidden");
+          uploadResult.className = "hidden";
+          submitButton.disabled = false;
+          uploadDialog.showModal();
+        });
+
+        photoInput.addEventListener("change", async () => {
+          const file = photoInput.files[0];
+          photoDataUrl = null;
+          photoPreview.classList.add("hidden");
+          if (!file || !file.type.startsWith("image/")) {
+            return;
+          }
+          photoDataUrl = await downscaleImage(file);
+          photoPreview.src = photoDataUrl;
+          photoPreview.classList.remove("hidden");
+        });
+
+        uploadForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const invoiceFile = invoiceInput.files[0];
+          if (!invoiceFile) {
+            showResult(false, "Select a file.", [
+              "The invoice JSON is required.",
+            ]);
+            return;
+          }
+          submitButton.disabled = true;
+          try {
+            const result = await api.uploadInvoice(invoiceFile, photoDataUrl);
+            showResult(
+              result.status === "approved",
+              describeResult(result),
+              result.reasons,
+            );
+            await receipts.refresh();
+          } catch (error) {
+            showResult(false, "Upload failed.", error.reasons);
+          } finally {
+            submitButton.disabled = false;
+          }
+        });
+
+        closeButton.addEventListener("click", () => {
+          uploadDialog.close();
+        });
+
+        receipts.refresh();
+      })();
+    </script>
+  </body>
+</html>

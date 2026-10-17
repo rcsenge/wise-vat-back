@@ -15,9 +15,9 @@ The app uses pnpm and the Wise Neptune CSS design system.
 3. Start the backend on port 8000: `make dev-backend` in `../backend`.
 4. Find this PC's LAN IP with `ipconfig`.
 5. Open `http://<LAN-IP>:8080` in Safari on the iPhone.
-6. Tap Add New Document. Select an invoice JSON file.
+6. Open `/employee`. Tap Add New Document. Select an invoice JSON file.
 
-The `Caddyfile` serves clean URLs. It maps `/` to `index.html` and `/employer` to `employer.html`.
+The `Caddyfile` serves clean URLs. It maps `/` to the landing index, `/employee` to the employee app, and `/employer` to the employer review.
 
 The file-input capture works over plain HTTP on iOS Safari. It does not need HTTPS.
 

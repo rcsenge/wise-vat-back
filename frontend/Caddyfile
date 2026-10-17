@@ -2,6 +2,14 @@
 :8080 {
 	root * www
 	encode gzip
+
+	# The landing index lives only at the root path.
+	@indexaccess path /index /index.html
+	respond @indexaccess 404
+
+	# Serve the employee directory without a trailing-slash redirect.
+	rewrite /employee /employee/index.html
+
 	try_files {path} {path}.html
 	file_server
 }
