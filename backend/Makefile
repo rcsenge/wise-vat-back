@@ -45,7 +45,7 @@ golden:
 	uv run python -m seed.generate_golden
 
 corpus-docs:
-	uv run --with reportlab python -m seed.generate_documents
+	uv run python -m seed.generate_documents
 
 demo-process:
 	uv run python -m seed.process_demo
