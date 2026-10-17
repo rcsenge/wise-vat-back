@@ -36,18 +36,18 @@ Set up the machine that runs the backend once:
 2. Download the model (6.1 GB): `ollama pull qwen3-vl:8b`.
 3. Keep the Ollama app open. Check it with `curl http://localhost:11434/api/tags`.
 
-The backend renders up to 3 PDF pages as images. It also sends the PDF text layer. Ollama returns JSON in the shape of `backend/schemas/extracted_invoice.schema.json`. The backend validates the JSON and runs the VAT back rules.
+The backend renders up to 3 PDF pages as images. It also sends the PDF text layer. Ollama returns JSON in the shape of `schemas/extracted_invoice.schema.json`. The backend validates the JSON and runs the VAT back rules.
 
 Settings in `.env`: `OLLAMA_URL`, `OLLAMA_MODEL`, `OLLAMA_TIMEOUT_SECONDS`. A smaller machine can use `qwen3-vl:4b`.
 
-Sample PDFs live in `backend/seed/documents/`:
+Sample PDFs live in `seed/documents/`:
 
 | File | Expected result |
 | --- | --- |
 | `pass_de_hotel_berlin.pdf` | approved, €22.50 |
 | `fail_at_restaurant_no_vat_number.pdf` | rejected, no supplier VAT number |
 
-Each PDF has an `.expected.json` file with the correct extraction. The tests use it in place of the AI. Regenerate the PDFs with `cd backend && uv run --with reportlab python -m seed.make_documents`.
+Each PDF has an `.expected.json` file with the correct extraction. The tests use it in place of the AI. Regenerate the PDFs with `uv run --with reportlab python -m seed.make_documents`.
 
 ## Testing
 
@@ -68,15 +68,15 @@ Regenerate the golden sidecars with `make golden`. Review the sidecars by hand a
 ## Layout
 
 ```
-backend/app/
+app/
   api/           thin routers (health, accounts, rates, simulate, events/SSE)
   domain/        PURE VAT back rules: country + category -> line decision with a reason. No I/O. Unit-tested.
   integrations/  WiseClient protocol + mock + real (httpx), factory by WISE_MODE; Ollama invoice reader
   models/        SQLModel tables (SQLite by default)
   schemas/       API contracts (Pydantic), e.g. ExtractedInvoice from image processing
   simulator/     fake events behind /simulate/* (also stands in for webhooks)
-backend/schemas/ ExtractedInvoice JSON Schema for the image-processing side
-backend/seed/    seed script, cached fallback rates, example invoices, sample invoices, sample invoice PDFs
+schemas/         ExtractedInvoice JSON Schema for the image-processing side
+seed/            seed script, cached fallback rates, example invoices, sample invoices, sample invoice PDFs
 ```
 
 ## Conventions

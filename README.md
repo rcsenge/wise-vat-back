@@ -63,20 +63,21 @@ sigint-monorepo/
 ├── init                        One-step launcher: Ollama, model, Docker Compose
 ├── docker-compose.yml          Backend and frontend containers
 ├── backend/                    Python project (FastAPI)
-│   ├── Makefile                install, seed, dev-backend, test
+│   ├── Makefile                install, seed, dev-backend, test, golden, eval-ai
 │   ├── .env.example            Settings template
-│   └── backend/
-│       ├── app/
-│       │   ├── api/            Routers: invoices, receipts, claims, health, placeholders
-│       │   ├── domain/         Pure VAT back rules and Money type. No I/O.
-│       │   ├── integrations/   Ollama invoice reader, upload extraction, VIES mock, Wise client
-│       │   ├── models/         SQLModel tables (SQLite)
-│       │   ├── schemas/        API contracts, ExtractedInvoice
-│       │   └── services/       Invoice flow: validate → VIES → match → rules → store
-│       ├── schemas/            extracted_invoice.schema.json (the AI output contract)
-│       ├── seed/               Seed script, sample invoices, sample PDFs and their generator
-│       ├── tests/              Pytest suite
-│       └── Dockerfile, docker/entrypoint.sh
+│   ├── pyproject.toml, uv.lock Dependencies
+│   ├── app/
+│   │   ├── api/                Routers: invoices, receipts, claims, health, placeholders
+│   │   ├── domain/             Pure VAT back rules and Money type. No I/O.
+│   │   ├── integrations/       Ollama invoice reader, upload extraction, VIES mock, Wise client
+│   │   ├── models/             SQLModel tables (SQLite)
+│   │   ├── schemas/            API contracts, ExtractedInvoice
+│   │   └── services/           Invoice flow: validate → VIES → match → rules → store
+│   ├── schemas/                extracted_invoice.schema.json (the AI output contract)
+│   ├── seed/                   Seed script, sample invoices, sample PDFs and their generator
+│   ├── evaluation/             AI extraction accuracy script
+│   ├── tests/                  Pytest suite
+│   └── Dockerfile, docker/entrypoint.sh
 └── frontend/                   Static site (HTML, Tailwind CSS v4, Wise Neptune CSS)
     ├── Caddyfile               Clean URLs: /, /employee, /employer
     ├── Dockerfile
@@ -165,10 +166,10 @@ curl http://localhost:11434/api/tags
 
 1. A PDF becomes up to 3 page images. The backend also reads the PDF text layer and adds it to the prompt for exact numbers.
 2. A photo is shrunk to at most 2000 px and sent as JPEG.
-3. The request sends `backend/backend/schemas/extracted_invoice.schema.json` in the Ollama `format` field. Ollama then forces the answer into that JSON shape.
+3. The request sends `backend/schemas/extracted_invoice.schema.json` in the Ollama `format` field. Ollama then forces the answer into that JSON shape.
 4. Pydantic validates the answer again. A bad answer gives a readable error, never silent wrong data.
 
-The code lives in `backend/backend/app/integrations/ollama_reader.py`.
+The code lives in `backend/app/integrations/ollama_reader.py`.
 
 ---
 
@@ -186,7 +187,7 @@ make seed          # reset the database, load demo transactions
 make dev-backend   # http://localhost:8000, reloads on code changes
 ```
 
-Without `make` (for example on Windows), run the same steps by hand from `backend/backend`:
+Without `make` (for example on Windows), run the same steps by hand from `backend`:
 
 ```bash
 uv sync --extra dev
@@ -229,7 +230,7 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 
 1. Open http://localhost:8080/employee.
 2. Tap **Add New Document**.
-3. Tap **Take photo** to photograph a receipt, or **PDF or photo** to select a file. A sample PDF is in `backend/backend/seed/documents/`.
+3. Tap **Take photo** to photograph a receipt, or **PDF or photo** to select a file. A sample PDF is in `backend/seed/documents/`.
    - On a phone, **Take photo** opens the camera app.
    - On a laptop, **Take photo** shows a live camera in the dialog. Tap **Capture**. The live camera needs `localhost` or https. The browser asks for camera access once.
 4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
@@ -246,7 +247,7 @@ The seed creates one demo company, *Példa Tech Kft.*, with one account per curr
 
 ### Sample PDFs (for the AI)
 
-`backend/backend/seed/documents/`
+`backend/seed/documents/`
 
 | File | Expected result |
 | --- | --- |
@@ -256,13 +257,13 @@ The seed creates one demo company, *Példa Tech Kft.*, with one account per curr
 Each PDF has an `.expected.json` file with the correct extraction. The tests use it in place of the AI. Regenerate the PDFs with:
 
 ```bash
-cd backend/backend
+cd backend
 uv run --with reportlab python -m seed.make_documents
 ```
 
 ### Invoice JSON files (API and tests only)
 
-`backend/backend/seed/invoices/`. The upload does not accept JSON. Send these files to `POST /invoices`, for example in the Swagger UI.
+`backend/seed/invoices/`. The upload does not accept JSON. Send these files to `POST /invoices`, for example in the Swagger UI.
 
 | File | Expected result |
 | --- | --- |
@@ -273,7 +274,7 @@ uv run --with reportlab python -m seed.make_documents
 
 ### Multi-country samples
 
-`backend/backend/seed/sample_invoices/` holds 42 invoices from 9 countries. They fill the employer view with realistic data. 37 are approved. Some approvals refund only part of the VAT, for example `fr_hotel_paris.json` (€3.60, France refunds no VAT on the hotel room) and `pl_fuel_orlen_poznan.json` (36.80 PLN, Poland refunds 50% on fuel). Five show a rejection:
+`backend/seed/sample_invoices/` holds 42 invoices from 9 countries. They fill the employer view with realistic data. 37 are approved. Some approvals refund only part of the VAT, for example `fr_hotel_paris.json` (€3.60, France refunds no VAT on the hotel room) and `pl_fuel_orlen_poznan.json` (36.80 PLN, Poland refunds 50% on fuel). Five show a rejection:
 
 | File | Rejection reason |
 | --- | --- |
@@ -285,13 +286,13 @@ uv run --with reportlab python -m seed.make_documents
 
 ### Invoice contract
 
-Every path ends in the same contract: `backend/backend/schemas/extracted_invoice.schema.json`, mirrored by the Pydantic model `ExtractedInvoice`. Amounts are decimal strings (`"188.80"`), never floats. A `null` value means "not on the document".
+Every path ends in the same contract: `backend/schemas/extracted_invoice.schema.json`, mirrored by the Pydantic model `ExtractedInvoice`. Amounts are decimal strings (`"188.80"`), never floats. A `null` value means "not on the document".
 
 ---
 
 ## VAT back rules
 
-The rules live in `backend/backend/app/domain/vat_rules.py`. They are pure functions with unit tests.
+The rules live in `backend/app/domain/vat_rules.py`. They are pure functions with unit tests.
 
 - **Supported countries:** Austria, Germany, France, Italy, the Netherlands, Poland, Czechia, Denmark, Sweden. The country of the card transaction decides the rules.
 - **Categories:** the ten expense codes of Directive 2008/9/EC (fuel, vehicle hire, vehicle expenses, road toll, travel, accommodation, food and drink, fair admission, entertainment, other).
@@ -368,7 +369,7 @@ cd backend
 make test
 ```
 
-Or, from `backend/backend`: `uv run pytest`. The suite has 170 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
+Or, from `backend`: `uv run pytest`. The suite has 170 tests. It covers the VAT rules, the invoice schema, the full invoice flow, the upload endpoint, CORS, and the Ollama reader. The tests never touch the network. A fake Ollama (`httpx.MockTransport`) stands in for the model, and the sample PDFs run with their expected extractions.
 
 Frontend formatting:
 

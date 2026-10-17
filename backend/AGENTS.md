@@ -15,7 +15,7 @@ Claude-specific operating notes live here: @CLAUDE.md
 - **Test Runner:** Pytest
 - **Linting:** Ruff
 - **Type Checking:** mypy
-- **Python Tooling:** uv (lockfile at `backend/uv.lock`)
+- **Python Tooling:** uv (lockfile at `uv.lock`)
 - **Configuration:** environment variables and `.env` files
 - **OpenAPI Contract:** `/openapi.json` drives the frontend project
 - **Demo Goal:** A demoable backend that connects to the frontend

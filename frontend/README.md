@@ -34,4 +34,4 @@ The compose stack serves this frontend with Caddy inside Docker. It publishes th
 - `GET /receipts`: both pages list the stored receipts.
 - `GET /claims`: the employer page shows the refundable VAT per country.
 
-Sample invoices live in `../backend/backend/seed/invoices/` (JSON) and `../backend/backend/seed/documents/` (PDF). Read `../backend/README.md` to set up the local AI. Run `make seed` in `../backend` to reset the demo.
+Sample invoices live in `../backend/seed/invoices/` (JSON) and `../backend/seed/documents/` (PDF). Read `../backend/README.md` to set up the local AI. Run `make seed` in `../backend` to reset the demo.
