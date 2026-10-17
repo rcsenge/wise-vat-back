@@ -42,3 +42,8 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: rcsenge's agent
 - Branch: feat/sample-vat-countries
 - Date: 2026-10-17
+
+- Task: Restyle employer review to Wise design with per-country VAT. Make the employee app responsive.
+- Signer: rcsenge's agent
+- Branch: feat/wise-vat-by-country
+- Date: 2026-10-17
