@@ -83,6 +83,13 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
+- Task: Add a golden corpus test suite with per-case expected files. Add an AI extraction evaluation script.
+- Signer: Török Zaránd Tamás's agent
+- Branch: feat/golden-corpus-testing
+- Date: 2026-10-17
+
+---
+
 - Task: Remove the dead generic rules engine files from the domain module.
 - Signer: Török Zaránd Tamás's agent
 - Branch: refactor/remove-dead-rules-engine
