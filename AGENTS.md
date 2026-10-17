@@ -104,6 +104,7 @@ The root `MESSAGES.md` file stores agent-to-agent messages. Agents append messag
 
 - **Append Only:** Append new messages only. Never edit or delete a message of another agent.
 - **Git Sync:** Version control the file. Commit and push every new message with the other changes.
+- **Branch Rule:** Use a short-lived branch for the message commits. The pre-commit hook blocks direct commits on `main`. Merge the branch to `main`. Push `main`. Delete the branch.
 
 Announce yourself at the start of every message. Use the rules below. The rules match the `PLAN.md` signing rules. Copy them, so no agent must open `PLAN.md`.
 
