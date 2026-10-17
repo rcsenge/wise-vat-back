@@ -18,24 +18,33 @@
     <link rel="stylesheet" href="vendor/neptune/props/neptune-tokens.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="bg-surface-screen text-ink-primary font-sans antialiased">
+  <body
+    class="bg-surface-screen text-ink-primary font-sans antialiased lg:overflow-hidden"
+  >
+    <progress
+      id="countdown-progress"
+      class="bg-surface-neutral [&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-neutral [&::-webkit-progress-value]:bg-brand-bright-green fixed left-0 top-0 z-10 h-1.5 w-full appearance-none"
+      max="300"
+      value="0"
+      aria-label="Progress"
+    ></progress>
+
     <main
-      class="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]"
+      class="grid min-h-dvh w-full grid-rows-[auto_1fr] lg:h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-1"
     >
-      <progress
-        id="countdown-progress"
-        class="bg-surface-neutral [&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-neutral [&::-webkit-progress-value]:bg-brand-bright-green h-1 w-full appearance-none overflow-hidden rounded-full [&::-moz-progress-bar]:rounded-full [&::-webkit-progress-value]:rounded-full"
-        max="300"
-        value="0"
-        aria-label="Progress"
-      ></progress>
+      <div
+        class="aspect-square w-full lg:order-2 lg:aspect-auto lg:h-full"
+        aria-hidden="true"
+      >
+        <canvas id="countdown-globe" class="block h-full w-full"></canvas>
+      </div>
 
       <section
-        class="flex flex-1 flex-col items-center justify-center text-center"
+        class="flex flex-col justify-center px-4 pb-10 sm:px-8 lg:order-1 lg:pb-0 lg:pl-[7vw] lg:pr-0"
       >
         <p
           id="countdown-timer"
-          class="bg-brand-light-green text-brand-forest-green flex h-12 items-center rounded-full px-6 text-xl font-semibold tabular-nums"
+          class="bg-brand-light-green text-brand-forest-green flex h-14 items-center self-start rounded-full px-7 text-2xl font-semibold tabular-nums lg:h-16 lg:px-8 lg:text-3xl"
           role="timer"
           aria-label="Timer"
         >
@@ -43,30 +52,36 @@
         </p>
         <p
           id="countdown-amount"
-          class="font-display mt-10 text-[80px] font-black tabular-nums leading-[0.85] tracking-[-0.015em]"
+          class="font-display mt-8 text-[22vw] font-black tabular-nums leading-[0.85] tracking-[-0.02em] lg:mt-12 lg:text-[9.5vw]"
         >
           0
         </p>
-        <p class="text-ink-secondary mt-4 text-lg font-semibold">EUR</p>
-      </section>
+        <p
+          class="text-ink-secondary mt-4 text-2xl font-semibold lg:mt-6 lg:text-3xl"
+        >
+          EUR
+        </p>
 
-      <div class="flex flex-col gap-3">
-        <button
-          id="countdown-button-start"
-          type="button"
-          class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed disabled:bg-surface-neutral disabled:text-ink-tertiary h-14 w-full rounded-full text-lg font-semibold"
-        >
-          Start
-        </button>
-        <button
-          id="countdown-button-reset"
-          type="button"
-          class="bg-brand-light-green text-brand-forest-green active:bg-brand-light-green-pressed h-14 w-full rounded-full text-lg font-semibold"
-        >
-          Reset
-        </button>
-      </div>
+        <div class="mt-10 flex gap-3 lg:mt-16">
+          <button
+            id="countdown-button-start"
+            type="button"
+            class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed disabled:bg-surface-neutral disabled:text-ink-tertiary h-14 rounded-full px-10 text-lg font-semibold"
+          >
+            Start
+          </button>
+          <button
+            id="countdown-button-reset"
+            type="button"
+            class="bg-brand-light-green text-brand-forest-green active:bg-brand-light-green-pressed h-14 rounded-full px-10 text-lg font-semibold"
+          >
+            Reset
+          </button>
+        </div>
+      </section>
     </main>
     <script src="countdown.js"></script>
+    <script src="vendor/globe/topojson-client.min.js"></script>
+    <script type="module" src="globe.js"></script>
   </body>
 </html>
