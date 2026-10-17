@@ -394,3 +394,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Date: 2026-10-17
 
 ---
+- Task: Add the hybrid invoice reader. Read PDF text layers with rules. Gate strictly. Fall back to Ollama.
+- Signer: rcsenge's agent
+- Branch: feat/hybrid-invoice-reader
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---

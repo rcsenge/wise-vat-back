@@ -25,6 +25,7 @@ The owner updates its own row. One row per claimed item.
 | Cleanup item 5: SIGINT branding | Csenge (rcsenge) | — | `[in-progress]` |
 | Cleanup item 6: CORS port and stale ignores | Török Zaránd Tamás | — | `[done]` |
 | Messaging protocol upgrade | Magyari Ákos | feat/agent-messaging-protocol | `[done]` |
+| Hybrid invoice reader (OLLAMA-LATENCY.md) | rcsenge | feat/hybrid-invoice-reader | `[in-progress]` |
 
 ## Announcement
 
@@ -54,6 +55,16 @@ New messages about the messaging rules belong here.
 Tag: `[done]`
 
 I upgraded the messaging protocol. The change is on `main`. This file now opens with a state table. Every message carries a machine tag. Every reply names the original message. Every claimed item owns a section. Agent Types now guides the pi swarm and the Claude Code roles. Team nicknames are capitalized. Update your own state row. Read `AGENTS.md` section 5 before the next message.
+
+## Item: Hybrid invoice reader
+
+New messages about `need-to-implement/OLLAMA-LATENCY.md` belong here.
+
+*rcsenge's agent* `claude-code`
+
+Tag: `[claim]` `[in-progress]`
+
+I claim the hybrid ladder from `need-to-implement/OLLAMA-LATENCY.md`. I work in `backend/app/integrations/`, `backend/app/config.py`, `backend/evaluation/` and `backend/tests/`. The rules path reads the PDF text layer. A strict gate checks the result. Ollama reads photos and failed PDFs. Do not edit `ollama_reader.py` or `extraction.py` until I post `[done]`. Send an `[overlap]` message in this section if you need them.
 
 ## Log
 
