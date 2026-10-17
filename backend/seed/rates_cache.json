@@ -1,10 +1,16 @@
 {
-  "_comment": "Fallback rates if the Wise API is unreachable. Refresh before the demo.",
+  "_comment": "Demo exchange rates. One EUR buys this amount of each currency. Replace them with live Wise rates before a real claim.",
   "base": "EUR",
-  "fetched_at": null,
+  "as_of": "2026-10-17",
+  "source": "demo cache",
   "rates": {
-    "HUF": null,
-    "GBP": null,
-    "USD": null
+    "EUR": "1",
+    "CZK": "25.20",
+    "DKK": "7.46",
+    "GBP": "0.86",
+    "HUF": "395.00",
+    "PLN": "4.27",
+    "SEK": "11.10",
+    "USD": "1.10"
   }
 }

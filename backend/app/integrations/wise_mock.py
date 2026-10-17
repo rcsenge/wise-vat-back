@@ -2,11 +2,12 @@
 from decimal import Decimal
 from typing import Any
 
+from app.integrations.rates_cache import cross_rate
+
 
 class MockWiseClient:
     def get_rate(self, source: str, target: str) -> Decimal:
-        # TODO: read from seed/rates_cache.json
-        raise NotImplementedError
+        return cross_rate(source, target)
 
     def list_balances(self, profile_id: int) -> list[dict[str, Any]]:
         # TODO: canned multi-currency balances
