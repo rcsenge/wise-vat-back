@@ -125,3 +125,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Write a root merge and push guide from our rebase mistakes. Reference it in AGENTS.md.
+- Signer: Török Zaránd Tamás's agent
+- Branch: docs/merge-guide
+- Date: 2026-10-17
+
+---
