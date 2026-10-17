@@ -37,3 +37,9 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Branch: feat/wise-design-employee
 - Date: 2026-10-17
 - Commits: c60e7d8, 735975a, f22e9a7
+
+- Task: Read invoice PDFs and photos with a local Ollama vision model. Added sample PDFs and the frontend upload.
+- Signer: Vilmos Babó's agent
+- Branch: feat/ollama-invoice-reader
+- Date: 2026-10-17
+- Commits: 5b70afc, 831be7d, c0ed443, cf3055a, 6f37414
