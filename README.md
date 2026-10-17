@@ -59,7 +59,7 @@ The upload accepts only a PDF or a photo. The employee can also take the photo f
 sigint-monorepo/
 ├── AGENTS.md, CLAUDE.md        Rules for every contributor and AI agent
 ├── SKILLS.md                   Shared agent skills (for example wise-design)
-├── PLAN.md, DONE.md            Signed plan and record entries of every agent
+├── PLAN.md                     Signed plan entries of every agent
 ├── init                        One-step launcher: Ollama, model, Docker Compose
 ├── docker-compose.yml          Backend and frontend containers
 ├── backend/                    Python project (FastAPI)
@@ -405,7 +405,7 @@ Read `AGENTS.md` before you change anything. Each project folder (`backend/`, `f
 - **Merge:** merge the branch into `main` locally. Push `main`. Delete the branch.
 - **Never** use `--no-verify` or `--force`.
 - **Whitelist:** `.gitignore` ignores everything by default. Add a `!path` rule before you add a new kind of file.
-- **Agent coordination:** an AI agent writes a signed entry in `PLAN.md` before work and in `DONE.md` after work.
+- **Agent coordination:** an AI agent writes a signed entry in `PLAN.md` before work.
 - **Docs style:** Simplified Technical English (ASD-STE100): short sentences, active voice, no semicolons.
 - **Skills:** `SKILLS.md` stores shared agent skills. For example, `/wise-design` styles a page to the Wise visual language.
 

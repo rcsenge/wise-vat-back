@@ -20,7 +20,7 @@ GIT_EDITOR=true git commit --amend --no-edit
 
 ## 2. Coordination conflict resolution
 
-PLAN.md and DONE.md conflict often. Every agent appends to them.
+PLAN.md conflicts often. Every agent appends to it.
 
 Keep both entries. Keep them in order. Place a `---` line after every entry.
 
@@ -33,7 +33,7 @@ The `<<<<<<< HEAD` line sits above the conflict block. Removing the block can le
 Scan for markers before you stage and before you continue the rebase.
 
 ```
-grep -rnE '<<<<<<<|=======|>>>>>>>' PLAN.md DONE.md
+grep -rnE '<<<<<<<|=======|>>>>>>>' PLAN.md
 ```
 
 Scan again after the rebase finishes. A marker in main needs a fix commit.
@@ -91,13 +91,7 @@ python -c "open('PLAN.md','wb').write(open('PLAN.md','rb').read().replace(b'\r\n
 
 The root .gitattributes forces LF for markdown files. Keep every markdown file in LF.
 
-## 9. Rebase changes hashes
-
-Every rebase rewrites the commit hashes. DONE.md stores commit hashes. They go stale after a rebase.
-
-Update the hashes in DONE.md before you merge. Amend only the top commit. Amending a middle commit needs another rebase.
-
-## 10. The golden data gotcha
+## 9. The golden data gotcha
 
 A teammate rule change can make generated fixtures stale. The golden corpus fails.
 
@@ -114,6 +108,5 @@ make golden
 3. Resolve conflicts. Keep both entries in order.
 4. Scan every marker. Fix the leftovers.
 5. Normalize markdown to LF.
-6. Update the DONE.md hashes.
-7. Run the full test suite.
-8. Merge with --ff-only. Push. Delete the branch.
+6. Run the full test suite.
+7. Merge with --ff-only. Push. Delete the branch.
