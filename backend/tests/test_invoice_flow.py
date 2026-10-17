@@ -15,6 +15,13 @@ def test_at_hotel_approved(client):
     assert len([line for line in body["line_outcomes"] if line["eligible"]]) == 3
 
 
+def test_country_total_equals_sum_of_eligible_lines(client):
+    body = client.post("/invoices", json=load_invoice("at_hotel_vienna.json")).json()
+    eligible = [Decimal(line["refundable_vat"]) for line in body["line_outcomes"] if line["eligible"]]
+    total = Decimal(body["country_totals"][0]["refundable_vat_total"])
+    assert total == sum(eligible, Decimal("0"))
+
+
 def test_de_taxi_rejected_missing_vat(client):
     response = client.post("/invoices", json=load_invoice("de_taxi_receipt_no_vat_id.json"))
     body = response.json()

@@ -9,6 +9,7 @@ from sqlmodel import Session, col, select
 from app.config import settings
 from app.domain import vat_rules
 from app.domain.claim_deadline import claim_deadline, expiry_reason, is_expired
+from app.domain.money import Money
 from app.integrations.vies import validate_vat_number
 from app.models.invoice_document import InvoiceDocument
 from app.models.invoice_record import InvoiceRecord
@@ -126,8 +127,10 @@ def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResul
         )
 
     outcomes = []
+    refundables: list[Money] = []
+    currency = invoice.currency
     for index, line in enumerate(invoice.lines):
-        decision = vat_rules.evaluate_line(transaction.country, line.category, index, line.vat_amount, invoice.currency)
+        decision = vat_rules.evaluate_line(transaction.country, line.category, index, line.vat_amount, currency)
         outcomes.append(
             LineOutcome(
                 line_index=decision.line_index,
@@ -138,18 +141,19 @@ def process_invoice(session: Session, invoice: ExtractedInvoice) -> InvoiceResul
                 reason=decision.reason,
             )
         )
+        if decision.eligible:
+            refundables.append(decision.refundable_vat)
 
-    eligible = [outcome for outcome in outcomes if outcome.eligible]
-    total = sum((outcome.refundable_vat for outcome in eligible), Decimal("0"))
+    total = sum(refundables, Money.zero(currency))
     country_total = CountryTotal(
         country=transaction.country,
-        currency=invoice.currency,
-        refundable_vat_total=total.quantize(_CENT),
-        eligible_line_count=len(eligible),
+        currency=currency,
+        refundable_vat_total=total.rounded().amount,
+        eligible_line_count=len(refundables),
         transaction_ids=[transaction.id],
     )
 
-    if not eligible:
+    if not refundables:
         return InvoiceResult(
             status="rejected",
             invoice_number=invoice.invoice_number,
@@ -200,7 +204,10 @@ def submit_invoice(
 ) -> InvoiceResult:
     """Run the full flow for one invoice. Store the result and the document. Return the result."""
     result = process_invoice(session, submission)
-    refundable = sum((total.refundable_vat_total for total in result.country_totals), Decimal("0"))
+    refundable = sum(
+        (Money(total.refundable_vat_total, total.currency) for total in result.country_totals),
+        Money.zero(submission.currency),
+    )
     matched = result.matched_transaction
     record = InvoiceRecord(
         status=result.status,
@@ -209,7 +216,7 @@ def submit_invoice(
         merchant=submission.supplier.name,
         currency=submission.currency,
         gross_amount=submission.totals.gross_amount,
-        refundable_vat=refundable,
+        refundable_vat=refundable.amount,
         country=matched.country if matched else None,
         transaction_id=matched.transaction_id if matched else None,
         image_data_url=submission.image_data_url,
@@ -247,7 +254,10 @@ def _add_country_total(totals: dict[tuple[str, str], CountryTotal], country_tota
     totals[key] = CountryTotal(
         country=current.country,
         currency=current.currency,
-        refundable_vat_total=(current.refundable_vat_total + country_total.refundable_vat_total).quantize(_CENT),
+        refundable_vat_total=(
+            Money(current.refundable_vat_total, current.currency)
+            + Money(country_total.refundable_vat_total, country_total.currency)
+        ).rounded().amount,
         eligible_line_count=current.eligible_line_count + country_total.eligible_line_count,
         transaction_ids=current.transaction_ids + country_total.transaction_ids,
     )
@@ -270,15 +280,15 @@ def compute_claims(session: Session) -> ClaimsSummary:
     totals: dict[tuple[str, str], CountryTotal] = {}
     expired_totals: dict[tuple[str, str], CountryTotal] = {}
     # One refund period per country, currency and invoice year. Each period has its own deadline.
-    period_totals: dict[tuple[str, str, int], tuple[Decimal, int]] = {}
+    period_totals: dict[tuple[str, str, int], tuple[Money, int]] = {}
     for result_json, issue_date in session.exec(approved):
         expired = _is_record_expired(issue_date, today)
         for country_total in InvoiceResult.model_validate_json(result_json).country_totals:
             _add_country_total(expired_totals if expired else totals, country_total)
             if issue_date is not None and not expired:
                 key = (country_total.country, country_total.currency, issue_date.year)
-                amount, count = period_totals.get(key, (Decimal("0"), 0))
-                period_totals[key] = (amount + country_total.refundable_vat_total, count + 1)
+                amount, count = period_totals.get(key, (Money.zero(country_total.currency), 0))
+                period_totals[key] = (amount + Money(country_total.refundable_vat_total, country_total.currency), count + 1)
     periods = sorted(
         (
             ClaimPeriod(
@@ -287,7 +297,7 @@ def compute_claims(session: Session) -> ClaimsSummary:
                 year=year,
                 period_start=date(year, 1, 1),
                 claim_deadline=claim_deadline(date(year, 1, 1)),
-                refundable_vat_total=amount.quantize(_CENT),
+                refundable_vat_total=amount.rounded().amount,
                 invoice_count=count,
             )
             for (country, currency, year), (amount, count) in period_totals.items()
