@@ -1,0 +1,38 @@
+# Docker Compose for the SIGINT demo.
+# It starts the Python backend and the Caddy frontend.
+# Ollama runs on the host machine. The backend reaches it through host.docker.internal.
+services:
+  backend:
+    build:
+      context: ./backend/backend
+      dockerfile: Dockerfile
+    container_name: sigint-backend
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3-vl:8b}
+      OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-300}
+      OLLAMA_READY_TIMEOUT_SECONDS: ${OLLAMA_READY_TIMEOUT_SECONDS:-120}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///./data/vatback.db}
+      WISE_MODE: ${WISE_MODE:-mock}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080,http://localhost:5173}
+      CORS_ORIGIN_REGEX: ${CORS_ORIGIN_REGEX:-^https?://[^/:]+:8080$}
+      SEED_ON_START: ${SEED_ON_START:-true}
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend-data:/app/data
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sigint-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
+volumes:
+  backend-data:
