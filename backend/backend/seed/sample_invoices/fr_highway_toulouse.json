@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1005",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Vinci Autoroutes",
+    "vatNumber": "FR92345678901",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "31000",
+      "city": "Toulouse",
+      "countryCode": "FR"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Péage A61",
+      "category": "ROAD_TOLL",
+      "netAmount": "18.40",
+      "vatRate": 20.0,
+      "vatAmount": "3.68",
+      "grossAmount": "22.08"
+    }
+  ],
+  "totals": {
+    "netAmount": "18.40",
+    "vatAmount": "3.68",
+    "grossAmount": "22.08"
+  },
+  "cardLast4": "4821"
+}

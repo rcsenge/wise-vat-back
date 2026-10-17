@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1006",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Trattoria da Mario",
+    "vatNumber": "IT09876543210",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "00184",
+      "city": "Roma",
+      "countryCode": "IT"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Pasta e Vino",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "38.00",
+      "vatRate": 10.0,
+      "vatAmount": "3.80",
+      "grossAmount": "41.80"
+    },
+    {
+      "description": "Coperto",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "4.00",
+      "vatRate": 10.0,
+      "vatAmount": "0.40",
+      "grossAmount": "4.40"
+    }
+  ],
+  "totals": {
+    "netAmount": "42.00",
+    "vatAmount": "4.20",
+    "grossAmount": "46.20"
+  },
+  "cardLast4": "4821"
+}

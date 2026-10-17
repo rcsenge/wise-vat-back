@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FULL_INVOICE",
+  "invoiceNumber": "CC-2026-1009",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Eetcafé de Haven",
+    "vatNumber": "NL823456789B01",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "3011",
+      "city": "Rotterdam",
+      "countryCode": "NL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Kost en drank",
+      "category": "FOOD_AND_DRINK",
+      "netAmount": "52.00",
+      "vatRate": 9.0,
+      "vatAmount": "4.68",
+      "grossAmount": "56.68"
+    }
+  ],
+  "totals": {
+    "netAmount": "52.00",
+    "vatAmount": "4.68",
+    "grossAmount": "56.68"
+  },
+  "cardLast4": "4821"
+}

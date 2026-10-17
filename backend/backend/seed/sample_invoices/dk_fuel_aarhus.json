@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1013",
+  "issueDate": "2026-09-10",
+  "currency": "DKK",
+  "supplier": {
+    "name": "Circle K Danmark",
+    "vatNumber": "DK25621554",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "8000",
+      "city": "Aarhus",
+      "countryCode": "DK"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Diesel",
+      "category": "FUEL",
+      "netAmount": "512.00",
+      "vatRate": 25.0,
+      "vatAmount": "128.00",
+      "grossAmount": "640.00"
+    }
+  ],
+  "totals": {
+    "netAmount": "512.00",
+    "vatAmount": "128.00",
+    "grossAmount": "640.00"
+  },
+  "cardLast4": "4821"
+}

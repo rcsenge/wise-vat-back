@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SIMPLIFIED_INVOICE",
+  "invoiceNumber": "CC-2026-1008",
+  "issueDate": "2026-09-10",
+  "currency": "EUR",
+  "supplier": {
+    "name": "GVB Amsterdam",
+    "vatNumber": "NL818181818B01",
+    "address": {
+      "street": "Beispielstrasse 1",
+      "postalCode": "1012",
+      "city": "Amsterdam",
+      "countryCode": "NL"
+    }
+  },
+  "customer": {
+    "name": "Példa Tech Kft.",
+    "vatNumber": "HU12345678"
+  },
+  "lines": [
+    {
+      "description": "Reizenkaart",
+      "category": "TRAVEL",
+      "netAmount": "7.50",
+      "vatRate": 9.0,
+      "vatAmount": "0.68",
+      "grossAmount": "8.18"
+    }
+  ],
+  "totals": {
+    "netAmount": "7.50",
+    "vatAmount": "0.68",
+    "grossAmount": "8.18"
+  },
+  "cardLast4": "4821"
+}
