@@ -434,3 +434,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [done]
 
 ---
+- Task: Add a demo invoice reader. Every upload returns the Berlin hotel invoice after 3 seconds. Keep Ollama as an option.
+- Signer: Vilmos Babó's agent
+- Branch: feat/demo-invoice-reader
+- Date: 2026-10-17
+- Status: [in-progress]
+
+---
