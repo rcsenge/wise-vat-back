@@ -29,6 +29,10 @@ RIGHT = PAGE_WIDTH - MARGIN
 FONT_REGULAR = "Roboto"
 FONT_BOLD = "Roboto-Bold"
 
+from datetime import datetime as _datetime
+
+_FIXED_CREATION_DATE = _datetime(2026, 1, 1)
+
 
 def _roboto_font_variants() -> dict[str, str]:
     """Return the Roboto regular and bold font file paths."""
@@ -50,6 +54,7 @@ class InvoicePdf(FPDF):
         self.add_font(FONT_REGULAR, "", variants[FONT_REGULAR])
         self.add_font(FONT_BOLD, "", variants[FONT_BOLD])
         self.set_auto_page_break(auto=False)
+        self.set_creation_date(_FIXED_CREATION_DATE)  # Deterministic PDF bytes
         self.add_page()
         self.set_left_margin(MARGIN)
         self.set_right_margin(MARGIN)
@@ -118,21 +123,10 @@ def _render_invoice(invoice: dict, pdf: InvoicePdf) -> None:
             y += 5.0
 
     y += 8.0
-    # Column header
+    # Table header, then one monospaced row per line. A fixed-width answer format keeps
+    # the text layer clean. Overlapping proportional cells corrupt the extraction order.
     header = ["Description", "Net", "VAT rate", "VAT", "Gross"]
-    pdf._left_text(y, header[0], bold=True)
-    _right_columns(pdf, y, header[1:])
-    y += 6.0
-
-    for line in invoice.get("lines", []):
-        pdf._left_text(y, line.get("description", ""), size=9.0)
-        _right_columns(pdf, y, [
-            line.get("netAmount", ""),
-            _rate_text(line.get("vatRate")),
-            line.get("vatAmount", ""),
-            line.get("grossAmount", ""),
-        ], size=9.0)
-        y += 6.0
+    y = render_table(pdf, y, header, invoice.get("lines", []))
 
     y += 4.0
     totals = invoice.get("totals", {})
@@ -147,14 +141,44 @@ def _render_invoice(invoice: dict, pdf: InvoicePdf) -> None:
         pdf._left_text(y, footer)
 
 
-def _right_columns(pdf: InvoicePdf, y: float, values: list[str], size: float = 9.0) -> None:
-    """Write the right-aligned numeric columns at the same row y."""
-    pdf.set_font(FONT_REGULAR, size=size)
-    # The columns sit at fixed x positions measured from the right edge.
-    positions = [55.0, 35.0, 24.0, 0.0]
-    for value, offset in zip(values, positions):
-        pdf.set_xy(RIGHT - offset, y)
-        pdf.cell(offset, 5.0, value, align="R")
+TABLE_FONT = FONT_REGULAR
+TABLE_BOLD_FONT = FONT_BOLD
+TABLE_SIZE = 7.8
+DESCRIPTION_WIDTH = 30
+NUMBER_WIDTHS = (8, 8, 7, 8)  # net, vat rate, vat amount, gross
+
+
+def _table_row(cells: list[str]) -> str:
+    """Return one fixed-width text line from the description and four numbers."""
+    description = f"{cells[0]:<{DESCRIPTION_WIDTH}}"[:DESCRIPTION_WIDTH]
+    numbers = "".join(f"{value:>{width}}" for value, width in zip(cells[1:], NUMBER_WIDTHS))
+    return (description + numbers).rstrip()
+
+
+def render_table(pdf: InvoicePdf, y: float, header: list[str], lines: list[dict]) -> float:
+    """Draw the invoice table as one text line per row. Return the y after the rows."""
+    pdf.set_font(TABLE_BOLD_FONT, size=TABLE_SIZE)
+    pdf.set_xy(pdf.l_margin, y)
+    pdf.cell(RIGHT - pdf.l_margin, 5.0, _table_row(header), align="L")
+    y += 5.2
+    pdf.set_font(TABLE_FONT, size=TABLE_SIZE)
+    for line in lines:
+        description = line.get("description", "")
+        if len(description) > DESCRIPTION_WIDTH:
+            pdf.set_xy(pdf.l_margin, y)
+            pdf.cell(RIGHT - pdf.l_margin, 5.0, description, align="L")
+            y += 5.0
+        values = [
+            description,
+            line.get("netAmount", ""),
+            _rate_text(line.get("vatRate")),
+            line.get("vatAmount", ""),
+            line.get("grossAmount", ""),
+        ]
+        pdf.set_xy(pdf.l_margin, y)
+        pdf.cell(RIGHT - pdf.l_margin, 5.0, _table_row(values), align="L")
+        y += 5.2
+    return y
 
 
 def _rate_text(rate: object) -> str:
