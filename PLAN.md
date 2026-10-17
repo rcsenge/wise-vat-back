@@ -286,6 +286,11 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Task: Unify the SIGINT branding in the frontend title tags and favicons. Cleanup item 5 of REPO-FINDINGS.md.
 - Signer: rcsenge's agent
 - Branch: fix/sigint-branding
+
+---
+- Task: Remove the stale neptune font ignore rules from the root .gitignore.
+- Signer: Török Zaránd Tamás's agent
+- Branch: chore/stale-font-ignore-cleanup
 - Date: 2026-10-17
 
 ---
