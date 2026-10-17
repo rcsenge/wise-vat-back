@@ -382,6 +382,52 @@
           return item;
         };
 
+        const CLAIM_ALL_LABEL = "Claim all";
+        // The browser starts each download after a short pause. It then keeps every file.
+        const CLAIM_DOWNLOAD_PAUSE_MS = 800;
+        let isClaimingAll = false;
+
+        const claimAllButton = element(
+          "button",
+          "bg-brand-bright-green text-brand-forest-green hover:bg-brand-bright-green-pressed mt-4 inline-flex h-12 cursor-pointer items-center rounded-full px-6 text-base font-semibold transition disabled:cursor-not-allowed disabled:opacity-50",
+          CLAIM_ALL_LABEL,
+        );
+        claimAllButton.type = "button";
+        claimAllButton.setAttribute(
+          "aria-label",
+          "Generate the claim package of every open period in every country",
+        );
+
+        const downloadPackage = (period) => {
+          const link = document.createElement("a");
+          link.href = api.packageUrl(period.country, period.year);
+          link.setAttribute("download", "");
+          link.click();
+        };
+
+        // The loop runs once per open period. The period list bounds it.
+        const claimAll = async () => {
+          const openPeriods = [...periods].sort(
+            (first, second) =>
+              first.country.localeCompare(second.country) ||
+              first.year - second.year,
+          );
+          isClaimingAll = true;
+          claimAllButton.disabled = true;
+          for (const [index, period] of openPeriods.entries()) {
+            claimAllButton.textContent = `Claiming ${index + 1} of ${openPeriods.length}…`;
+            downloadPackage(period);
+            await new Promise((resolve) =>
+              setTimeout(resolve, CLAIM_DOWNLOAD_PAUSE_MS),
+            );
+          }
+          isClaimingAll = false;
+          claimAllButton.textContent = CLAIM_ALL_LABEL;
+          claimAllButton.disabled = periods.length === 0;
+        };
+
+        claimAllButton.addEventListener("click", claimAll);
+
         const renderHero = () => {
           const totals = api.sumByCurrency(
             countryTotals,
@@ -409,12 +455,14 @@
               ),
             ),
           );
+          claimAllButton.disabled = isClaimingAll || periods.length === 0;
           heroTotals.replaceChildren(
             element(
               "p",
               "font-display text-display-large text-brand-bright-green tabular-nums sm:text-[64px]",
               api.formatMoney(main[1], main[0]),
             ),
+            claimAllButton,
             otherRow,
           );
           const countryCount = new Set(
