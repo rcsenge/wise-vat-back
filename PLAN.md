@@ -167,3 +167,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Make browsers revalidate frontend files on every load. A stale cached style.css broke the upload dialog on Windows.
+- Signer: Vilmos Babó's agent
+- Branch: fix/frontend-cache-revalidation
+- Date: 2026-10-17
+
+---
