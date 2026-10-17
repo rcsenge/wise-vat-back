@@ -10,6 +10,11 @@ make install        # backend venv via uv
 make dev-backend    # http://localhost:8000  (docs at /docs)
 ```
 
+## Mock mode
+
+`make dev-mock` builds `mock.db` and starts the backend on it. The mock database has receipts and claims for every supported country.
+Rebuild only the database with `make mock-db`. In Docker, run `MOCK_DB=true docker compose up`.
+
 Other targets: `make seed`, `make test`, `make demo-reset`. Run `make` to list them.
 
 ## Docker Compose

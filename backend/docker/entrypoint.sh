@@ -38,7 +38,10 @@ print("[entrypoint] The API starts anyway. Uploads return a clear 503 error unti
 raise SystemExit(0)
 PY
 
-if [ "${SEED_ON_START:-true}" = "true" ]; then
+if [ "${MOCK_DB:-false}" = "true" ]; then
+    echo "[entrypoint] The mock database replaces the demo database."
+    /app/.venv/bin/python -m seed.mock_db
+elif [ "${SEED_ON_START:-true}" = "true" ]; then
     echo "[entrypoint] The seed refreshes the demo database."
     /app/.venv/bin/python -m seed.seed
 fi

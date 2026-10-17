@@ -67,5 +67,7 @@ Prefer the Makefile for repeatable steps. It keeps the commands identical for ev
 - `make install`: Create the backend venv and install dependencies with uv.
 - `make dev-backend`: Start Uvicorn with reload on port 8000 via uv.
 - `make seed`: Create the database tables via uv.
+- `make mock-db`: Build the mock database for every supported country via uv.
+- `make dev-mock`: Build the mock database. Start Uvicorn on it in mock mode.
 - `make test`: Run the pytest suite via uv.
 - `make demo-reset`: Reset the simulator state.
