@@ -15,7 +15,7 @@ from app.models.invoice_record import InvoiceRecord
 from app.models.transaction import Transaction
 from app.schemas.invoice import ExtractedInvoice
 from app.schemas.invoice_flow import (
-    ClaimDeadline,
+    ClaimPeriod,
     ClaimsSummary,
     CountryTotal,
     InvoiceResult,
@@ -269,24 +269,38 @@ def compute_claims(session: Session) -> ClaimsSummary:
     )
     totals: dict[tuple[str, str], CountryTotal] = {}
     expired_totals: dict[tuple[str, str], CountryTotal] = {}
-    deadline_totals: dict[tuple[str, str, date], Decimal] = {}
+    # One refund period per country, currency and invoice year. Each period has its own deadline.
+    period_totals: dict[tuple[str, str, int], tuple[Decimal, int]] = {}
     for result_json, issue_date in session.exec(approved):
         expired = _is_record_expired(issue_date, today)
         for country_total in InvoiceResult.model_validate_json(result_json).country_totals:
             _add_country_total(expired_totals if expired else totals, country_total)
             if issue_date is not None and not expired:
-                key = (country_total.country, country_total.currency, claim_deadline(issue_date))
-                deadline_totals[key] = deadline_totals.get(key, Decimal("0")) + country_total.refundable_vat_total
-    deadlines = [
-        ClaimDeadline(country=country, currency=currency, claim_deadline=deadline, refundable_vat_total=amount.quantize(_CENT))
-        for (country, currency, deadline), amount in sorted(deadline_totals.items(), key=lambda item: (item[0][2], item[0][0]))
-    ]
+                key = (country_total.country, country_total.currency, issue_date.year)
+                amount, count = period_totals.get(key, (Decimal("0"), 0))
+                period_totals[key] = (amount + country_total.refundable_vat_total, count + 1)
+    periods = sorted(
+        (
+            ClaimPeriod(
+                country=country,
+                currency=currency,
+                year=year,
+                period_start=date(year, 1, 1),
+                claim_deadline=claim_deadline(date(year, 1, 1)),
+                refundable_vat_total=amount.quantize(_CENT),
+                invoice_count=count,
+            )
+            for (country, currency, year), (amount, count) in period_totals.items()
+        ),
+        key=lambda period: (period.claim_deadline, period.country),
+    )
     newest = select(InvoiceRecord.result_json).order_by(col(InvoiceRecord.id).desc()).limit(MAX_CLAIM_RESULTS)
     results = [InvoiceResult.model_validate_json(result_json) for result_json in reversed(session.exec(newest).all())]
     return ClaimsSummary(
         per_country=list(totals.values()),
         expired_per_country=list(expired_totals.values()),
-        deadlines=deadlines,
+        periods=periods,
+        reference_date=today,
         results=results,
     )
 

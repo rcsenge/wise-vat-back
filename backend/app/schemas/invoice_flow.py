@@ -47,19 +47,23 @@ class InvoiceResult(BaseModel):
     country_totals: list[CountryTotal] = Field(default_factory=list)
 
 
-class ClaimDeadline(BaseModel):
-    """Refundable VAT of one country that shares one claim deadline."""
+class ClaimPeriod(BaseModel):
+    """The open refund period of one country: one calendar year with its own deadline."""
 
     country: str
     currency: str
+    year: int  # The refund period is the calendar year of the invoices
+    period_start: date
     claim_deadline: date
     refundable_vat_total: Decimal
+    invoice_count: int
 
 
 class ClaimsSummary(BaseModel):
     per_country: list[CountryTotal] = Field(default_factory=list)  # Only invoices inside the deadline
     expired_per_country: list[CountryTotal] = Field(default_factory=list)  # Approved, but the deadline passed
-    deadlines: list[ClaimDeadline] = Field(default_factory=list)  # Earliest deadline first
+    periods: list[ClaimPeriod] = Field(default_factory=list)  # Open periods, earliest deadline first
+    reference_date: date  # The date that the deadline check used as today
     results: list[InvoiceResult] = Field(default_factory=list)
 
 
