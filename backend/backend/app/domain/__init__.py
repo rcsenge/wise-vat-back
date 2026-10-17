@@ -1,1 +1,1 @@
-"""Pure domain core. NO I/O here (no DB, no HTTP) — state + event in, decision out."""
+"""Pure domain: VAT back rules and the money value type. No I/O here (no DB, no HTTP)."""
