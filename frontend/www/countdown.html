@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0f2600" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <title>vatback</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,18 +19,35 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body
-    class="bg-surface-screen text-ink-primary font-sans antialiased lg:overflow-hidden"
+    class="bg-brand-forest-green-dark text-brand-bright-green font-sans antialiased lg:overflow-hidden"
   >
     <progress
       id="countdown-progress"
-      class="bg-surface-neutral [&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-surface-neutral [&::-webkit-progress-value]:bg-brand-bright-green fixed left-0 top-0 z-10 h-1.5 w-full appearance-none"
+      class="bg-brand-light-green/15 [&::-moz-progress-bar]:bg-brand-bright-green [&::-webkit-progress-bar]:bg-brand-light-green/15 [&::-webkit-progress-value]:bg-brand-bright-green fixed left-0 top-0 z-10 h-1.5 w-full appearance-none"
       max="300"
       value="0"
       aria-label="Progress"
     ></progress>
 
+    <svg
+      class="pointer-events-none fixed inset-x-0 top-1/2 w-full -translate-y-1/2 select-none"
+      viewBox="0 0 1000 254"
+      aria-hidden="true"
+    >
+      <text
+        class="fill-brand-forest-green font-display"
+        x="0"
+        y="227"
+        font-size="318"
+        textLength="1000"
+        lengthAdjust="spacingAndGlyphs"
+      >
+        SIGINT
+      </text>
+    </svg>
+
     <main
-      class="grid min-h-dvh w-full grid-rows-[auto_1fr] lg:h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-1"
+      class="relative grid min-h-dvh w-full grid-rows-[auto_1fr] lg:h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-1"
     >
       <div
         class="aspect-square w-full lg:order-2 lg:aspect-auto lg:h-full"
@@ -44,7 +61,7 @@
       >
         <p
           id="countdown-timer"
-          class="bg-brand-light-green text-brand-forest-green flex h-14 items-center self-start rounded-full px-7 text-2xl font-semibold tabular-nums lg:h-16 lg:px-8 lg:text-3xl"
+          class="bg-brand-bright-green text-brand-forest-green flex h-14 items-center self-start rounded-full px-7 text-2xl font-semibold tabular-nums lg:h-16 lg:px-8 lg:text-3xl"
           role="timer"
           aria-label="Timer"
         >
@@ -57,7 +74,7 @@
           0
         </p>
         <p
-          class="text-ink-secondary mt-4 text-2xl font-semibold lg:mt-6 lg:text-3xl"
+          class="text-brand-light-green mt-4 text-2xl font-semibold lg:mt-6 lg:text-3xl"
         >
           EUR
         </p>
@@ -66,7 +83,7 @@
           <button
             id="countdown-button-start"
             type="button"
-            class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed disabled:bg-surface-neutral disabled:text-ink-tertiary h-14 rounded-full px-10 text-lg font-semibold"
+            class="bg-brand-bright-green text-brand-forest-green active:bg-brand-bright-green-pressed disabled:bg-brand-light-green/15 disabled:text-brand-light-green h-14 rounded-full px-10 text-lg font-semibold"
           >
             Start
           </button>
