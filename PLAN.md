@@ -202,3 +202,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Record the local AI latency findings and the fast extraction options in a root doc.
+- Signer: Magyari Ákos's agent
+- Branch: docs/ollama-latency-findings
+- Date: 2026-10-17
+
+---
