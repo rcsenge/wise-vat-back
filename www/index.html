@@ -69,32 +69,6 @@
         />
       </header>
 
-      <section
-        id="summary-section"
-        aria-label="Scan summary"
-        class="mt-6 grid gap-4 sm:grid-cols-3"
-      >
-        <div
-          class="rounded-2xl border border-[#00a4a6]/30 bg-[#00a4a6] p-5 text-white shadow-sm"
-        >
-          <p class="text-sm font-medium text-[#d6f6f6]">Total claimable</p>
-          <p id="summary-claimable" class="mt-1 text-3xl font-bold">€0.00</p>
-          <p class="mt-1 text-xs text-[#d6f6f6]">
-            Sum of VAT across all receipts
-          </p>
-        </div>
-        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
-          <p class="text-sm font-medium text-[#6b7a78]">Total spend</p>
-          <p id="summary-spend" class="mt-1 text-2xl font-bold">€0.00</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Sum of receipt amounts</p>
-        </div>
-        <div class="rounded-2xl border border-[#e6e9ea] bg-white p-5 shadow-sm">
-          <p class="text-sm font-medium text-[#6b7a78]">Receipts</p>
-          <p id="summary-count" class="mt-1 text-2xl font-bold">0</p>
-          <p class="mt-1 text-xs text-[#6b7a78]">Claimable documents</p>
-        </div>
-      </section>
-
       <section aria-labelledby="receipts-heading" class="mt-8">
         <h2 id="receipts-heading" class="text-lg font-semibold">
           Scanned receipts
@@ -255,9 +229,6 @@
 
         const receiptList = document.getElementById("receipt-list");
         const documentInput = document.getElementById("document-input");
-        const summaryClaimable = document.getElementById("summary-claimable");
-        const summarySpend = document.getElementById("summary-spend");
-        const summaryCount = document.getElementById("summary-count");
         const emptyState = document.getElementById("empty-state");
 
         const receiptDialog = document.getElementById("receipt-dialog");
@@ -372,21 +343,6 @@
 
         const render = () => {
           const stored = readReceipts();
-          const totals = stored.reduce(
-            (acc, receipt) => {
-              acc.tax += Number.isFinite(receipt.taxAmount)
-                ? receipt.taxAmount
-                : 0;
-              acc.spend += Number.isFinite(receipt.amount) ? receipt.amount : 0;
-              return acc;
-            },
-            { tax: 0, spend: 0 },
-          );
-
-          summaryClaimable.textContent = formatMoney(totals.tax);
-          summarySpend.textContent = formatMoney(totals.spend);
-          summaryCount.textContent = String(stored.length);
-
           const shown = stored.slice(0, MAX_RECEIPTS);
           receiptList.replaceChildren();
           shown.forEach((receipt) => {
