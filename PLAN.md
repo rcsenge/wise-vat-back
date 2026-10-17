@@ -82,3 +82,10 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Date: 2026-10-17
 
 ---
+
+- Task: Write a complete root README for the monorepo. Cover setup, Docker, local AI, demo data, API and team workflow.
+- Signer: Vilmos Babó's agent
+- Branch: docs/project-readme
+- Date: 2026-10-17
+
+---
