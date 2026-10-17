@@ -387,3 +387,10 @@ Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.
 - Status: [in-progress]
 
 ---
+
+- Task: Show the claim deadline once per country on the employer page. Remove it from each receipt.
+- Signer: rcsenge's agent
+- Branch: fix/deadline-once-per-country
+- Date: 2026-10-17
+
+---
