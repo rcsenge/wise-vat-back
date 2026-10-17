@@ -116,7 +116,6 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 
 ---
 
-<<<<<<< HEAD
 - Task: Matched card transactions by country and date. The claims now sum every approved invoice without the 500 record limit.
 - Signer: rcsenge's agent
 - Branch: fix/transaction-matching-claims
@@ -129,6 +128,6 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: Török Zaránd Tamás's agent
 - Branch: feat/golden-corpus-testing
 - Date: 2026-10-17
-- Commits: b1c72a8, cc041f5, df367e6, 6c04c89
+- Commits: 14eb411, ff329cf, 3e279ce, ac46a4c
 
 ---
