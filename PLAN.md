@@ -12,3 +12,8 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: <git config user.name>'s agent
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
+
+- Task: serve frontend pages with cleaner URLs without the html extension
+- Signer: Magyari Ákos's agent
+- Branch: feat/clean-frontend-urls
+- Date: 2026-10-17
