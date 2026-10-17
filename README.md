@@ -237,7 +237,8 @@ Both servers listen on every interface. Find the computer's IP address (`ipconfi
 4. Wait for the result. The button shows *"The AI reads the invoice..."* while Ollama works.
 5. Read the result: approved with the refundable VAT, or rejected with the reasons.
 6. Open http://localhost:8080/employer. It shows the refundable VAT per country and the approved receipts. It refreshes every few seconds.
-7. Every country card lists its open refund years. Each year has a deadline bar and a **Generate package** button. The button downloads the ZIP file for the accountant.
+7. The hero shows one total in EUR. Other currencies count at the demo exchange rates. **Generate all** downloads the claim package of every open year in every country.
+8. Every country card lists its open refund years. Each year has a deadline bar and a **Generate package** button. The button downloads the ZIP file for the accountant.
 
 **Reset the demo.** A card transaction can back only one invoice. A second upload of the same invoice is rejected on purpose. To start again, stop the backend and run `make seed` (or `docker compose restart backend`, which seeds on start).
 
@@ -364,7 +365,9 @@ Interactive docs: http://localhost:8000/docs. The OpenAPI contract: http://local
 | `GET` | `/claims` | Refundable VAT per country, the open refund periods per year, the expired totals, the reference date and every stored result. |
 | `GET` | `/claims/package?country=DE&year=2026` | The claim package ZIP for one refund country and year. |
 | `GET` | `/health` | Liveness check. |
-| `GET` | `/accounts`, `/accounts/{id}/transactions`, `/rates`, `/events/stream` | Placeholders for the Wise integration. They return empty or fixed data. |
+| `GET` | `/rates?source=CZK&target=EUR` | One exchange rate. The mock Wise client reads the demo table in `backend/seed/rates_cache.json`. |
+| `GET` | `/rates/table` | The whole demo rate table (EUR base). The employer page converts its total to EUR with it. |
+| `GET` | `/accounts`, `/accounts/{id}/transactions`, `/events/stream` | Placeholders for the Wise integration. They return empty or fixed data. |
 | `POST` | `/simulate/card-swipe`, `/simulate/skip-time`, `/simulate/reset` | Placeholders for the demo simulator. |
 
 Upload errors return `{"detail": {"reasons": [...]}}` with a status code:
