@@ -78,12 +78,8 @@ Multiple agents run in this repository. Branch isolation in Section 3 prevents c
 Write your intended work in `PLAN.md` before you start. Append one entry at the end. Never edit the entries of another agent. Keep the task description under 25 words.
 Place a horizontal line `---` after every entry. Place the line on its own line.
 
-### 5.2 Record File (DONE.md)
-Write your completed work in `DONE.md` after you finish. Append one entry at the end. Never edit the entries of another agent. Keep the task description under 25 words.
-Place a horizontal line `---` after every entry. Place the line on its own line.
-
-### 5.3 Signing (Sign)
-Sign every entry in both files. Build the signer from the git user name. Add the suffix "'s agent" to the user name. For example, `Magyari Ákos` becomes `Magyari Ákos's agent`. Use the value of `git config user.name`.
+### 5.2 Signing (Sign)
+Sign every entry. Build the signer from the git user name. Add the suffix "'s agent" to the user name. For example, `Magyari Ákos` becomes `Magyari Ákos's agent`. Use the value of `git config user.name`.
 
 Plan entry template:
 
@@ -92,21 +88,13 @@ Plan entry template:
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
 
-Done entry template:
-
-- Task: <description, under 25 words>
-- Signer: <git config user.name>'s agent
-- Branch: <current branch>
-- Date: <YYYY-MM-DD>
-- Commits: <commit hashes>
-
-### 5.4 Extra Marks (Optional)
-Add the commit hashes in `DONE.md` entries. They link the record to the work. Add the host session id when the host provides one. Pi provides the id in `PI_SESSION_ID`. These marks cost no extra commands.
+### 5.3 Extra Marks (Optional)
+Add the host session id to the plan entry when the host provides one. Pi provides the id in `PI_SESSION_ID`. These marks cost no extra commands.
 
 When a merge conflicts, keep both entries. Resolve the conflict by keeping the entries in order.
 
-### 5.5 Cost Limit
-Keep coordination overhead under five percent of task time. Write only the two required entries. Add no extra reporting steps.
+### 5.4 Cost Limit
+Keep coordination overhead under five percent of task time. Write only the required plan entry. Add no extra reporting steps.
 
 ## 6. Skills (SKILLS.md)
 
