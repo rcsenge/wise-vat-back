@@ -21,6 +21,10 @@ The `Caddyfile` serves clean URLs. It maps `/` to the landing index, `/employee`
 
 The file-input capture works over plain HTTP on iOS Safari. It does not need HTTPS.
 
+## Docker Compose
+
+The compose stack serves this frontend with Caddy inside Docker. It publishes the site on port 8080. The backend also runs inside Docker on port 8000. Ollama stays on the host machine. Run `docker compose up` at the repo root.
+
 ## Backend Connection
 
 `www/api.js` calls the backend on port 8000 of the page host.

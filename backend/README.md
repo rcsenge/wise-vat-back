@@ -12,6 +12,19 @@ make dev-backend    # http://localhost:8000  (docs at /docs)
 
 Other targets: `make seed`, `make test`, `make demo-reset`. Run `make` to list them.
 
+## Docker Compose
+
+The compose stack runs the Python backend and the Caddy frontend in Docker. Ollama runs on the host machine. The backend container reaches it through `host.docker.internal:11434`.
+
+1. Start Ollama on the host. Pull the model once. Run `ollama pull qwen3-vl:8b`.
+2. Stop any local dev server on ports 8000 and 8080.
+3. Run `docker compose up` at the repo root. Rebuild after code changes. Run `docker compose up --build`.
+4. Open the frontend at `http://localhost:8080`. The API docs live at `http://localhost:8000/docs`.
+
+On Linux, bind Ollama to every interface. Run `OLLAMA_HOST=0.0.0.0:11434 ollama serve`.
+The seed reloads the demo data on every start. Set `SEED_ON_START=false` to disable it.
+The SQLite database persists in the `backend-data` Docker volume.
+
 ## Local AI invoice reader
 
 `POST /invoices/upload` takes a PDF, a photo or an invoice JSON file. A local Ollama vision model reads PDFs and photos. It needs no API key, no account and has no usage limit.

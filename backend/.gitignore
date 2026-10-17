@@ -16,6 +16,9 @@
 # Backend
 !backend/pyproject.toml
 !backend/uv.lock
+!backend/Dockerfile
+!backend/.dockerignore
+!backend/docker/**
 !backend/app/**/*.py
 !backend/seed/**/*.py
 !backend/seed/**/*.json

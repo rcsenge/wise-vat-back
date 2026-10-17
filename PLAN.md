@@ -59,3 +59,19 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: rcsenge's agent
 - Branch: feat/wise-vat-by-country
 - Date: 2026-10-17
+
+---
+
+- Task: Create a mockdata project. Render the backend mock invoices in Typst and compile them into PDFs.
+- Signer: Magyari Ákos's agent
+- Branch: feat/mock-invoices-typst
+- Date: 2026-10-17
+
+---
+
+- Task: Containerize the backend and the Caddy frontend with Docker Compose. Keep Ollama on the host.
+- Signer: Magyari Ákos's agent
+- Branch: feat/dockerize-backend
+- Date: 2026-10-17
+
+---
