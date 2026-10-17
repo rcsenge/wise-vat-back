@@ -59,6 +59,7 @@ A JSON file in the invoice schema skips the AI step. This keeps the demo usable 
 sigint-monorepo/
 ├── AGENTS.md, CLAUDE.md        Rules for every contributor and AI agent
 ├── PLAN.md, DONE.md            Signed plan and record entries of every agent
+├── init                        One-step launcher: Ollama, model, Docker Compose
 ├── docker-compose.yml          Backend and frontend containers
 ├── backend/                    Python project (FastAPI)
 │   ├── Makefile                install, seed, dev-backend, test
@@ -92,13 +93,22 @@ sigint-monorepo/
 
 This is the easiest way to run everything. Docker runs the backend and the frontend. Ollama runs directly on the host, because Docker on macOS cannot use the Apple GPU.
 
-**Prerequisites:** Docker Desktop, Git, and Ollama with the model downloaded. See [Local AI setup](#local-ai-setup-ollama).
+**Prerequisites:** Docker Desktop, Git, and Ollama. See [Local AI setup](#local-ai-setup-ollama).
 
 ```bash
 git clone https://github.com/magyariakos/sigint-monorepo.git
 cd sigint-monorepo
-docker compose up --build
+./init --build
 ```
+
+The `init` launcher does every step for you (macOS and Linux):
+
+1. It checks that Docker and Docker Compose exist.
+2. It starts Ollama on the host when it does not run yet.
+3. It downloads the model on the first run (several GB).
+4. It starts `docker compose up`. The `--build` flag rebuilds the images. Leave it out on later runs.
+
+Without the launcher, start Ollama yourself and run `docker compose up --build`.
 
 Open:
 
@@ -112,7 +122,7 @@ Open:
 The backend container waits up to 120 seconds for Ollama. It then seeds the demo database and starts the API. If Ollama is not ready, the API still starts. PDF and photo uploads then return a clear error until Ollama runs.
 
 - Stop the stack: `Ctrl+C`, then `docker compose down`.
-- Rebuild after a code change: `docker compose up --build`.
+- Rebuild after a code change: `./init --build` or `docker compose up --build`.
 - The database lives in the `backend-data` volume. The seed resets it on every start. Set `SEED_ON_START=false` to keep the data.
 - On Linux, make Ollama listen on every interface: `OLLAMA_HOST=0.0.0.0:11434 ollama serve`.
 
