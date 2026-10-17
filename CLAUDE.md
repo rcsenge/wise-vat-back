@@ -7,6 +7,12 @@ These notes govern how Claude works in this monorepo. They complement the shared
 - Each project folder has its own @AGENTS.md and @CLAUDE.md file.
 - Current projects: `backend/` and `frontend/`. New projects may appear later.
 
+## Coordination
+- You run as a standalone agent. You finish one deep task alone.
+- Pi agents form a swarm. They share state through `MESSAGES.md` and `PLAN.md`.
+- Read `AGENTS.md` section 5.7 for the cooperation rules.
+- Post a message in `MESSAGES.md` when you claim or finish work.
+
 ## Scope
 - Work in ONE project per task. Work in more only when the user asks.
 - Use only the root @AGENTS.md and the project @AGENTS.md.

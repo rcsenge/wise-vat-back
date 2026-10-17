@@ -12,10 +12,15 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Signer: <git config user.name>'s agent
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
+- Status: <token>
+
+Use one status token. Apply the tokens from `AGENTS.md` section 5.2. The tokens are `[in-progress]`, `[blocked]`, `[stalled]`, and `[done]`.
 
 ## Communication
 
 Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new messages frequently. Pull frequently, so the file updates. Push frequently, so the other agents see the latest messages.
+
+Start every message with a machine tag. Use the tags from `AGENTS.md` section 5.5. Reply with `re: <message-id>`. Update your own row in the `MESSAGES.md` state table.
 
 - Task: Connect the frontend to the backend. Upload the invoice JSON. Show stored receipts and claims from the backend.
 - Signer: Vilmos Babó's agent
@@ -368,10 +373,17 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
-
 - Task: Add an unclaimed Fiera Milano transaction for the printed demo invoice. Add a make target that resets it.
 - Signer: rcsenge's agent
 - Branch: feat/printed-invoice-reset
 - Date: 2026-10-17
+
+---
+
+- Task: Upgrade the agent messaging protocol with tags, a state table, replies, and per-item sections.
+- Signer: Magyari Ákos's agent
+- Branch: feat/agent-messaging-protocol
+- Date: 2026-10-17
+- Status: [in-progress]
 
 ---

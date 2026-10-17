@@ -79,6 +79,7 @@ Multiple agents run in this repository. Branch isolation in Section 3 prevents c
 ### 5.1 Plan File (PLAN.md)
 Write your intended work in `PLAN.md` before you start. Append one entry at the end. Never edit the entries of another agent. Keep the task description under 25 words.
 Place a horizontal line `---` after every entry. Place the line on its own line.
+Update the `Status` token of your own entry when the state changes.
 
 ### 5.2 Signing (Sign)
 Sign every entry. Build the signer from the git user name. Add the suffix "'s agent" to the user name. For example, `Magyari Ákos` becomes `Magyari Ákos's agent`. Use the value of `git config user.name`.
@@ -89,6 +90,14 @@ Plan entry template:
 - Signer: <git config user.name>'s agent
 - Branch: <current branch>
 - Date: <YYYY-MM-DD>
+- Status: <token>
+
+Status tokens track progress. Apply these rules.
+
+- Use `[in-progress]` when you start.
+- Use `[blocked]` when the work waits for another agent.
+- Use `[stalled]` when the wait lasts over a day.
+- Use `[done]` after the merge.
 
 ### 5.3 Extra Marks (Optional)
 Add the host session id to the plan entry when the host provides one. Pi provides the id in `PI_SESSION_ID`. These marks cost no extra commands.
@@ -100,11 +109,20 @@ Keep coordination overhead under five percent of task time. Write only the requi
 
 ### 5.5 Agent Message File (MESSAGES.md)
 
-The root `MESSAGES.md` file stores agent-to-agent messages. Agents append messages here.
+The root `MESSAGES.md` file stores agent-to-agent messages. Agents append messages here. The messages carry the record of every claim and every reply.
 
 - **Append Only:** Append new messages only. Never edit or delete a message of another agent.
 - **Git Sync:** Version control the file. Commit and push every new message with the other changes.
 - **Branch Rule:** Use a short-lived branch for the message commits. The pre-commit hook blocks direct commits on `main`. Merge the branch to `main`. Push `main`. Delete the branch.
+
+Every message starts with a classifier.
+
+- **Machine Tags:** Start the message with a tag. Use one of `[claim]`, `[done]`, `[overlap]`, `[ack]`, `[question]`, or `[notice]`.
+- **Reply by Reference:** Start a reply with `re: <message-id>`. The id names the original message.
+- **Default Resolve:** An overlap resolves when the other agent's commits land on `main`. Do not block on an unanswered reply.
+- **State Table:** `MESSAGES.md` holds a state table at the top. One row per claimed item. The owner updates its own row. The row holds the item, the owner, the branch, and the status.
+- **One Section per Item:** Each claimed item has its own section in `MESSAGES.md`. Append the item messages in that section only.
+- **Status Tokens:** Every claim carries a status token. Use `[in-progress]`, `[done]`, `[blocked]`, or `[stalled]`.
 
 Announce yourself at the start of every message. Use the rules below. The rules match the `PLAN.md` signing rules. Copy them, so no agent must open `PLAN.md`.
 
@@ -118,6 +136,8 @@ Use this message format.
 ```markdown
 *<Signer>* `<session-id>`
 
+Tag: `[<tag>]`
+
 Write your message here.
 ```
 
@@ -125,15 +145,32 @@ Write your message here.
 
 Check your task for overlap with the other tasks. Your task overlaps when another agent changes the same code or files. Coordinate through `MESSAGES.md` when you find overlap. Do not work alone on a shared area. Split the overlapping work with the other agent.
 
-### 5.7 Team Names
+Send an `[overlap]` message when you find a conflict. The message names the files. The message asks for the other agent to reply. The default resolve rule applies when the other agent does not reply. Check `main` for the other agent's commits. Work after the commits, not after the reply.
+
+### 5.7 Agent Types
+
+Track the type of every agent. The type changes the cooperation style.
+
+- **Pi Swarm:** Pi agents form a swarm. Many agents work in parallel. They share state through `MESSAGES.md` and `PLAN.md`. They rely on frequent pulls and pushes.
+- **Claude Code Standalone:** A Claude Code agent works alone. It is faster and better on one deep task. It may not read the message board.
+
+Apply these rules.
+
+- Give a broad parallel task to the swarm.
+- Give a deep single task to a Claude Code agent.
+- Accept that the Claude Code agent may be faster and better.
+- Do not duplicate the standalone work. The standalone owns its task.
+- Give the standalone a complete brief. It cannot ask the board for context.
+
+### 5.8 Team Names
 
 Other people use short names for the team. This list maps every short name to the git user name.
 
-- `csenge` is `rcsenge`
-- `vili` is `Vilmos Babó`
-- `zazi` is `Török Zaránd Tamás`
+- `Csenge` is `rcsenge`
+- `Vili` is `Vilmos Babó`
+- `Zazi` is `Török Zaránd Tamás`
 
-Resolve a short name before you act on a request. Use the git user name for the signer. For example, "zazi's agents" means `Török Zaránd Tamás's agent`.
+Resolve a short name before you act on a request. Use the git user name for the signer. For example, "Zazi's agents" means `Török Zaránd Tamás's agent`.
 
 ## 6. Skills (SKILLS.md)
 

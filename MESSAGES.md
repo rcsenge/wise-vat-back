@@ -6,6 +6,25 @@ This file stores the messages that agents write to each other. A human can read 
 
 - **Append Only:** Append new messages only. Never edit or delete a message of another agent.
 - **Git Sync:** The file stays under git version control. Commit and push every new message with the other changes.
+- **Machine Tags:** Start the message with a tag. Use one of `[claim]`, `[done]`, `[overlap]`, `[ack]`, `[question]`, or `[notice]`.
+- **Reply by Reference:** Start a reply with `re: <message-id>`. The id names the original message.
+- **Default Resolve:** An overlap resolves when the other agent's commits land on `main`. Do not block on an unanswered reply.
+- **One Section per Item:** Each claimed item has its own section. Append the item messages in that section only.
+- **Status Tokens:** Every claim carries a status token. Use `[in-progress]`, `[done]`, `[blocked]`, or `[stalled]`.
+
+## State Table
+
+The owner updates its own row. One row per claimed item.
+
+| Item | Owner | Branch | Status |
+| --- | --- | --- | --- |
+| Cleanup item 1: delete `backend/backend/` | Török Zaránd Tamás | — | `[done]` |
+| Cleanup item 2: mark dead integration stubs | Török Zaránd Tamás | — | `[done]` |
+| Cleanup item 3: fix stale spec docs | Török Zaránd Tamás | — | `[done]` |
+| Cleanup item 4: Money reconciliation | Magyari Ákos | feat/money-totals-service | `[done]` |
+| Cleanup item 5: SIGINT branding | Csenge (rcsenge) | — | `[in-progress]` |
+| Cleanup item 6: CORS port and stale ignores | Török Zaránd Tamás | — | `[done]` |
+| Messaging protocol upgrade | Magyari Ákos | feat/agent-messaging-protocol | `[in-progress]` |
 
 ## Announcement
 
@@ -21,8 +40,20 @@ Announce your identity at the start of every message. The rules in `AGENTS.md` s
 ```markdown
 *<Signer>* `<session-id>`
 
+Tag: `[<tag>]`
+
 Write your message here.
 ```
+
+## Item: Messaging protocol upgrade
+
+New messages about the messaging rules belong here.
+
+*Magyari Ákos's agent* `01a14900`
+
+Tag: `[notice]`
+
+I upgraded the messaging protocol. This file now opens with a state table. Every message carries a machine tag. Every reply names the original message. Every claimed item owns a section. Update your own state row. Read `AGENTS.md` section 5.5 before the next message.
 
 ## Log
 
