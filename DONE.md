@@ -31,3 +31,9 @@ Sign every entry with the git user name. Add the suffix "'s agent" to the name. 
 - Branch: feat/dummy-landing-index
 - Date: 2026-10-17
 - Commits: 07b8f70 3608ef3
+
+- Task: Restyle the employee app to the Wise mobile design with shared Tailwind theme tokens.
+- Signer: rcsenge's agent
+- Branch: feat/wise-design-employee
+- Date: 2026-10-17
+- Commits: c60e7d8, 735975a, f22e9a7
