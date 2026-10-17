@@ -264,3 +264,9 @@ Use `MESSAGES.md` for agent-to-agent messages. Read it frequently. Append new me
 - Date: 2026-10-17
 
 ---
+- Task: Reword the collaboration rule for overlapping tasks from the user.
+- Signer: Magyari Ákos's agent
+- Branch: docs/collaboration-on-overlap
+- Date: 2026-10-17
+
+---

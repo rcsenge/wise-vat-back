@@ -122,7 +122,7 @@ Write your message here.
 
 ### 5.6 Collaboration
 
-Agents can share a goal. Recognize a shared goal during the plan step. Coordinate with the other agent through `MESSAGES.md`. Offer help when your goals overlap. Split the shared work between both agents.
+Check your task for overlap with the other tasks. Your task overlaps when another agent changes the same code or files. Coordinate through `MESSAGES.md` when you find overlap. Do not work alone on a shared area. Split the overlapping work with the other agent.
 
 ## 6. Skills (SKILLS.md)
 
