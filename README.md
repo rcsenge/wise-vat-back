@@ -1,4 +1,5 @@
 # SIGINT · Wise VAT Back
+🥉 3rd place at BME HackNight & Day 2026 (24-hour hackathon sponsored by Wise).
 
 Business travellers pay VAT abroad. Most companies never claim it back, because the paperwork is slow and the rules differ per country.
 
@@ -479,6 +480,6 @@ This is a hackathon demo.
 
 ## Team
 
-Magyari Ákos · rcsenge · Török Zaránd Tamás · Vilmos Babó
+Magyari Ákos · Rada Csenge · Török Zaránd Tamás · Vilmos Babó
 
 Built for a Wise hackathon.
